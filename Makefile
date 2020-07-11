@@ -51,7 +51,7 @@ git-commit:
 	git add *.cc *.hh *.l *.y Makefile >> .local.git.out  || echo
 	git add test-shell/testall.out >> .local.git.out  || echo
 	touch test-shell/testall.out
-	git commit -a -m  \"`cat test-shell/testall.out`\" >> .local.git.out || echo
+	git commit -a -m 'cat test-shell/testall.out' >> .local.git.out || echo
 	git push origin master
 
 .PHONY: clean

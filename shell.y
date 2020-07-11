@@ -28,11 +28,12 @@
 }
 
 %token <cpp_string> WORD
-%token NOTOKEN GREAT NEWLINE
+%token NOTOKEN GREAT NEWLINE TWOGREAT  GREATGREAT AMPERSAND GREATAMPERSAND GREATGREATAMPERSAND LESS PIPE
 
 %{
 //#define yylex yylex
 #include <cstdio>
+#include <string.h>
 #include "shell.hh"
 
 void yyerror(const char * s);
@@ -43,59 +44,97 @@ int yylex();
 %%
 
 goal:
-  commands
+  command_list
   ;
 
-commands:
-  command
-  | commands command
-  ;
-
-command: simple_command
-       ;
-
-simple_command:	
-  command_and_args iomodifier_opt NEWLINE {
-    printf("   Yacc: Execute command\n");
-    Shell::_currentCommand.execute();
+arg_list:
+  arg_list WORD {
+    /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
+    Command::_currentSimpleCommand->insertArgument( $2 );\
   }
-  | NEWLINE 
-  | error NEWLINE { yyerrok; }
-  ;
-
-command_and_args:
-  command_word argument_list {
-    Shell::_currentCommand.
-    insertSimpleCommand( Command::_currentSimpleCommand );
-  }
-  ;
-
-argument_list:
-  argument_list argument
   | /* can be empty */
   ;
 
-argument:
+cmd_and_args:
   WORD {
-    printf("   Yacc: insert argument \"%s\"\n", $1->c_str());
-    Command::_currentSimpleCommand->insertArgument( $1 );\
-  }
-  ;
-
-command_word:
-  WORD {
-    printf("   Yacc: insert command \"%s\"\n", $1->c_str());
+    /* printf("   Yacc: insert command \"%s\"\n", $1->c_str()); */
     Command::_currentSimpleCommand = new SimpleCommand();
     Command::_currentSimpleCommand->insertArgument( $1 );
+  } arg_list {
+    Shell::_currentCommand.insertSimpleCommand( Command::_currentSimpleCommand );
   }
   ;
 
-iomodifier_opt:
-  GREAT WORD {
-    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+pipe_list:
+  pipe_list PIPE cmd_and_args
+  | cmd_and_args
+  ;
+
+io_modifier:
+  GREATGREAT WORD {
+    /* append output to file */
+    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._append = true;
+  }
+  | GREAT WORD {
+    /* redirect output to file */
+    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
     Shell::_currentCommand._outFile = $2;
   }
-  | /* can be empty */ 
+  | GREATGREATAMPERSAND WORD {
+    /* append stdout and stderr to file */
+    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._errFile = new std::string ($2->c_str());
+    Shell::_currentCommand._append = true;
+  }
+  | TWOGREAT WORD{
+    /* redirect stderr to file */
+    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    Shell::_currentCommand._errFile = $2;
+  }
+  | GREATAMPERSAND WORD {
+    /* redirect stdout and stderr to file */
+    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._errFile = new std::string ($2->c_str());
+  }
+  | LESS WORD {
+    /* take input from file */
+    /* printf("   Yacc: insert input \"%s\"\n", $2->c_str()); */
+    Shell::_currentCommand._inFile = $2;
+  }
+  ;
+
+io_modifier_list:
+  io_modifier_list io_modifier
+  | /* can be empty */
+  ;
+
+background_optional:
+  AMPERSAND {
+    Shell::_currentCommand._background = true;
+  }
+  | /* can be empty */
+  ;
+
+command_line:
+  pipe_list io_modifier_list background_optional NEWLINE {
+    /* printf("   Yacc: Execute command\n"); */
+    Shell::_currentCommand.execute();
+  }
+  | NEWLINE {
+    Shell::_currentCommand.execute();
+  }
+  | error NEWLINE {
+    yyerrok;
+  }
+  ;
+
+command_list:
+  command_line
+  | command_list command_line
   ;
 
 %%

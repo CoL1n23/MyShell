@@ -16,8 +16,11 @@
 
 #include <cstdio>
 #include <cstdlib>
-
+#include <unistd.h>
 #include <iostream>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/wait.h>
 
 #include "command.hh"
 #include "shell.hh"
@@ -30,6 +33,7 @@ Command::Command() {
     _outFile = NULL;
     _inFile = NULL;
     _errFile = NULL;
+    _append = false;
     _background = false;
 }
 
@@ -62,6 +66,8 @@ void Command::clear() {
         delete _errFile;
     }
     _errFile = NULL;
+
+    _append = false;
 
     _background = false;
 }
@@ -99,12 +105,117 @@ void Command::execute() {
     }
 
     // Print contents of Command data structure
-    print();
+    // print();
 
     // Add execution here
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
+    
+    // save stdin/stdout/stderr
+    int tmpin = dup(0);
+    int tmpout = dup(1);
+    int tmperr = dup(2);
+
+    // setup stderr
+    int fderr;
+    if (_errFile != NULL && _append == false) {
+      fderr = open(_errFile->c_str(), O_CREAT | O_WRONLY | O_TRUNC, 0664);
+    }
+    else if (_errFile != NULL && _append == true) {
+      fderr = open(_errFile->c_str(), O_CREAT | O_WRONLY | O_APPEND, 0664);
+    }
+    else {
+      fderr = dup(tmperr);
+    }
+    dup2(fderr, 2);
+    close(fderr);
+
+    // set initial input, to either inFile or stdin
+    int fdin;
+    if (_inFile != NULL) {
+      fdin = open(_inFile->c_str(), O_RDONLY, 0444);
+      perror(_inFile->c_str());
+    }
+    else {
+      fdin = dup(tmpin);
+    }
+    
+    int ret;
+    int fdout;
+    for (size_t i = 0; i < _simpleCommands.size(); i++) {
+      // redirect input and error
+      dup2(fdin, 0);
+      close(fdin);
+      dup2(fderr, 2);
+      close(fderr);
+
+      // setup output
+      if (i == _simpleCommands.size() - 1) {
+        // last simple command
+	// redirect output to outFile or stdout
+	if (_outFile != NULL && _append == false) {
+          fdout = open(_outFile->c_str(), O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	}
+	else if (_outFile != NULL && _append == true) {
+	  fdout = open(_outFile->c_str(), O_CREAT | O_WRONLY | O_APPEND, 0664);
+	}
+	else {
+          fdout = dup(tmpout);
+	}
+      }
+      else {
+        // not last simple command
+	// creat pipe
+	int fdpipe[2];
+	pipe(fdpipe);
+	fdout = fdpipe[1];
+	fdin = fdpipe[0];
+      }
+
+      // redirect output
+      dup2(fdout, 1);
+      close(fdout);
+
+      // creat child process to execute child process
+      ret = fork();
+      if (ret == 0 ) {
+        // child process
+	// initialize args c_string array to contain args
+        const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));
+	
+	// append NULL at end
+	args[_simpleCommands[i]->_arguments.size()] = NULL;
+	
+	// convert all cpp_strings to c_strings
+	for (size_t j = 0; j < _simpleCommands[i]->_arguments.size(); j++) {
+          args[j] = _simpleCommands[i]->_arguments[j]->c_str();
+	}
+
+	// execute cmd_and_args
+        execvp(_simpleCommands[i]->_arguments[0]->c_str(), (char* const*) args);
+	
+	// free allocated object
+	free(args);
+
+	// print error if execvp encounters error
+	perror("execvp");
+        _exit(1);
+      }
+    }
+
+    // restore stdin/stdout
+    dup2(tmpin, 0);
+    dup2(tmpout, 1);
+    dup2(tmperr, 2);
+    close(tmpin);
+    close(tmpout);
+    close(tmperr);
+
+    // handle background optional
+    if (!_background) {
+      waitpid(ret, NULL, 0);
+    }
 
     // Clear to prepare for next command
     clear();

@@ -136,7 +136,8 @@ void Command::execute() {
     if (_inFile != NULL) {
       fdin = open(_inFile->c_str(), O_RDONLY, 0444);
       if (fdin == -1) {
-        exit(1);
+        perror(_inFile->c_str());
+	exit(1);
       }
     }
     else {

@@ -135,7 +135,6 @@ void Command::execute() {
     int fdin;
     if (_inFile != NULL) {
       fdin = open(_inFile->c_str(), O_RDONLY, 0444);
-      perror(_inFile->c_str());
     }
     else {
       fdin = dup(tmpin);

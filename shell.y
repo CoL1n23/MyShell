@@ -49,7 +49,7 @@ goal:
 
 arg_list:
   arg_list WORD {
-    /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
+    printf("   Yacc: insert argument \"%s\"\n", $2->c_str());
     Command::_currentSimpleCommand->insertArgument( $2 );\
   }
   | /* can be empty */
@@ -57,7 +57,7 @@ arg_list:
 
 cmd_and_args:
   WORD {
-    /* printf("   Yacc: insert command \"%s\"\n", $1->c_str()); */
+    printf("   Yacc: insert command \"%s\"\n", $1->c_str());
     Command::_currentSimpleCommand = new SimpleCommand();
     Command::_currentSimpleCommand->insertArgument( $1 );
   } arg_list {
@@ -73,36 +73,36 @@ pipe_list:
 io_modifier:
   GREATGREAT WORD {
     /* append output to file */
-    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._append = true;
   }
   | GREAT WORD {
     /* redirect output to file */
-    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     Shell::_currentCommand._outFile = $2;
   }
   | GREATGREATAMPERSAND WORD {
     /* append stdout and stderr to file */
-    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._errFile = new std::string ($2->c_str());
     Shell::_currentCommand._append = true;
   }
   | TWOGREAT WORD{
     /* redirect stderr to file */
-    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     Shell::_currentCommand._errFile = $2;
   }
   | GREATAMPERSAND WORD {
     /* redirect stdout and stderr to file */
-    /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._errFile = new std::string ($2->c_str());
   }
   | LESS WORD {
-    /* take input from file */
-    /* printf("   Yacc: insert input \"%s\"\n", $2->c_str()); */
+    /* redirect input to file */
+    printf("   Yacc: insert input \"%s\"\n", $2->c_str());
     Shell::_currentCommand._inFile = $2;
   }
   ;
@@ -121,7 +121,7 @@ background_optional:
 
 command_line:
   pipe_list io_modifier_list background_optional NEWLINE {
-    /* printf("   Yacc: Execute command\n"); */
+    printf("   Yacc: Execute command\n");
     Shell::_currentCommand.execute();
   }
   | NEWLINE {

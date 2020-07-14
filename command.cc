@@ -203,7 +203,7 @@ void Command::execute() {
 
 	// print error if execvp encounters error
 	perror("execvp");
-        _exit(1);
+        exit(1);
       }
     }
 

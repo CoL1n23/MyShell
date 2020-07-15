@@ -35,6 +35,8 @@ Command::Command() {
     _errFile = NULL;
     _append = false;
     _background = false;
+    _multi_output = false;
+    _multi_input = false;
 }
 
 void Command::insertSimpleCommand( SimpleCommand * simpleCommand ) {
@@ -70,6 +72,9 @@ void Command::clear() {
     _append = false;
 
     _background = false;
+
+    _multi_output = false;
+    _multi_input = false;
 }
 
 void Command::print() {
@@ -111,7 +116,16 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
-    
+   
+    if (_multi_output == true) {
+      printf("Ambiguous output redirect.\n");
+      exit(1);
+    }
+    else if (_multi_input == true) {
+      printf("Ambiguous input redirect.\n");
+      exit(1);
+    }
+
     // save stdin/stdout/stderr
     int tmpin = dup(0);
     int tmpout = dup(1);

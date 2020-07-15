@@ -74,23 +74,39 @@ io_modifier:
   GREATGREAT WORD {
     /* append output to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    
+    /* set _multi_output to true if multiple output redirections are identified */
     if (Shell::_currentCommand._outFile != NULL) {
       Shell::_currentCommand._multi_output = true;
     }
+
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._append = true;
   }
   | GREAT WORD {
     /* redirect output to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    
+    /* set _multi_output to true if multiple output redirections are identified */
     if (Shell::_currentCommand._outFile != NULL) {
       Shell::_currentCommand._multi_output = true;
     }
+
     Shell::_currentCommand._outFile = $2;
   }
   | GREATGREATAMPERSAND WORD {
     /* append stdout and stderr to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    
+    /* set _multi_output to true if multiple output redirections are identified */
+    if (Shell::_currentCommand._outFile != NULL) {
+      Shell::_currentCommand._multi_output = true;
+    }
+    /* set _multi_output to true if multiple error redirections are identified */
+    if (Shell::_currentCommand._errFile != NULL) {
+      Shell::_currentCommand._multi_output = true;
+    }
+
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._errFile = new std::string ($2->c_str());
     Shell::_currentCommand._append = true;
@@ -98,17 +114,39 @@ io_modifier:
   | TWOGREAT WORD{
     /* redirect stderr to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    
+    /* set _multi_output to true if multiple error redirections are identified */
+    if (Shell::_currentCommand._errFile != NULL) {
+      Shell::_currentCommand._multi_output = true;
+    }
+
     Shell::_currentCommand._errFile = $2;
   }
   | GREATAMPERSAND WORD {
     /* redirect stdout and stderr to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
+    
+    /* set _multi_output to true if multiple output redirections are identified */
+    if (Shell::_currentCommand._outFile != NULL) {
+      Shell::_currentCommand._multi_output = true;
+    }
+    /* set _multi_output to true if multiple error redirections are identified */
+    if (Shell::_currentCommand._errFile != NULL) {
+      Shell::_currentCommand._multi_output = true;
+    }
+    
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._errFile = new std::string ($2->c_str());
   }
   | LESS WORD {
     /* redirect input to file */
     /* printf("   Yacc: insert input \"%s\"\n", $2->c_str()); */
+    
+    /* set _multi_output to true if multiple output redirections are identified */
+    if (Shell::_currentCommand._inFile != NULL) {
+      Shell::_currentCommand._multi_input = true;
+    }
+
     Shell::_currentCommand._inFile = $2;
   }
   ;

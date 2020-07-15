@@ -75,7 +75,7 @@ io_modifier:
     /* append output to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
     if (Shell::_currentCommand._outFile != NULL) {
-      Shell::_currentCommend._multi_output = true;
+      Shell::_currentCommand._multi_output = true;
     }
     Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._append = true;
@@ -84,7 +84,7 @@ io_modifier:
     /* redirect output to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
     if (Shell::_currentCommand._outFile != NULL) {
-      Shell::_currentCommend._multi_output = true;
+      Shell::_currentCommand._multi_output = true;
     }
     Shell::_currentCommand._outFile = $2;
   }

@@ -6,7 +6,8 @@
 struct Shell {
 
   static void prompt();
-
+  static void sigIntHandler(int sig);
+  static void sigChildHandler(int sig);
   static Command _currentCommand;
 };
 

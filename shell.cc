@@ -14,13 +14,13 @@ void Shell::prompt() {
 }
 
 void sigIntHandler (int sig) {
-  return sig;
+  sig++;
 }
 
 void sigChildHandler (int sig) {
-
+  pid = 0;
   printf("%d exited.\n", pid);
-  return sig;
+  sig++;
 }
 
 int main() {

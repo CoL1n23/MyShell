@@ -29,12 +29,25 @@ void sigChildHandler (int sig) {
 int main() {
   Shell::prompt();
 
-  struct sigaction signalAction;
-  signalAction.sa_handler = sigIntHandler;
-  sigemptyset(&signalAction.sa_mask);
-  signalAction.sa_flags = SA_RESTART;
+  // handle SIGINT
+  struct sigaction sa_int;
+  sa_int.sa_handler = sigIntHandler;
+  sigemptyset(&sa_int.sa_mask);
+  sa_int.sa_flags = SA_RESTART;
 
-  int error = sigaction(SIGINT, &signalAction, NULL);
+  int error = sigaction(SIGINT, &sa_int, NULL);
+  if (error) {
+    perror("sigaction");
+    exit(-1);
+  }
+
+  // handle SIGCHILD
+  struct sigaction sa_child;
+  sa_child.sa_handler = sigChildHandler;
+  sigemptyset(&sa_child.sa_mask);
+  sa_child.sa_flags = SA_RESTART;
+
+  int error = sigaction(SIGCHILD, &sa_child, NULL);
   if (error) {
     perror("sigaction");
     exit(-1);

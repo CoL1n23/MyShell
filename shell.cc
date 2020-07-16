@@ -35,7 +35,7 @@ int main() {
   }
   
   struct sigaction signalAction;
-  signalAction.sa_handler = sigIntHandler(2);
+  signalAction.sa_handler = sigIntHandler;
   sigemptyset(&signalAction.sa_mask);
   signalAction.sa_flags = SA_RESTART;
 

@@ -18,7 +18,7 @@ void sigIntHandler (int sig) {
 }
 
 void sigChildHandler (int sig) {
-  pid = 0;
+  int pid = 0;
   printf("%d exited.\n", pid);
   sig++;
 }

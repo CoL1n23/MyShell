@@ -35,8 +35,8 @@ int main() {
   sigemptyset(&sa_int.sa_mask);
   sa_int.sa_flags = SA_RESTART;
 
-  int error = sigaction(SIGINT, &sa_int, NULL);
-  if (error) {
+  int error_int = sigaction(SIGINT, &sa_int, NULL);
+  if (error_int) {
     perror("sigaction");
     exit(-1);
   }
@@ -47,8 +47,8 @@ int main() {
   sigemptyset(&sa_child.sa_mask);
   sa_child.sa_flags = SA_RESTART;
 
-  int error = sigaction(SIGCHILD, &sa_child, NULL);
-  if (error) {
+  int error_child = sigaction(SIGCHLD, &sa_child, NULL);
+  if (error_child) {
     perror("sigaction");
     exit(-1);
   }

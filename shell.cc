@@ -15,7 +15,6 @@ void Shell::prompt() {
 
 void sigIntHandler (int sig) {
   printf("caught %d\n", sig);
-  exit(0);
 }
 
 void sigChildHandler (int sig) {
@@ -30,7 +29,7 @@ int main() {
   struct sigaction signalAction;
   signalAction.sa_handler = sigIntHandler;
   sigemptyset(&signalAction.sa_mask);
-  signalAction.sa_flags = SA_RESTART;
+  signalAction.sa_flags = 0;
 
   int error = sigaction(SIGINT, &signalAction, NULL);
   if (error) {

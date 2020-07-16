@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <unistd.h>
 #include "shell.hh"
+#include <string.h>
+#include <signal.h>
 
 int yyparse(void);
 
@@ -12,12 +14,13 @@ void Shell::prompt() {
 }
 
 void sigIntHandler (int sig) {
-  
+  return sig;
 }
 
 void sigChildHandler (int sig) {
 
   printf("%d exited.\n", pid);
+  return sig;
 }
 
 int main() {

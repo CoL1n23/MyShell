@@ -27,6 +27,18 @@ void sigChildHandler (int sig) {
 int main() {
   Shell::prompt();
 
+  struct sigaction signalAction;
+  signalAction.sa_handler = sigIntHandler;
+  sigemptyset(&signalAction.sa_mask);
+  signalAction.sa_flags = SA_RESTART;
+:w
+
+  int error = sigaction(SIGINT, &signalAction, NULL);
+  if (error) {
+    perror("sigaction");
+    exit(-1);
+  }
+
   char s[20];
   fflush(stdout);
   fgets(s, 20, stdin);
@@ -34,18 +46,7 @@ int main() {
     printf("Exiting...\n");
     exit(1);
   }
-  
-  struct sigaction signalAction;
-  signalAction.sa_handler = sigIntHandler;
-  sigemptyset(&signalAction.sa_mask);
-  signalAction.sa_flags = SA_RESTART;
 
-  int error = sigaction(SIGINT, &signalAction, NULL);
-  if (error) {
-    perror("sigaction");
-    exit(-1);
-  }
-  
   yyparse();
 }
 

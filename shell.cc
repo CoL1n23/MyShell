@@ -21,9 +21,10 @@ void sigIntHandler (int sig) {
 }
 
 void sigChildHandler (int sig) {
-  int pid = 0;
-  printf("%d exited.\n", pid);
-  printf("caught %d\n", sig);
+  if (sig == SIGCHLD) {
+    while (waitpid(-1, NULL, WNOHANG) > 0) {
+    }
+  }
 }
 
 int main() {

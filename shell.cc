@@ -31,7 +31,6 @@ int main() {
   signalAction.sa_handler = sigIntHandler;
   sigemptyset(&signalAction.sa_mask);
   signalAction.sa_flags = SA_RESTART;
-:w
 
   int error = sigaction(SIGINT, &signalAction, NULL);
   if (error) {

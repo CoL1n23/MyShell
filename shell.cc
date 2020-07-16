@@ -14,13 +14,13 @@ void Shell::prompt() {
 }
 
 void sigIntHandler (int sig) {
-  sig++;
+  printf("caught %d\n", sig);
 }
 
 void sigChildHandler (int sig) {
   int pid = 0;
   printf("%d exited.\n", pid);
-  sig++;
+  printf("caught %d\n", sig);
 }
 
 int main() {
@@ -35,7 +35,7 @@ int main() {
   }
   
   struct sigaction signalAction;
-  signalAction.sa_handler = sigIntHandler;
+  signalAction.sa_handler = sigIntHandler(2);
   sigemptyset(&signalAction.sa_mask);
   signalAction.sa_flags = SA_RESTART;
 

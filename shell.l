@@ -70,11 +70,10 @@ void myunputc(int c) {
   return WORD;
 }
 
-"\"" {
+"\"[^ \t\n][^ \t\n]*\"" {
   /* string contains quotes */
   yylval.cpp_string = new std::string(yytext);
   yylval.cpp_string->erase(0, 1);
   yylval.cpp_string->erase(yylval.cpp_string->size() - 1, 1);
-  yylval.cpp_string = strdup(yytext);
   return WORD;
 }

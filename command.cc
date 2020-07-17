@@ -214,7 +214,7 @@ void Command::execute() {
 	strcpy(arg_2, arg2);
 	strcat(arg, "=");
 	strcat(arg, arg_2);
-	if (putenv(arg->c_str())) {
+	if (putenv(arg)) {
 	  perror("setenv");
 	  exit(1);
 	}

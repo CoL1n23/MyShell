@@ -31,7 +31,6 @@ void sigChildHandler (int sig) {
 int main() {
   Shell::prompt();
 
-  /*
   // handle SIGINT
   struct sigaction sa_int;
   sa_int.sa_handler = sigIntHandler;
@@ -57,6 +56,7 @@ int main() {
     exit(-1);
   }
 
+  /*
   char s[20];
   fflush(stdout);
   fgets(s, 20, stdin);

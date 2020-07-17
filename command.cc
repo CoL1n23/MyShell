@@ -21,6 +21,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <string.h>
 
 #include "command.hh"
 #include "shell.hh"
@@ -202,7 +203,7 @@ void Command::execute() {
 	if (!strcmp(_simpleCommands[i]->_arguments[0], "printenv")) {
 	  char** p = environ;
 	  while (*p != NULL) {
-	    print("%s\n", p);
+	    printf("%s\n", p);
 	    p++;
 	  }
 	  exit(0);

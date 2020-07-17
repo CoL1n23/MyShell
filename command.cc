@@ -206,10 +206,10 @@ void Command::execute() {
 
       // setenv implementation
       if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
-	std::string arg1 = _simpleCommands[i]->_arguments[1];
-	std::string arg2 = _simpleCommands[i]->_arguments[2];
-	std::string arg = arg1 + "=" + arg2;
-	if (putenv(arg->c_str())) {
+	std::string* arg1 = _simpleCommands[i]->_arguments[1];
+	std::string* arg2 = _simpleCommands[i]->_arguments[2];
+	std::string arg = &arg1 + "=" + &arg2;
+	if (putenv(arg.c_str())) {
 	  perror("setenv");
 	  exit(1);
 	}

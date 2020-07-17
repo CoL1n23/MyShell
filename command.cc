@@ -117,7 +117,12 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
-   
+  
+    if (!strcmp(_simpleCommands[0]->_arguments[0]->c_str(), "exit")) {
+      printf("Exiting...\n");
+      exit(1);
+    }
+    
     if (_multi_output == true) {
       printf("Ambiguous output redirect.\n");
       exit(1);

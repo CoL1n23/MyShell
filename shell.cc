@@ -42,7 +42,6 @@ int main() {
     perror("sigaction");
     exit(-1);
   }
-
   
   // handle SIGCHILD
   struct sigaction sa_child;
@@ -65,6 +64,7 @@ int main() {
     exit(1);
   }
   */
+
   yyparse();
 }
 

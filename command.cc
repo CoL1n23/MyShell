@@ -200,7 +200,7 @@ void Command::execute() {
       ret = fork();
       if (ret == 0 ) {
         // child process
-	if (!strcmp(_simpleCommands[i]->_arguments[0], "printenv")) {
+	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
 	  char** p = environ;
 	  while (*p != NULL) {
 	    printf("%s\n", *p);

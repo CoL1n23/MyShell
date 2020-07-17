@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "command.hh"
 #include "shell.hh"
@@ -117,7 +118,8 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
-  
+ 
+    // detect "exit" and exit shell
     if (!strcmp(_simpleCommands[0]->_arguments[0]->c_str(), "exit")) {
       printf("Exiting...\n");
       exit(1);
@@ -201,10 +203,22 @@ void Command::execute() {
       close(fdout);
 
       extern char** environ;
+
+      // setenv implementation
+      if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
+	if (putenv("%s=%s", _simpleCommands[i]->_arguments[1]->c_str(), _simpleCommands[i]->_arguments[2]->c_str())) {
+	  perror("setenv");
+	  exit(1);
+	}
+	exit(0);
+      }
+
       // creat child process to execute child process
       ret = fork();
       if (ret == 0 ) {
         // child process
+	
+	// handle built-in function
 	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
 	  char** p = environ;
 	  while (*p != NULL) {

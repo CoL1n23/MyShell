@@ -31,6 +31,7 @@ void sigChildHandler (int sig) {
 int main() {
   Shell::prompt();
 
+  /*
   // handle SIGINT
   struct sigaction sa_int;
   sa_int.sa_handler = sigIntHandler;
@@ -43,7 +44,7 @@ int main() {
     exit(-1);
   }
 
-  /*
+  
   // handle SIGCHILD
   struct sigaction sa_child;
   sa_child.sa_handler = sigChildHandler;
@@ -55,7 +56,6 @@ int main() {
     perror("sigaction");
     exit(-1);
   }
-  */
 
   char s[20];
   fflush(stdout);
@@ -64,7 +64,7 @@ int main() {
     printf("Exiting...\n");
     exit(1);
   }
-
+  */
   yyparse();
 }
 

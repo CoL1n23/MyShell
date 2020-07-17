@@ -207,7 +207,7 @@ void Command::execute() {
       // setenv implementation
       if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
 	const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
-	char* arg[100];
+	char arg[100];
 	strcpy(arg, arg1);
 	strcat(arg, "=");
 	arg->append(_simpleCommands[i]->_arguments[2]);

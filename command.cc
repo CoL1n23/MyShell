@@ -200,7 +200,6 @@ void Command::execute() {
       ret = fork();
       if (ret == 0 ) {
         // child process
-	/*
 	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
 	  char** p = environ;
 	  while (*p != NULL) {
@@ -209,7 +208,6 @@ void Command::execute() {
 	  }
 	  exit(0);
 	}
-	*/
 	
 	// initialize args c_string array to contain args
         const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));

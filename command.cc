@@ -210,7 +210,6 @@ void Command::execute() {
 	char* arg[100];
 	strcpy(arg, arg1);
 	strcat(arg, "=");
-	strcat(arg, _simpleCommands[i]->_arguments[2]->c_str());
 	arg->append(_simpleCommands[i]->_arguments[2]);
 	if (putenv(arg->c_str())) {
 	  perror("setenv");

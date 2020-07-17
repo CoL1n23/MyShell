@@ -43,6 +43,7 @@ int main() {
     exit(-1);
   }
 
+  /*
   // handle SIGCHILD
   struct sigaction sa_child;
   sa_child.sa_handler = sigChildHandler;
@@ -54,6 +55,7 @@ int main() {
     perror("sigaction");
     exit(-1);
   }
+  */
 
   char s[20];
   fflush(stdout);

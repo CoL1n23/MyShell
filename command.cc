@@ -206,7 +206,6 @@ void Command::execute() {
 	    printf("%s\n", *p);
 	    p++;
 	  }
-	  exit(0);
 	}
 	
 	// initialize args c_string array to contain args

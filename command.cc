@@ -206,9 +206,9 @@ void Command::execute() {
 
       // setenv implementation
       if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
-	char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
-	char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
-	if (putenv(f"{arg1}={arg2}")) {
+	const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
+	const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
+	if (putenv(arg1 + "=" + arg2)) {
 	  perror("setenv");
 	  exit(1);
 	}

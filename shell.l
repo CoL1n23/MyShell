@@ -82,7 +82,6 @@ void myunputc(int c) {
   /* string contains slash */
   int size = strlen(yytext);
   int counter = 0;
-  yytext_trimed[size - 1] = '\0';
   int pos[10];
   int index = 0;
   for (int i = 0; i < size; i++) {
@@ -92,6 +91,7 @@ void myunputc(int c) {
     }
   }
   char yytext_trimed[size - index + 1];
+  yytext_trimed[size - index] = '\0';
   int index_2 = 0;
   for (int i = 0; i < size; i++) {
     if (i != pos[index_2]) {

@@ -74,6 +74,6 @@ void myunputc(int c) {
   /* string contains quotes */ 
   yylval.cpp_string = new std::string(yytext);
   yylval.cpp_string->erase(0, 1);
-  yylval.cpp_string->erase(cpp_string->size() - 1, 1);
+  yylval.cpp_string->erase(yylval.cpp_string->size() - 1, 1);
   return WORD;
 }

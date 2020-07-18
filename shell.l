@@ -92,11 +92,10 @@ void myunputc(int c) {
   }
 
   /* remove slash */
-  int index = 0;
   for (int i = 0; i < size; i++) {
     if (i != pos) {
-      yytext_trimed[index] = yytext[i];
-      index++;
+      yytext_trimed[counter] = yytext[i];
+      counter++;
     }
   }
   yylval.cpp_string = new std::string(yytext_trimed);

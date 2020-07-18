@@ -70,8 +70,7 @@ void myunputc(int c) {
   printf("%d\n", size);
   int counter =  0;
   char yytext_trimed[size - 2];
-  yytext_trimed[size - 3] = '\0';
-  for (int i = 1; i < size - 2; i++) {
+  for (int i = 1; i < size - 1; i++) {
     yytext_trimed[counter] = yytext[i];
     counter++;
   }

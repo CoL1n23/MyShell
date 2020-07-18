@@ -64,7 +64,7 @@ void myunputc(int c) {
   return PIPE;
 }
 
-"\"[^ \t\n][^\t\n]\"" {
+\"[^\t\n]*\" {
   /* string contains quotes */
   int size = sizeof(yytext) / sizeof(yytext[0]);
   int counter =  0;

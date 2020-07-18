@@ -81,7 +81,7 @@ void myunputc(int c) {
 [^ \t\n]*\\[^ \t\n]* {
   /* string contains slash */
   int size = strlen(yytext);
-  int counter =  0;
+  int counter = 0;
   char yytext_trimed[size];
   yytext_trimed[size - 1] = '\0';
   int pos = 0;

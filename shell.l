@@ -88,6 +88,7 @@ void myunputc(int c) {
   for (int i = 0; i < size; i++) {
     if (yytext[i] == '\') {
       pos = i;
+      break;
     }
   }
   /* remove slash */

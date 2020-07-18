@@ -872,7 +872,7 @@ YY_RULE_SETUP
   int counter =  0;
   char* yytext_trimed[size - 2];
   for (int i = 1; i < size - 1; i++) {
-    yytext_trimed[counter] = yytext[i];
+    yytext_trimed[counter] = &yytext[i];
     counter++;
   }
   yylval.cpp_string = strdup(yytext_trimed);

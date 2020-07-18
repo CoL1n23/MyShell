@@ -66,13 +66,14 @@ void myunputc(int c) {
 
 "\"[^ \t\n][^\t\n]\"" {
   /* string contains quotes */
-  /*
-  yylval.cpp_string = new std::string(yytext);
-  yylval.cpp_string->erase(0, 1);
-  yylval.cpp_string->erase(yylval.cpp_string->size() - 1, 1);
-  printf("%s\n", yylval.cpp_string->c_str());
-  */
-  yylval.cpp_string = new std::string("what");
+  int size = sizeof(yytext) / sizeof(yytext[0]);
+  int counter =  0;
+  char* yytext_trimed[size - 2];
+  for (int i = 1; i < size - 1; i++) {
+    yytext_trimed[counter] = yytext[i];
+    counter++;
+  }
+  yylval.cpp_string = strdup(yytext_trimed);
   return WORD;
 }
 

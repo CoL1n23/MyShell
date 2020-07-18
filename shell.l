@@ -68,7 +68,7 @@ void myunputc(int c) {
   /* string contains quotes */
   int size = sizeof(yytext) / sizeof(yytext[0]);
   int counter =  0;
-  const char yytext_trimed[size - 2];
+  char yytext_trimed[size - 2];
   for (int i = 1; i < size - 1; i++) {
     yytext_trimed[counter] = yytext[i];
     counter++;

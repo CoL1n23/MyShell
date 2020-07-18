@@ -892,17 +892,22 @@ YY_RULE_SETUP
   int counter = 0;
   char yytext_trimed[size];
   yytext_trimed[size - 1] = '\0';
-  int pos = 0;
+  int pos[10];
+  int index = 0;
   for (int i = 0; i < size; i++) {
     if (yytext[i] == '\\') {
-      pos = i;
-      break;
+      pos[index] = i;
+      index++;
     }
   }
+  int index_2 = 0;
   for (int i = 0; i < size; i++) {
-    if (i != pos) {
+    if (i != pos[index_2]) {
       yytext_trimed[counter] = yytext[i];
       counter++;
+    }
+    else {
+      index_2++;
     }
   }
   yylval.cpp_string = new std::string(yytext_trimed);
@@ -911,7 +916,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 105 "shell.l"
+#line 110 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -920,10 +925,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 110 "shell.l"
+#line 115 "shell.l"
 ECHO;
 	YY_BREAK
-#line 927 "lex.yy.cc"
+#line 932 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1940,4 +1945,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 110 "shell.l"
+#line 115 "shell.l"

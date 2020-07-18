@@ -73,7 +73,7 @@ void myunputc(int c) {
     yytext_trimed[counter] = yytext[i];
     counter++;
   }
-  yylval.cpp_string = strdup(yytext_trimed);
+  yylval.cpp_string = new std::string(yytext_trimed);
   return WORD;
 }
 

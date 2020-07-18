@@ -79,14 +79,23 @@ void myunputc(int c) {
   return WORD;
 }
 
-\\[^ \t\n]* {
+[^ \t\n]*\\[^ \t\n]* {
   /* string contains slash */
-  int size = sizeof(yytext) / sizeof(yytext[0]);
+  int size = strlen(yytext);
   int counter =  0;
-  char yytext_trimed[size - 1];
-  for (int i = 1; i < size; i++) {
-    yytext_trimed[counter] = yytext[i];
-    counter++;
+  char yytext_trimed[size];
+  yytext_trimed[size - 1] = '\0';
+  int pos = 0;
+  for (int i = 0; i < size; i++) {
+    if (yytext[i] == '\') {
+      pos = i;
+    }
+  }
+  if (pos == 0) {
+    for (int i = 1; i < size; i++) {
+      yytext_trimed[counter] = yytext[i];
+      counter++;
+    }
   }
   yylval.cpp_string = new std::string(yytext_trimed);
   return WORD;

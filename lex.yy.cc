@@ -866,7 +866,8 @@ YY_RULE_SETUP
   int size = strlen(yytext);
   printf("%d\n", size);
   int counter =  0;
-  char yytext_trimed[size - 2];
+  char yytext_trimed[size - 1];
+  yytext_trimed[size - 2] = '\0';
   for (int i = 1; i < size - 1; i++) {
     yytext_trimed[counter] = yytext[i];
     counter++;
@@ -877,7 +878,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 81 "shell.l"
+#line 82 "shell.l"
 {
   /* string contains slash */
   int size = sizeof(yytext) / sizeof(yytext[0]);
@@ -893,7 +894,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 95 "shell.l"
+#line 96 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -902,10 +903,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 100 "shell.l"
+#line 101 "shell.l"
 ECHO;
 	YY_BREAK
-#line 909 "lex.yy.cc"
+#line 910 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1922,4 +1923,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 100 "shell.l"
+#line 101 "shell.l"

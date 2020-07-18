@@ -77,6 +77,19 @@ void myunputc(int c) {
   return WORD;
 }
 
+\\[^ \t\n]* {
+  /* string contains slash */
+  int size = sizeof(yytext) / sizeof(yytext[0]);
+  int counter =  0;
+  char yytext_trimed[size - 1];
+  for (int i = 1; i < size; i++) {
+    yytext_trimed[counter] = yytext[i];
+    counter++;
+  }
+  yylval.cpp_string = new std::string(yytext_trimed);
+  return WORD;
+}
+
 
 [^ \t\n][^ \t\n]*  {
   /* Assume that file names have only alpha chars */

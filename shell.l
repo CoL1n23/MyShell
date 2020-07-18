@@ -67,6 +67,7 @@ void myunputc(int c) {
 \"[^\t\n]*\" {
   /* string contains quotes */
   int size = sizeof(yytext) / sizeof(yytext[0]);
+  printf("%d\n", size);
   int counter =  0;
   char yytext_trimed[size - 2];
   yytext_trimed[size - 3] = '\0';

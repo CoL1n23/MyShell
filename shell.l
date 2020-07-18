@@ -81,6 +81,7 @@ void myunputc(int c) {
 [^ \t\n]*\\[^ \t\n]* {
   /* string contains slash */
   int size = strlen(yytext);
+  /*
   int counter = 0;
   char yytext_trimed[size];
   yytext_trimed[size - 1] = '\0';
@@ -99,6 +100,7 @@ void myunputc(int c) {
   }
   yylval.cpp_string = new std::string(yytext_trimed);
   return WORD;
+  */
 }
 
 

@@ -84,17 +84,22 @@ void myunputc(int c) {
   int counter = 0;
   char yytext_trimed[size];
   yytext_trimed[size - 1] = '\0';
-  int pos = 0;
+  int pos[10];
+  int index = 0;
   for (int i = 0; i < size; i++) {
     if (yytext[i] == '\\') {
-      pos = i;
-      break;
+      pos[index] = i;
+      index++;
     }
   }
+  int index_2 = 0;
   for (int i = 0; i < size; i++) {
-    if (i != pos) {
+    if (i != pos[index_2]) {
       yytext_trimed[counter] = yytext[i];
       counter++;
+    }
+    else {
+      index_2++;
     }
   }
   yylval.cpp_string = new std::string(yytext_trimed);

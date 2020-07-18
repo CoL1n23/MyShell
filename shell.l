@@ -69,7 +69,7 @@ void myunputc(int c) {
   int size = sizeof(yytext) / sizeof(yytext[0]);
   int counter =  0;
   char yytext_trimed[size - 2];
-  yytext_trimed[size - 3] = NULL;
+  yytext_trimed[size - 3] = '\0';
   for (int i = 1; i < size - 2; i++) {
     yytext_trimed[counter] = yytext[i];
     counter++;

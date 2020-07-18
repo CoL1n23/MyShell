@@ -91,11 +91,14 @@ void myunputc(int c) {
       pos = i;
     }
   }
-  if (pos == 0) {
-    for (int i = 1; i < size; i++) {
-      yytext_trimed[counter] = yytext[i];
-      counter++;
+
+  /* remove slash */
+  int index = 0;
+  for (int i = 0; i < size; i++) {
+    if (i != pos) {
+      yytext_trimed[index] = yytext[i];
     }
+    index++;
   }
   yylval.cpp_string = new std::string(yytext_trimed);
   return WORD;

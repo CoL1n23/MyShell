@@ -85,13 +85,14 @@ void myunputc(int c) {
   char yytext_trimed[size];
   yytext_trimed[size - 1] = '\0';
   int pos = 0;
-  
-  for (int i = 0; i < size - 1; i++) {
+  /*
+  for (int i = 0; i < size; i++) {
     if (yytext[i] == '\') {
       pos = i;
       break;
     }
   }
+  */
   for (int i = 0; i < size; i++) {
     if (i != pos) {
       yytext_trimed[counter] = yytext[i];

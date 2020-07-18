@@ -64,7 +64,7 @@ void myunputc(int c) {
   return PIPE;
 }
 
-"\"[^ \t\n][^ \t\n]*\"" {
+"\"*\"" {
   /* string contains quotes */
   yylval.cpp_string = new std::string(yytext);
   yylval.cpp_string->erase(0, 1);

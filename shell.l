@@ -97,8 +97,8 @@ void myunputc(int c) {
   for (int i = 0; i < size; i++) {
     if (i != pos) {
       yytext_trimed[index] = yytext[i];
+      index++;
     }
-    index++;
   }
   yylval.cpp_string = new std::string(yytext_trimed);
   return WORD;

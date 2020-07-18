@@ -72,7 +72,7 @@ void myunputc(int c) {
   yylval.cpp_string->erase(yylval.cpp_string->size() - 1, 1);
   printf("%s\n", yylval.cpp_string->c_str());
   */
-  WORD = NULL;
+  yylval.cpp_string = new std::string("what");
   return WORD;
 }
 

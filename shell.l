@@ -88,6 +88,7 @@ void myunputc(int c) {
     if (yytext[i] == '\\') {
       pos[index] = i;
       index++;
+      i++;
     }
   }
   char yytext_trimed[size - index + 1];

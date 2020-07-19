@@ -139,9 +139,9 @@ void Command::unsetenv(int i) {
     const char s[2] = "=";
     name = strtok(*p, s);
     printf("%s\n", name);
-    if (!strcmp(_simpleCommands[i]->_arguments[1]->c_str(), name)) {
+    //if (!strcmp(_simpleCommands[i]->_arguments[1]->c_str(), name)) {
       
-    }
+    //}
     p++;
   }
   exit(0);

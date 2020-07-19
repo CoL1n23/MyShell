@@ -119,7 +119,12 @@ void Command::setenv(int i) {
   strcpy(arg1, _simpleCommands[i]->_arguments[1]->c_str());
   char* arg2 = new char[_simpleCommands[i]->_arguments[2]->length() + 1]; 
   strcpy(arg2, _simpleCommands[i]->_arguments[2]->c_str());
-  fprintf(stderr, "%d\n", (int)strlen(arg1));
+  char* equal = "=\0";
+  char* arg = new char[strlen(arg1) + strlen(arg2) + 2];
+  strcpy(arg, arg1);
+  strcat(arg, equal);
+  strcat(arg, arg2);
+  fprintf(stderr, "%s\n", arg);
   //if (putenv(result.c_str()) {
   //  perror("putenv");
   //  exit(1);

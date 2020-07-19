@@ -150,7 +150,7 @@ void Command::unsetenv(int i) {
 void Command::cd(int i) {
   if (_simpleCommands[i]->_arguments.size() == 1) {
     // change to home directory
-    if (chdir((const char*)getenv("HOME"))) {
+    if (chdir(getenv("HOME"))) {
       perror("chdir");
       exit(-1);
     }

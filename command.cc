@@ -123,9 +123,11 @@ void Command::setenv(int i) {
   strcpy(arg_2, arg2);
   strcat(arg, "=");
   strcat(arg, arg_2);
-  fprintf(stderr, "%s\n", arg);
+  int length = strlen(arg);
+  arg[length] = '\0';
+  // fprintf(stderr, "%s\n", arg);
   if (putenv(arg)) {
-    perror("setenv");
+    perror("putenv");
     exit(1);
   }
 }

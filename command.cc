@@ -128,6 +128,8 @@ void Command::setenv(int i) {
     perror("putenv");
     exit(1);
   }
+  free(arg);
+  free(arg_2);
 }
 
 void Command::execute() {

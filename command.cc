@@ -155,6 +155,12 @@ void Command::cd(int i) {
       exit(-1);
     }
   }
+  else {
+    if (chdir(_simpleCommands[i]->_arguments[1]->c_str())) {
+      perror("chdir");
+      exit(-1);
+    }
+  }
 }
 
 void Command::execute() {

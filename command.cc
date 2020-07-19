@@ -128,7 +128,7 @@ void Command::setenv(int i) {
     perror("setenv");
     exit(1);
   }
-  Shell::prompt();
+  break;
 }
 
 void Command::execute() {

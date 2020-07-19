@@ -134,7 +134,7 @@ void Command::setenv(int i) {
 void Command::unsetenv(int i) {
   extern char** environ;
   char** p = environ;
-  while (p[index] != NULL) {
+  while (*p != NULL) {
     char* name;
     const char s[2] = "=";
     name = strtok(*p, s);

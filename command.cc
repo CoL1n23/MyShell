@@ -186,11 +186,9 @@ void Command::execute() {
     
     if (_multi_output == true) {
       printf("Ambiguous output redirect.\n");
-      exit(1);
     }
     else if (_multi_input == true) {
       printf("Ambiguous input redirect.\n");
-      exit(1);
     }
 
     // save stdin/stdout/stderr

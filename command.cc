@@ -152,10 +152,9 @@ void Command::cd(int i) {
     // change to home directory
     if (!chdir((const char*)getenv("HOME"))) {
       perror("chdir");
-      _exit(-1);
+      exit(-1);
     }
   }
-  _exit(1);
 }
 
 void Command::execute() {
@@ -241,6 +240,11 @@ void Command::execute() {
         break;
       }
 
+      // cd function
+      if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "cd")) {
+        cd(i);
+      }
+
       // setup output
       if (i == _simpleCommands.size() - 1) {
         // last simple command
@@ -277,11 +281,6 @@ void Command::execute() {
 	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
 	  printenv();
 	}
-
-	// cd function
-	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "cd")) {
-          cd(i);
-        }
 	
 	// initialize args c_string array to contain args
         const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));

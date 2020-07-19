@@ -148,7 +148,7 @@ void Command::unsetenv(int i) {
 }
 
 void Command::cd(int i) {
-  if (_simpleCommands[i]->_arguments->size() == 1) {
+  if (_simpleCommands[i]->_arguments.size() == 1) {
     // change to home directory
     if (!chdir(getenv("HOME"))) {
       perror("chdir");

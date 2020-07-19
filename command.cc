@@ -106,7 +106,7 @@ void Command::print() {
 
 void printenv(int i) {
   extern char** environ;
-  if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
+  if (!strcmp(Command::_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
     char** p = environ;
     while (*p != NULL) {
       printf("%s\n", *p);

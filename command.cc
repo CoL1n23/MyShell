@@ -115,7 +115,8 @@ void Command::printenv() {
 }
 
 void Command::setenv(int i) {
-  std::string equal = new std::string("=\0");
+  char equal_c[1] = {'='}; 
+  std::string equal = new std::string(equal_c);
   const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
   const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
   std::string result = *_simpleCommands[i]->_arguments[1] + equal + *_simpleCommands[i]->_arguments[2];

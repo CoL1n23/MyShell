@@ -128,7 +128,6 @@ void Command::setenv(int i) {
     perror("setenv");
     exit(1);
   }
-  break;
 }
 
 void Command::execute() {
@@ -204,6 +203,7 @@ void Command::execute() {
 
       if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
 	setenv(i);
+	break;
       }
 
       // setup output

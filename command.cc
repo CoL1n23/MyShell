@@ -119,11 +119,11 @@ void Command::setenv(int i) {
   const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
   const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
   std::string result = *_simpleCommands[i]->_arguments[1] + equal + *_simpleCommands[i]->_arguments[2];
-  fprintf(stderr, "%s\n", result->c_str());
-  if (putenv(result.c_str()) {
-    perror("putenv");
-    exit(1);
-  }
+  fprintf(stderr, "%s\n", result.c_str());
+  //if (putenv(result.c_str()) {
+  //  perror("putenv");
+  //  exit(1);
+  //}
 }
 
 void Command::execute() {

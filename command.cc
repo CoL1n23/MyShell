@@ -243,6 +243,7 @@ void Command::execute() {
       // cd function
       if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "cd")) {
         cd(i);
+	break;
       }
 
       // setup output

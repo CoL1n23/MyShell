@@ -138,6 +138,7 @@ void myunputc(int c) {
     char result[100];
     read(0, result, 50);
     fprintf(stderr, "child: %s\n", result);
+    
   
     close(pin[0]);
     close(pout[1]);
@@ -160,6 +161,10 @@ void myunputc(int c) {
 
     write(1, sub_command, strlen(sub_command));
     write(1, "exit\n", 5);
+
+    execvp("/proc/self/exe", NULL);
+    perror("execvp subshell");
+    _exit(1);
 
     close(pin[1]);
     close(pout[0]); 

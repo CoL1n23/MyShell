@@ -104,6 +104,17 @@ void Command::print() {
     printf( "\n\n" );
 }
 
+void printenv(int i) {
+  if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
+    char** p = environ;
+    while (*p != NULL) {
+      printf("%s\n", *p);
+      p++;
+    }
+    exit(0);
+  }
+}
+
 void Command::execute() {
     // Don't do anything if there are no simple commands
     if ( _simpleCommands.size() == 0 ) {
@@ -219,6 +230,7 @@ void Command::execute() {
 	  perror("setenv");
 	  exit(1);
 	}
+	exit();
       }
 
       // creat child process to execute child process
@@ -227,14 +239,7 @@ void Command::execute() {
         // child process
 	
 	// handle built-in function
-	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
-	  char** p = environ;
-	  while (*p != NULL) {
-	    printf("%s\n", *p);
-	    p++;
-	  }
-	  exit(0);
-	}
+	printenv(i);
 	
 	// initialize args c_string array to contain args
         const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));
@@ -257,7 +262,7 @@ void Command::execute() {
 	perror("execvp");
         exit(1);
       }
-    }
+    }  // end for
 
     // restore stdin/stdout
     dup2(tmpin, 0);

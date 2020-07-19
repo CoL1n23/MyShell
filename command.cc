@@ -119,7 +119,7 @@ void Command::setenv(int i) {
   strcpy(arg1, _simpleCommands[i]->_arguments[1]->c_str());
   char* arg2 = new char[_simpleCommands[i]->_arguments[2]->length() + 1]; 
   strcpy(arg2, _simpleCommands[i]->_arguments[2]->c_str());
-  char* equal = new char[2];
+  char* equal = new char[2]();
   equal = "=\0";
   char* arg = new char[strlen(arg1) + strlen(arg2) + 2];
   strcpy(arg, arg1);

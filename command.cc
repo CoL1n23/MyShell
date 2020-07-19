@@ -140,12 +140,11 @@ void Command::unsetenv(int i) {
     const char s[2] = "=";
     name = strtok(p[index], s);
     printf("%s\n", name);
-    //if (!strcmp(_simpleCommands[i]->_arguments[1]->c_str(), name)) {
-      
-    //}
+    if (!strcmp(_simpleCommands[i]->_arguments[1]->c_str(), name)) {
+      environ[index] = environ[index + 1];
+    }
     index++;
   }
-  exit(0);
 }
 
 void Command::execute() {

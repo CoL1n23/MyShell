@@ -147,6 +147,17 @@ void Command::unsetenv(int i) {
   }
 }
 
+void Command::cd(int i) {
+  if (_simpleCommands[i]->_arguments->size() == 1) {
+    // change to home directory
+    if (!chdir(getenv("HOME"))) {
+      perror("chdir");
+      _exit(-1);
+    }
+  }
+  _exit(1);
+}
+
 void Command::execute() {
     // Don't do anything if there are no simple commands
     if ( _simpleCommands.size() == 0 ) {
@@ -266,6 +277,11 @@ void Command::execute() {
 	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
 	  printenv();
 	}
+
+	// cd function
+	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "cd")) {
+          cd(i);
+        }
 	
 	// initialize args c_string array to contain args
         const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));
@@ -286,7 +302,7 @@ void Command::execute() {
 
 	// print error if execvp encounters error
 	perror("execvp");
-        exit(1);
+        _exit(1);
       }
     }  // end for
 

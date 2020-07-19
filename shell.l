@@ -10,6 +10,7 @@
 %{
 
 #include <cstring>
+#include <sys/wait.h>
 #include "y.tab.hh"
 
 static void yyunput (int c, char *buf_ptr);

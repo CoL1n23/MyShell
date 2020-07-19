@@ -138,7 +138,7 @@ void Command::unsetenv(int i) {
   while (p[index] != NULL) {
     char* name;
     const char s[2] = "=";
-    name = strtok(*p, s);
+    name = strtok(p[index], s);
     printf("%s\n", name);
     if (!strcmp(_simpleCommands[i]->_arguments[1]->c_str(), name)) {
       

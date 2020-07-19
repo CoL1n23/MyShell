@@ -20,6 +20,7 @@ struct Command {
   
   void printenv();
   void setenv(int i);
+  void unsetenv(int i);
 
   void clear();
   void print();

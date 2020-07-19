@@ -127,8 +127,21 @@ void Command::setenv(int i) {
   // fprintf(stderr, "%s\n", arg);
   if (putenv(arg)) {
     perror("putenv");
-    exit(1);
+    exit(-1);
   }
+}
+
+void Command::unsetenv(int i) {
+  extern char** environ;
+  char** p = environ;
+  while (*p != NULL) {
+    char* name;
+    const char s[2] = "=";
+    name = strtok(p, s);
+    printf("%s\n", name);
+    p++;
+  }
+  exit(0);
 }
 
 void Command::execute() {
@@ -202,9 +215,16 @@ void Command::execute() {
       dup2(fderr, 2);
       close(fderr);
 
+      // setenv function
       if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
 	setenv(i);
 	break;
+      }
+
+      // unsetenv function
+      if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "unsetenv")) {
+        unsetenv(i);
+        break;
       }
 
       // setup output

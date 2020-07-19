@@ -134,12 +134,16 @@ void Command::setenv(int i) {
 void Command::unsetenv(int i) {
   extern char** environ;
   char** p = environ;
-  while (*p != NULL) {
+  int index = 0;
+  while (p[index] != NULL) {
     char* name;
     const char s[2] = "=";
     name = strtok(*p, s);
     printf("%s\n", name);
-    p++;
+    if (!strcmp(_simpleCommands[i]->_arguments[1]->c_str(), name)) {
+      
+    }
+    index++;
   }
   exit(0);
 }

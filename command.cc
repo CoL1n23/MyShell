@@ -125,7 +125,7 @@ void Command::setenv(int i) {
   strcat(arg, arg_2);
   int length = strlen(arg);
   arg[length] = '\0';
-  // fprintf(stderr, "%s\n", arg);
+  fprintf(stderr, "%s\n", arg);
   if (putenv(arg)) {
     perror("putenv");
     exit(1);

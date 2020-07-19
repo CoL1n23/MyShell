@@ -125,10 +125,10 @@ void Command::setenv(int i) {
   strcat(arg, equal);
   strcat(arg, arg2);
   fprintf(stderr, "%s\n", arg);
-  //if (putenv(result.c_str()) {
-  //  perror("putenv");
-  //  exit(1);
-  //}
+  if (putenv(arg)) {
+    perror("putenv");
+    exit(1);
+  }
 }
 
 void Command::execute() {

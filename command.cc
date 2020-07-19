@@ -115,12 +115,11 @@ void Command::printenv() {
 }
 
 void Command::setenv(int i) {
-  char equal_c[1] = {'='}; 
-  std::string equal = new std::string(equal_c);
-  const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
-  const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
-  std::string result = *_simpleCommands[i]->_arguments[1] + equal + *_simpleCommands[i]->_arguments[2];
-  fprintf(stderr, "%s\n", result.c_str());
+  char arg1[_simpleCommands[i]->_arguments[1]->length() + 1];
+  strcpy(arg1, _simpleCommands[i]->_arguments[1]->c_str());
+  char arg2[_simpleCommands[i]->_arguments[2]->length() + 1]; 
+  strcpy(arg2, _simpleCommands[i]->_arguments[2]->c_str());
+  fprintf(stderr, "%s\n", arg1);
   //if (putenv(result.c_str()) {
   //  perror("putenv");
   //  exit(1);
@@ -235,7 +234,7 @@ void Command::execute() {
       if (ret == 0 ) {
         // child process
 	
-	// handle built-in function
+	// printenv function
 	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
 	  printenv();
 	}

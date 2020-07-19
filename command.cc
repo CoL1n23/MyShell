@@ -137,7 +137,7 @@ void Command::unsetenv(int i) {
   while (*p != NULL) {
     char* name;
     const char s[2] = "=";
-    name = strtok(p, s);
+    name = strtok(*p, s);
     printf("%s\n", name);
     p++;
   }

@@ -230,7 +230,6 @@ void Command::execute() {
 	  perror("setenv");
 	  exit(1);
 	}
-	exit();
       }
 
       // creat child process to execute child process

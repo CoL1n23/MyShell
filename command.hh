@@ -19,6 +19,8 @@ struct Command {
   void insertSimpleCommand( SimpleCommand * simpleCommand );
   
   void printenv(int i);
+  void setenv(int i);
+
   void clear();
   void print();
   void execute();

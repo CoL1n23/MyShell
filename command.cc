@@ -106,14 +106,30 @@ void Command::print() {
 
 void Command::printenv(int i) {
   extern char** environ;
-  if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
-    char** p = environ;
-    while (*p != NULL) {
-      printf("%s\n", *p);
-      p++;
-    }
-    exit(0);
+  char** p = environ;
+  while (*p != NULL) {
+    printf("%s\n", *p);
+    p++;
   }
+  exit(0);
+}
+
+void Command::setenv(int i) {
+  const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
+  const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
+  char arg[100];
+  char arg_2[100];
+  strcpy(arg, arg1);
+  strcpy(arg_2, arg2);
+  strcat(arg, "=");
+  strcat(arg, arg_2);
+  fprintf(stderr, "%s\n", arg);
+  if (putenv(arg)) {
+    perror("setenv");
+    exit(1);
+  }
+  Shell::prompt();
+  exit(0);
 }
 
 void Command::execute() {
@@ -187,6 +203,10 @@ void Command::execute() {
       dup2(fderr, 2);
       close(fderr);
 
+      if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
+	setenv(i);
+      }
+
       // setup output
       if (i == _simpleCommands.size() - 1) {
         // last simple command
@@ -214,31 +234,15 @@ void Command::execute() {
       dup2(fdout, 1);
       close(fdout);
 
-
-      // setenv implementation
-      if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "setenv")) {
-	const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
-	const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
-	char arg[100];
-	char arg_2[100];
-	strcpy(arg, arg1);
-	strcpy(arg_2, arg2);
-	strcat(arg, "=");
-	strcat(arg, arg_2);
-	fprintf(stderr, "%s\n", arg);
-	if (putenv(arg)) {
-	  perror("setenv");
-	  exit(1);
-	}
-      }
-
       // creat child process to execute child process
       ret = fork();
       if (ret == 0 ) {
         // child process
 	
 	// handle built-in function
-	printenv(i);
+	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
+	  printenv(i);
+	}
 	
 	// initialize args c_string array to contain args
         const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));

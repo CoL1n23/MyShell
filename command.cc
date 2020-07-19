@@ -119,7 +119,7 @@ void Command::setenv(int i) {
   const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
   char arg[100];
   strcpy(arg, arg1);
-  strcat(arg, "=\0");
+  strcat(arg, "=");
   strcat(arg, arg2);
   fprintf(stderr, "%s\n", arg);
   if (putenv(arg)) {

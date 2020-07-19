@@ -121,9 +121,9 @@ void Command::setenv(int i) {
   char* arg_2 = strdup(arg2);
   strcpy(arg, arg1);
   strcpy(arg_2, arg2);
-  strcat(arg, "=");
+  strcat(arg, "=\0");
   strcat(arg, arg_2);
-  // fprintf(stderr, "%s\n", arg);
+  fprintf(stderr, "%s\n", arg);
   if (putenv(arg)) {
     perror("putenv");
     exit(1);

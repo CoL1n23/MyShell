@@ -1018,7 +1018,7 @@ YY_RULE_SETUP
     close(pout[0]); 
   }
   else {
-    perror("fork");
+    perror("fork subshell");
     exit(1);
   }
 

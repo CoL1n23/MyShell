@@ -977,7 +977,7 @@ YY_RULE_SETUP
   int tmperr = dup(2); 
  
   int ret = fork();
-  if (ret) {
+  if (ret == 0) {
     // child process
     dup2(pin[0], 0);
     dup2(pout[1], 1);

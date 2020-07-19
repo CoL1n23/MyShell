@@ -152,7 +152,7 @@ void myunputc(int c) {
     char* sub_command = new char[strlen(yytext) - 2];
     sub_command[strlen(sub_command) - 1] = '\0';
     int index = 0;
-    for (int i = 2; i < strlen(yytext) - 2; i++) {
+    for (int i = 2; i < strlen(yytext) - 1; i++) {
       sub_command[index] = yytext[i];
       index++;
     }

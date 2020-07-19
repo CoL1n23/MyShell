@@ -973,6 +973,7 @@ YY_RULE_SETUP
 #line 118 "shell.l"
 {
   /* subshell */
+  printf("heads up going to subshell\n");
   int pin[2], pout[2];
   pipe(pin);
   pipe(pout);
@@ -1034,10 +1035,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 179 "shell.l"
+#line 180 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1041 "lex.yy.cc"
+#line 1042 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2054,4 +2055,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 179 "shell.l"
+#line 180 "shell.l"

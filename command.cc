@@ -117,10 +117,9 @@ void Command::printenv() {
 void Command::setenv(int i) {
   const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
   const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
-  char* arg = (char *) malloc((strlen(arg1) + strlen(arg2) + 1) * sizeof(char));
-  char* arg_2 = strdup(arg2);
+  char* arg[100];
+  char* arg_2 = strcpy(arg2);
   strcpy(arg, arg1);
-  strcpy(arg_2, arg2);
   strcat(arg, "=\0");
   strcat(arg, arg_2);
   fprintf(stderr, "%s\n", arg);
@@ -128,8 +127,6 @@ void Command::setenv(int i) {
     perror("putenv");
     exit(1);
   }
-  free(arg);
-  free(arg_2);
 }
 
 void Command::execute() {

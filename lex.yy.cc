@@ -986,7 +986,7 @@ YY_RULE_SETUP
     
     char result[100];
     read(0, result, 50);
-    fprintf(stderr, "%s\n", result);
+    fprintf(stderr, "child: %s\n", result);
   
     close(pin[0]);
     close(pout[1]);
@@ -999,13 +999,13 @@ YY_RULE_SETUP
     close(pout[1]);
 
     char* sub_command = new char[strlen(yytext) - 2];
-    sub_command[strlen(sub_command) - 1] = '\0';
+    sub_command[strlen(sub_command) - 1] = '\n';
+    
     int index = 0;
     for (int i = 2; i < strlen(yytext) - 1; i++) {
       sub_command[index] = yytext[i];
       index++;
     }
-    printf("%s\n", sub_command);
     write(1, sub_command, strlen(sub_command));
 
     close(pin[1]);
@@ -1022,16 +1022,14 @@ YY_RULE_SETUP
   close(tmpin);
   close(tmpout);
   close(tmperr);
-
-  waitpid(ret, NULL, 0);
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 180 "shell.l"
+#line 178 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1035 "lex.yy.cc"
+#line 1033 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2048,4 +2046,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 180 "shell.l"
+#line 178 "shell.l"

@@ -157,7 +157,9 @@ void myunputc(int c) {
       sub_command[index] = yytext[i];
       index++;
     }
+
     write(1, sub_command, strlen(sub_command));
+    write(1, "exit\n", 5);
 
     close(pin[1]);
     close(pout[0]); 

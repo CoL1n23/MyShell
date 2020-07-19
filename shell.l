@@ -113,3 +113,65 @@ void myunputc(int c) {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
 }
+
+\$\([^\t\n]*\) {
+  /* subshell */
+  int pin[2], pout[2];
+  pipe(pin);
+  pipe(pout);
+
+  // save stdin/stdout/stderr
+  int tmpin = dup(0);
+  int tmpout = dup(1);
+  int tmperr = dup(2); 
+ 
+  int ret = fork();
+  if (ret) {
+    // child process
+    dup2(pin[0], 0);
+    dup2(pout[1], 1);
+    close(pin[1]);
+    close(pout[0]);
+    
+    char result[100];
+    read(0, result, 50);
+    fprintf(stderr, "%s\n", result);
+  
+    close(pin[0]);
+    close(pout[1]);
+  }
+  else if (ret > 0) {
+    // parent process
+    dup2(pout[0], 0);
+    dup2(pin[1], 1);
+    close(pin[0]);
+    close(pout[1]);
+
+    char* sub_command = new char[strlen(yytext) - 2];
+    sub_command[strlen(sub_command) - 1] = '\0';
+    int index = 0;
+    for (int i = 2; i < strlen(yytext) - 2; i++) {
+      sub_command[index] = yytext[i];
+      index++;
+    }
+    
+    write(1, sub_command, strlen(sub_command));
+
+    close(pin[1]);
+    close(pout[0]); 
+  }
+  else {
+    perror("fork");
+    exit(1);
+  }
+
+  dup2(tmpin, 0);
+  dup2(tmpout, 1);
+  dup2(tmperr, 2);
+  close(tmpin);
+  close(tmpout);
+  close(tmperr);
+
+  waitpid(ret, NULL, 0);
+}
+

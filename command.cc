@@ -120,7 +120,7 @@ void Command::setenv(int i) {
   char arg[100];
   strcpy(arg, arg1);
   strcat(arg, "=\0");
-  strcat(arg, arg_2);
+  strcat(arg, arg2);
   fprintf(stderr, "%s\n", arg);
   if (putenv(arg)) {
     perror("putenv");

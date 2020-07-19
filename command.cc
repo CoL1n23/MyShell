@@ -104,7 +104,7 @@ void Command::print() {
     printf( "\n\n" );
 }
 
-void Command::printenv(int i) {
+void Command::printenv() {
   extern char** environ;
   char** p = environ;
   while (*p != NULL) {
@@ -241,7 +241,7 @@ void Command::execute() {
 	
 	// handle built-in function
 	if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
-	  printenv(i);
+	  printenv();
 	}
 	
 	// initialize args c_string array to contain args

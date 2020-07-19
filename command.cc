@@ -238,7 +238,7 @@ void Command::execute() {
         // child process
 	
 	// handle built-in function
-	Command::printenv(i);
+	printenv(i);
 	
 	// initialize args c_string array to contain args
         const char** args = (const char **) malloc((_simpleCommands[i]->_arguments.size() + 1) * sizeof(const char *));

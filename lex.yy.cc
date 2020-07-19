@@ -1005,7 +1005,7 @@ YY_RULE_SETUP
       sub_command[index] = yytext[i];
       index++;
     }
-    
+    printf("%s\n", sub_command);
     write(1, sub_command, strlen(sub_command));
 
     close(pin[1]);

@@ -115,14 +115,12 @@ void Command::printenv() {
 }
 
 void Command::setenv(int i) {
+  std::string equal = new std::string("=");
   const char* arg1 = _simpleCommands[i]->_arguments[1]->c_str();
   const char* arg2 = _simpleCommands[i]->_arguments[2]->c_str();
-  char arg[100];
-  strcpy(arg, arg1);
-  strcat(arg, "=");
-  strcat(arg, arg2);
-  fprintf(stderr, "%s\n", arg);
-  if (putenv(arg)) {
+  std::string result = *_simpleCommands[i]->_arguments[1] + equal + *_simpleCommands[i]->_arguments[2];
+  fprintf(stderr, "%s\n", result->c_str());
+  if (putenv(result.c_str()) {
     perror("putenv");
     exit(1);
   }

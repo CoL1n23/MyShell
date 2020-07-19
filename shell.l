@@ -162,7 +162,7 @@ void myunputc(int c) {
     close(pout[0]); 
   }
   else {
-    perror("fork");
+    perror("fork subshell");
     exit(1);
   }
 

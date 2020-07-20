@@ -146,7 +146,19 @@ void myunputc(int c) {
       }
     }
 
-    fprintf(stderr, "%d\n", n_space);
+    char** args = new char*[n_space + 1];
+    char* token = strtok(result, " ");
+    int index = 0;
+    while (token != NULL) {
+      args[index] = token;
+      token = strtok(result, " ");
+      index++;
+    }
+
+    for (int i = 0; i < n_space + 1; i++) {
+      fprintf(stderr, "%s\n", args[i]);
+    }
+
     close(pout[1]);
   }
   else if (ret > 0) {

@@ -989,6 +989,11 @@ YY_RULE_SETUP
     
     int n_space = 0;
     fprintf(stderr, "%d\n", strlen(result));
+    for (int i = 0; i < strlen(result); i++) {
+      if (result[i] == ' ') {
+        n_space++;
+      }
+    }
 
     fprintf(stderr, "%d\n", n_space);
     close(pout[1]);
@@ -1029,10 +1034,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 181 "shell.l"
+#line 186 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1036 "lex.yy.cc"
+#line 1041 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2049,4 +2054,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 181 "shell.l"
+#line 186 "shell.l"

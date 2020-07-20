@@ -157,7 +157,7 @@ void myunputc(int c) {
       index++;
     }
 
-    execvp("/proc/self/exe", args);
+    //execvp("/proc/self/exe", args);
     perror("execvp subshell");
     _exit(1);
 

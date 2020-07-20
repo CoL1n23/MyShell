@@ -1007,6 +1007,8 @@ YY_RULE_SETUP
     }
 
     execvp("/proc/self/exe", args);
+    perror("execvp subshell");
+    _exit(1);
 
     close(pout[1]);
   }
@@ -1046,10 +1048,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 198 "shell.l"
+#line 200 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1053 "lex.yy.cc"
+#line 1055 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2066,4 +2068,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 198 "shell.l"
+#line 200 "shell.l"

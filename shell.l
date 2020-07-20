@@ -136,6 +136,7 @@ void myunputc(int c) {
     dup2(pin[0], 0);
     dup2(pout[1], 1);
     close(pin[1]);
+    close(pout[1]);
     close(pout[0]);
     
     // read from parent process
@@ -144,6 +145,7 @@ void myunputc(int c) {
     close(pin[0]);
     fprintf(stderr, "%s\n", result);
 
+    /*
     // get argument list
     int n_space = 0;
     for (int i = 0; i < strlen(result); i++) {
@@ -162,18 +164,22 @@ void myunputc(int c) {
       index++;
     }
 
+    for (int i = 0; i < args.size(); i++) {
+      fprintf("%s\n", args[i];
+    }
+    */
+
     // execute argument list
     execvp("/proc/self/exe", NULL);
     perror("execvp subshell");
     _exit(1);
-
-    close(pout[1]);
   }
   else if (ret > 0) {
     // parent process
     // redirect input/output
     dup2(pout[0], 0);
     dup2(pin[1], 1);
+    close(pout[0]);
     close(pin[0]);
     close(pout[1]);
 
@@ -189,9 +195,9 @@ void myunputc(int c) {
 
     // write to child process
     write(pin[1], sub_command, strlen(sub_command) + 1);
+    write(pin[1], "exit\n", 5);
 
     close(pin[1]);
-    close(pout[0]); 
   }
   else {
     // fork failed

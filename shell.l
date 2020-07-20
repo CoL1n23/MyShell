@@ -160,6 +160,7 @@ void myunputc(int c) {
       index++;
     }
 
+    printf("parent: %s", sub_command);
     write(1, sub_command, strlen(sub_command) + 1);
     write(1, "exit\n", 6);
 

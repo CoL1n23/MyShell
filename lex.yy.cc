@@ -984,9 +984,11 @@ YY_RULE_SETUP
     close(pin[1]);
     close(pout[0]);
     
-    char result[100];
-    read(0, result, 50);
-    fprintf(stderr, "child: %s\n", result);
+    char result1[100];
+    char result2[100];
+    read(0, result1, 50);
+    read(0, result2, 50);
+    fprintf(stderr, "child: %s %s\n", result1, result2);
     
     close(pin[0]);
     close(pout[1]);
@@ -1028,10 +1030,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 180 "shell.l"
+#line 182 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1035 "lex.yy.cc"
+#line 1037 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2048,4 +2050,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 180 "shell.l"
+#line 182 "shell.l"

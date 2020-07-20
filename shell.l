@@ -140,7 +140,7 @@ void myunputc(int c) {
     std::string arg(result1);
     fprintf(stderr, "%d\n", arg.size());
     arg = arg.substr(0, arg.size() - 1);
-    fprintf(stderr, "%d\n", arg.size());
+    fprintf(stderr, "%s %d\n", arg.c_str(), arg.size());
  
     close(pin[0]);
     close(pout[1]);

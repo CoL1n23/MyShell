@@ -966,7 +966,6 @@ YY_RULE_SETUP
 #line 118 "shell.l"
 {
   /* subshell */
-  printf("heads up going to subshell\n");
   int pin[2], pout[2];
   pipe(pin);
   pipe(pout);
@@ -986,6 +985,7 @@ YY_RULE_SETUP
     
     char result[100];
     read(0, result, 50);
+    close(pin[0]);
     
     int n_space = 0;
     int index = 0;
@@ -996,7 +996,6 @@ YY_RULE_SETUP
     }
     
     fprintf(stderr, "%d\n", n_space);
-    close(pin[0]);
     close(pout[1]);
   }
   else if (ret > 0) {
@@ -1015,7 +1014,6 @@ YY_RULE_SETUP
       index++;
     }
 
-    printf("parent: %s", sub_command);
     write(1, sub_command, strlen(sub_command) + 1);
 
     close(pin[1]);
@@ -1036,10 +1034,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 188 "shell.l"
+#line 186 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1043 "lex.yy.cc"
+#line 1041 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2056,4 +2054,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 188 "shell.l"
+#line 186 "shell.l"

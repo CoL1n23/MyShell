@@ -158,9 +158,8 @@ void myunputc(int c) {
       index++;
     }
 
-    write(1, sub_command, strlen(sub_command));
-    fflush(pin[1]);
-    write(1, "exit\n", 5);
+    write(1, sub_command, strlen(sub_command) + 1);
+    write(1, "exit\n", 6);
 
     close(pin[1]);
     close(pout[0]); 

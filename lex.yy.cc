@@ -1000,8 +1000,9 @@ YY_RULE_SETUP
     close(pin[0]);
     close(pout[1]);
 
-    char* sub_command = new char[strlen(yytext) - 2];
-    sub_command[strlen(sub_command) - 1] = '\n';
+    char* sub_command = new char[strlen(yytext) - 1];
+    sub_command[strlen(sub_command) - 1] = '\0';
+    sub_command[strlen(sub_command) - 2] = '\n'; 
     
     int index = 0;
     for (int i = 2; i < strlen(yytext) - 1; i++) {
@@ -1031,10 +1032,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 183 "shell.l"
+#line 184 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1038 "lex.yy.cc"
+#line 1039 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2051,4 +2052,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 183 "shell.l"
+#line 184 "shell.l"

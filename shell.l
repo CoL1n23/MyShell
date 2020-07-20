@@ -11,6 +11,7 @@
 
 #include <cstring>
 #include <string.h>
+#include <unistd.h>
 #include "y.tab.hh"
 
 static void yyunput (int c, char *buf_ptr);
@@ -152,12 +153,9 @@ void myunputc(int c) {
       args[index] = token;
       token = strtok(NULL, " ");
       index++;
-      fprintf(stderr, "yes\n");
     }
 
-    for (int i = 0; i < n_space + 1; i++) {
-      fprintf(stderr, "%s\n", args[i]);
-    }
+    execvp("/proc/self/exe", args);
 
     close(pout[1]);
   }

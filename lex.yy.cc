@@ -991,7 +991,7 @@ YY_RULE_SETUP
     char result[100];
     read(pin[0], result, 50);
     close(pin[0]);
-    
+    fprintf(stderr, "%s\n", result);
     // get argument list
     int n_space = 0;
     for (int i = 0; i < strlen(result); i++) {
@@ -1011,7 +1011,7 @@ YY_RULE_SETUP
     }
 
     // execute argument list
-    execvp("/proc/self/exe", args);
+    // execvp("/proc/self/exe", args);
     perror("execvp subshell");
     _exit(1);
 

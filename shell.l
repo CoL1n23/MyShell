@@ -143,6 +143,7 @@ void myunputc(int c) {
     read(pin[0], result, 50);
     close(pin[0]);
     fprintf(stderr, "%s\n", result);
+
     // get argument list
     int n_space = 0;
     for (int i = 0; i < strlen(result); i++) {
@@ -162,7 +163,7 @@ void myunputc(int c) {
     }
 
     // execute argument list
-    // execvp("/proc/self/exe", args);
+    execvp("/proc/self/exe", (char* const*)args);
     perror("execvp subshell");
     _exit(1);
 

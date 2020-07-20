@@ -135,9 +135,11 @@ void myunputc(int c) {
     close(pin[1]);
     close(pout[0]);
     
-    char result[100];
-    read(0, result, 50);
-    fprintf(stderr, "child: %s\n", result);
+    char result1[100];
+    char result2[100];
+    read(0, result1, 50);
+    read(0, result2, 50);
+    fprintf(stderr, "child: %s %s\n", result1, result2);
     
     close(pin[0]);
     close(pout[1]);

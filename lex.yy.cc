@@ -1007,9 +1007,8 @@ YY_RULE_SETUP
       index++;
     }
 
-    write(1, sub_command, strlen(sub_command));
-    fflush(pin[1]);
-    write(1, "exit\n", 5);
+    write(1, sub_command, strlen(sub_command) + 1);
+    write(1, "exit\n", 6);
 
     close(pin[1]);
     close(pout[0]); 
@@ -1029,10 +1028,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 181 "shell.l"
+#line 180 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1036 "lex.yy.cc"
+#line 1035 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2049,4 +2048,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 181 "shell.l"
+#line 180 "shell.l"

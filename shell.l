@@ -140,6 +140,11 @@ void myunputc(int c) {
     
     int n_space = 0;
     fprintf(stderr, "%d\n", strlen(result));
+    for (int i = 0; i < strlen(result); i++) {
+      if (result[i] == ' ') {
+        n_space++;
+      }
+    }
 
     fprintf(stderr, "%d\n", n_space);
     close(pout[1]);

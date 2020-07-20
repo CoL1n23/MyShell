@@ -151,8 +151,9 @@ void myunputc(int c) {
     close(pin[0]);
     close(pout[1]);
 
-    char* sub_command = new char[strlen(yytext) - 2];
-    sub_command[strlen(sub_command) - 1] = '\n';
+    char* sub_command = new char[strlen(yytext) - 1];
+    sub_command[strlen(sub_command) - 1] = '\0';
+    sub_command[strlen(sub_command) - 2] = '\n'; 
     
     int index = 0;
     for (int i = 2; i < strlen(yytext) - 1; i++) {

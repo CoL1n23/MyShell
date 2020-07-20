@@ -967,7 +967,6 @@ YY_RULE_SETUP
 #line 119 "shell.l"
 {
   /* subshell */
-  printf("enter\n");
   // create two pipes
   int pin[2], pout[2];
   pipe(pin);
@@ -984,15 +983,15 @@ YY_RULE_SETUP
     // redirect input/output
     dup2(pin[0], 0);
     dup2(pout[1], 1);
-    close(pin[1]);
     close(pout[1]);
-    close(pout[0]);
+    close(pin[1]);  // close writing end of pin
+    close(pout[0]);  // close reading end of pout
     
     // read from parent process
     char result[100];
     read(pin[0], result, 100);
     close(pin[0]);
-    fprintf(stderr, "%s\n", result);
+    fprintf(stderr, "%s %d\n", result, strlen(result));
 
     /*
     // get argument list
@@ -1029,8 +1028,8 @@ YY_RULE_SETUP
     dup2(pout[0], 0);
     dup2(pin[1], 1);
     close(pout[0]);
-    close(pin[0]);
-    close(pout[1]);
+    close(pin[0]);  // close reading end of pin
+    close(pout[1]);  // close writing end of pout
 
     // get content in $(...)
     char* sub_command = new char[strlen(yytext) - 2];
@@ -1064,10 +1063,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 216 "shell.l"
+#line 215 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1071 "lex.yy.cc"
+#line 1070 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2084,4 +2083,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 216 "shell.l"
+#line 215 "shell.l"

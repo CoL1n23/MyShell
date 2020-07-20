@@ -142,6 +142,7 @@ void myunputc(int c) {
     char result[100];
     read(pin[0], result, 100);
     close(pin[0]);
+    result[strlen(result)] = '\0';
     fprintf(stderr, "%s %d\n", result, strlen(result));
 
     /*

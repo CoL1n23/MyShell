@@ -995,7 +995,19 @@ YY_RULE_SETUP
       }
     }
 
-    fprintf(stderr, "%d\n", n_space);
+    char** args = new char*[n_space + 1];
+    char* token = strtok(result, " ");
+    int index = 0;
+    while (token != NULL) {
+      args[index] = token;
+      token = strtok(result, " ");
+      index++;
+    }
+
+    for (int i = 0; i < n_space + 1; i++) {
+      fprintf(stderr, "%s\n", args[i]);
+    }
+
     close(pout[1]);
   }
   else if (ret > 0) {
@@ -1034,10 +1046,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 186 "shell.l"
+#line 198 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1041 "lex.yy.cc"
+#line 1053 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2054,4 +2066,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 186 "shell.l"
+#line 198 "shell.l"

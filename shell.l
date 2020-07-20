@@ -150,7 +150,7 @@ void myunputc(int c) {
     int index = 0;
     while (token != NULL) {
       args[index] = token;
-      token = strtok(result, " ");
+      token = strtok(NULL, " ");
       index++;
       fprintf(stderr, "yes\n");
     }

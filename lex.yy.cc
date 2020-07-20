@@ -535,7 +535,7 @@ char *yytext_ptr;
 #line 11 "shell.l"
 
 #include <cstring>
-#include <sys/wait.h>
+#include <string.h>
 #include "y.tab.hh"
 
 static void yyunput (int c, char *buf_ptr);
@@ -988,7 +988,6 @@ YY_RULE_SETUP
     close(pin[0]);
     
     int n_space = 0;
-    fprintf(stderr, "%d\n", strlen(result));
     for (int i = 0; i < strlen(result); i++) {
       if (result[i] == ' ') {
         n_space++;
@@ -1002,6 +1001,7 @@ YY_RULE_SETUP
       args[index] = token;
       token = strtok(result, " ");
       index++;
+      fprintf(stderr, "yes\n");
     }
 
     for (int i = 0; i < n_space + 1; i++) {

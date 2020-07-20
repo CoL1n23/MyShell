@@ -139,13 +139,8 @@ void myunputc(int c) {
     close(pin[0]);
     
     int n_space = 0;
-    int index = 0;
-    while (result[index] != '\0') {
-      if (result[index] == ' ') {
-        n_space++;
-      }
-    }
-    
+    fprintf(stderr, "%d\n", strlen(result));
+
     fprintf(stderr, "%d\n", n_space);
     close(pout[1]);
   }

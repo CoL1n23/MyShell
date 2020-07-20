@@ -119,6 +119,7 @@ void myunputc(int c) {
 \$\([^\t\n]*\) {
   /* subshell */
   printf("enter\n");
+  // create two pipes
   int pin[2], pout[2];
   pipe(pin);
   pipe(pout);
@@ -131,15 +132,18 @@ void myunputc(int c) {
   int ret = fork();
   if (ret == 0) {
     // child process
+    // redirect input/output
     dup2(pin[0], 0);
     dup2(pout[1], 1);
     close(pin[1]);
     close(pout[0]);
     
+    // read from parent process
     char result[100];
-    read(0, result, 50);
+    read(pin[0], result, 50);
     close(pin[0]);
     
+    // get argument list
     int n_space = 0;
     for (int i = 0; i < strlen(result); i++) {
       if (result[i] == ' ') {
@@ -157,7 +161,8 @@ void myunputc(int c) {
       index++;
     }
 
-    //execvp("/proc/self/exe", args);
+    // execute argument list
+    execvp("/proc/self/exe", args);
     perror("execvp subshell");
     _exit(1);
 
@@ -165,11 +170,13 @@ void myunputc(int c) {
   }
   else if (ret > 0) {
     // parent process
+    // redirect input/output
     dup2(pout[0], 0);
     dup2(pin[1], 1);
     close(pin[0]);
     close(pout[1]);
 
+    // get content in $(...)
     char* sub_command = new char[strlen(yytext) - 2];
     sub_command[strlen(sub_command) - 1] = '\n'; 
     
@@ -179,12 +186,14 @@ void myunputc(int c) {
       index++;
     }
 
-    write(1, sub_command, strlen(sub_command) + 1);
+    // write to child process
+    write(pin[1], sub_command, strlen(sub_command) + 1);
 
     close(pin[1]);
     close(pout[0]); 
   }
   else {
+    // fork failed
     perror("fork subshell");
     exit(1);
   }

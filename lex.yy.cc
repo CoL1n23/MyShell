@@ -988,7 +988,9 @@ YY_RULE_SETUP
     read(0, result1, 50);
     fprintf(stderr, "child: %s\n", result1);
     fprintf(stderr, "%d\n", strlen(result1));
-    
+    std::string arg = new std::string(result1);
+    fprintf(stderr, "%d\n", arg.size());
+ 
     close(pin[0]);
     close(pout[1]);
   }
@@ -1029,10 +1031,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 181 "shell.l"
+#line 183 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1036 "lex.yy.cc"
+#line 1038 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2049,4 +2051,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 181 "shell.l"
+#line 183 "shell.l"

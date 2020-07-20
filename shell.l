@@ -147,7 +147,8 @@ void myunputc(int c) {
       }
     }
 
-    char** args = new char*[n_space + 1];
+    char** args = new char*[n_space + 2];
+    args[n_space + 1] = NULL;
     char* token = strtok(result, " ");
     int index = 0;
     while (token != NULL) {

@@ -118,6 +118,7 @@ void myunputc(int c) {
 
 \$\([^\t\n]*\) {
   /* subshell */
+  printf("enter\n");
   int pin[2], pout[2];
   pipe(pin);
   pipe(pout);

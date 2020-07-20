@@ -138,7 +138,7 @@ void myunputc(int c) {
     char result1[100];
     read(0, result1, 50);
     fprintf(stderr, "child: %s\n", result1);
-    printf("%d\n", strlen(result));
+    printf("%d\n", strlen(result1));
     
     close(pin[0]);
     close(pout[1]);

@@ -135,13 +135,18 @@ void myunputc(int c) {
     close(pin[1]);
     close(pout[0]);
     
-    char result1[100];
-    read(0, result1, 50);
-    std::string arg(result1);
-    fprintf(stderr, "%d\n", arg.size());
-    arg = arg.substr(0, arg.size() - 1);
-    fprintf(stderr, "%s %d\n", arg.c_str(), arg.size());
- 
+    char result[100];
+    read(0, result, 50);
+    
+    int n_space = 0;
+    int index = 0;
+    while (result[index] != NULL) {
+      if (result[index] == ' ') {
+        n_space++;
+      }
+    }
+    
+    fprintf(stderr, "%d\n", n_space);
     close(pin[0]);
     close(pout[1]);
   }

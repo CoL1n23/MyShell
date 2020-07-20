@@ -140,7 +140,7 @@ void myunputc(int c) {
     
     // read from parent process
     char result[100];
-    read(pin[0], result, 50);
+    read(pin[0], result, 100);
     close(pin[0]);
     fprintf(stderr, "%s\n", result);
 
@@ -163,7 +163,7 @@ void myunputc(int c) {
     }
 
     // execute argument list
-    execvp("/proc/self/exe", (char* const*)args);
+    execvp("/proc/self/exe", NULL);
     perror("execvp subshell");
     _exit(1);
 

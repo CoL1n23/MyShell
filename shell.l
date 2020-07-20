@@ -158,6 +158,8 @@ void myunputc(int c) {
     }
 
     execvp("/proc/self/exe", args);
+    perror("execvp subshell");
+    _exit(1);
 
     close(pout[1]);
   }

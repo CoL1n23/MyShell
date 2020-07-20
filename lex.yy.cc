@@ -989,7 +989,7 @@ YY_RULE_SETUP
     
     int n_space = 0;
     int index = 0;
-    while (result[index] != NULL) {
+    while (result[index] != '\n') {
       if (result[index] == ' ') {
         n_space++;
       }

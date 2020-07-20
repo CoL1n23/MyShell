@@ -117,7 +117,6 @@ void myunputc(int c) {
 
 \$\([^\t\n]*\) {
   /* subshell */
-  printf("heads up going to subshell\n");
   int pin[2], pout[2];
   pipe(pin);
   pipe(pout);
@@ -137,6 +136,7 @@ void myunputc(int c) {
     
     char result[100];
     read(0, result, 50);
+    close(pin[0]);
     
     int n_space = 0;
     int index = 0;
@@ -147,7 +147,6 @@ void myunputc(int c) {
     }
     
     fprintf(stderr, "%d\n", n_space);
-    close(pin[0]);
     close(pout[1]);
   }
   else if (ret > 0) {
@@ -166,7 +165,6 @@ void myunputc(int c) {
       index++;
     }
 
-    printf("parent: %s", sub_command);
     write(1, sub_command, strlen(sub_command) + 1);
 
     close(pin[1]);

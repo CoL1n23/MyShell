@@ -139,12 +139,12 @@ void myunputc(int c) {
     close(pout[0]);  // close reading end of pout
     
     // read from parent process
-    char result[6];
-    read(pin[0], result, 6);
+    char result[100];
+    read(pin[0], result, 100);
     close(pin[0]);
     
     // print out what is read from pipe
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 100; i++) {
       fprintf(stderr, "%c", result[i]);
     }
     fprintf(stderr, "\n");
@@ -201,7 +201,19 @@ void myunputc(int c) {
 
     // write to child process
     write(pin[1], sub_command, strlen(sub_command) + 1);
-    // write(pin[1], "exit\n", 6);
+    write(pin[1], "exit\n", 6);
+
+    char* result_char;
+    char* result = new char[100];
+    int index = 0;
+    while (read(0, result_char, 1)) {
+      result[index++] = *result_char;
+    }
+    result[index] = '\0';
+
+    for (int i = strlen(result) - 1; i >= 0; i--) {
+      myunputc(result[i]);
+    }
 
     close(pin[1]);
   }

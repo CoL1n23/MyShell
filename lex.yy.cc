@@ -991,7 +991,6 @@ YY_RULE_SETUP
   int ret = fork();
   if (ret == 0) {
     // child process
-    // const char** args = (const char **) malloc(2 * sizeof(const char *));
     const char** args = new const char*[2];
     args[1] = "proc/self/exe";
     args[2]  = NULL;
@@ -1037,7 +1036,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 191 "shell.l"
+#line 190 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1046,10 +1045,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 196 "shell.l"
+#line 195 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1053 "lex.yy.cc"
+#line 1052 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2066,4 +2065,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 196 "shell.l"
+#line 195 "shell.l"

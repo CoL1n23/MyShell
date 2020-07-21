@@ -288,7 +288,7 @@ void Command::execute() {
 	}
 	
 	// initialize args c_string array to contain args
-	const char** args = new const char*[(_simpleCommands[i]->_arguments.size() + 1];
+	const char** args = new const char*[_simpleCommands[i]->_arguments.size() + 1];
 	
 	// append NULL at end
 	args[_simpleCommands[i]->_arguments.size()] = NULL;

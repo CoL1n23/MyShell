@@ -142,6 +142,8 @@ void myunputc(int c) {
     char result[100];
     read(pin[0], result, 100);
     close(pin[0]);
+    
+    // print out what is read from pipe
     for (int i = 0; i < 100; i++) {
       fprintf(stderr, "%c", result[i]);
     }
@@ -199,7 +201,7 @@ void myunputc(int c) {
 
     // write to child process
     write(pin[1], sub_command, strlen(sub_command));
-    // write(pin[1], "exit\n", 5);
+    write(pin[1], "exit\n", 5);
 
     close(pin[1]);
   }

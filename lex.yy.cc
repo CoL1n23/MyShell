@@ -1049,7 +1049,7 @@ YY_RULE_SETUP
     }
 
     // write to child process
-    write(pin[1], sub_command, strlen(sub_command));
+    write(pin[1], sub_command, strlen(sub_command) + 1);
     write(pin[1], "exit\n", 5);
 
     close(pin[1]);

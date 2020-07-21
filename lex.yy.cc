@@ -1042,7 +1042,7 @@ YY_RULE_SETUP
 
     // get content in $(...)
     char* sub_command = new char[strlen(yytext) - 2];
-    sub_command[strlen(sub_command) - 1] = '\n'; 
+    sub_command[strlen(sub_command) - 1] = '\0'; 
     
     int index = 0;
     for (int i = 2; i < strlen(yytext) - 1; i++) {
@@ -1052,6 +1052,7 @@ YY_RULE_SETUP
 
     // write to child process
     write(1, sub_command, strlen(sub_command) + 1);
+    write(1, "\n", 1);
     write(1, "exit\n", 6);
 
     waitpid(ret, NULL, 0);
@@ -1087,10 +1088,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 239 "shell.l"
+#line 240 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1094 "lex.yy.cc"
+#line 1095 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2107,4 +2108,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 239 "shell.l"
+#line 240 "shell.l"

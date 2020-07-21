@@ -203,6 +203,8 @@ void myunputc(int c) {
     write(1, sub_command, strlen(sub_command) + 1);
     write(1, "exit\n", 6);
 
+    wait(NULL);
+
     char* sub_result_char;
     char* sub_result = new char[100];
     int counter = 0;

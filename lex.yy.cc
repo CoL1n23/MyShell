@@ -989,8 +989,8 @@ YY_RULE_SETUP
     
     // read from parent process
     char result[100];
-    read(pin[0], result, 100);
-    close(pin[0]);
+    read(0, result, 100);
+    close(0);
     
     // print out what is read from pipe
     for (int i = 0; i < 100; i++) {
@@ -1049,19 +1049,20 @@ YY_RULE_SETUP
     }
 
     // write to child process
-    write(pin[1], sub_command, strlen(sub_command) + 1);
-    write(pin[1], "exit\n", 6);
+    write(1, sub_command, strlen(sub_command) + 1);
+    write(1, "exit\n", 6);
 
-    char* result_char;
-    char* result = new char[100];
+    char* sub_result_char;
+    char* sub_result = new char[100];
     int counter = 0;
-    while (read(0, result_char, 1)) {
-      result[counter++] = *result_char;
+    while (read(0, sub_result_char, 1)) {
+      sub_result[counter++] = *sub_result_char;
     }
-    result[counter] = '\0';
+    sub_result[counter] = '\0';
+    fprintf(stderr, "%s\n", sub_result);
 
-    for (int i = strlen(result) - 1; i >= 0; i--) {
-      myunputc(result[i]);
+    for (int i = strlen(sub_result) - 1; i >= 0; i--) {
+      myunputc(sub_result[i]);
     }
 
     close(pin[1]);
@@ -1082,10 +1083,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 234 "shell.l"
+#line 235 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1089 "lex.yy.cc"
+#line 1090 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2102,4 +2103,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 234 "shell.l"
+#line 235 "shell.l"

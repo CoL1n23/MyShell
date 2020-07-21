@@ -1035,6 +1035,7 @@ YY_RULE_SETUP
     // redirect input/output
     dup2(pout[0], 0);
     dup2(pin[1], 1);
+    close(pin[1], 1);
     close(pout[0]);
     close(pin[0]);   // close reading end of pin
     close(pout[1]);  // close writing end of pout
@@ -1068,7 +1069,7 @@ YY_RULE_SETUP
       myunputc(sub_result[i]);
     }
 
-    close(pin[1]);
+    // close(pin[1]);
   }
   else {
     // fork failed
@@ -1086,10 +1087,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 238 "shell.l"
+#line 239 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1093 "lex.yy.cc"
+#line 1094 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2106,4 +2107,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 238 "shell.l"
+#line 239 "shell.l"

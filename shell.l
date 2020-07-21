@@ -180,7 +180,7 @@ void myunputc(int c) {
   sub_result[counter] = '\0';
   close(pout[0]);
 
-  for (int i = strlen(sub_result) - 2; i >= 0; i--) {
+  for (int i = strlen(sub_result) - 1; i >= 2; i--) {
     myunputc(sub_result[i]);
   }
 }

@@ -991,6 +991,8 @@ YY_RULE_SETUP
     char result[100];
     read(pin[0], result, 100);
     close(pin[0]);
+    
+    // print out what is read from pipe
     for (int i = 0; i < 100; i++) {
       fprintf(stderr, "%c", result[i]);
     }
@@ -1048,7 +1050,7 @@ YY_RULE_SETUP
 
     // write to child process
     write(pin[1], sub_command, strlen(sub_command));
-    // write(pin[1], "exit\n", 5);
+    write(pin[1], "exit\n", 5);
 
     close(pin[1]);
   }
@@ -1068,10 +1070,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 220 "shell.l"
+#line 222 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1075 "lex.yy.cc"
+#line 1077 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2088,4 +2090,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 220 "shell.l"
+#line 222 "shell.l"

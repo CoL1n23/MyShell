@@ -1040,48 +1040,45 @@ YY_RULE_SETUP
     perror("execvp subshell");
     _exit(1);
   }
-  else if (ret > 0) {
-    // parent process
-    // redirect input/output
-    dup2(tmpin, 0);
-    dup2(tmpout, 1);
-    dup2(tmperr, 2);
-    close(tmpin);
-    close(tmpout);
-    close(tmperr);
-
-    waitpid(ret, NULL, 0);
-
-    fprintf(stderr, "back here\n");
-    char* sub_result_char;
-    char* sub_result = new char[1000];
-    int counter = 0;
-    while (read(pout[0], sub_result_char, 1)) {
-      if (*sub_result_char == '\n' || *sub_result_char == '\t') {
-        sub_result[counter++] = ' ';
-      }
-      else {
-        sub_result[counter++] = *sub_result_char;
-      }
-    }
-    close(pout[0]);
-    sub_result[counter] = '\0';
-    fprintf(stderr, "%s\n", sub_result);
-
-    for (int i = strlen(sub_result) - 1; i >= 0; i--) {
-      myunputc(sub_result[i]);
-    }
-  }
-  else {
+  else if (ret < 0) {
     // fork failed
     perror("fork subshell");
     exit(1);
+  }
+
+  // parent process
+  // redirect input/output
+  dup2(tmpin, 0);
+  dup2(tmpout, 1);
+  dup2(tmperr, 2);
+  close(tmpin);
+  close(tmpout);
+  close(tmperr);
+
+  fprintf(stderr, "back here\n");
+  char* sub_result_char;
+  char* sub_result = new char[1000];
+  int counter = 0;
+  while (read(pout[0], sub_result_char, 1)) {
+    if (*sub_result_char == '\n' || *sub_result_char == '\t') {
+      sub_result[counter++] = ' ';
+    }
+    else {
+      sub_result[counter++] = *sub_result_char;
+    }
+  }
+  close(pout[0]);
+  sub_result[counter] = '\0';
+  fprintf(stderr, "%s\n", sub_result);
+
+  for (int i = strlen(sub_result) - 1; i >= 0; i--) {
+    myunputc(sub_result[i]);
   }
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 235 "shell.l"
+#line 232 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1090,10 +1087,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 240 "shell.l"
+#line 237 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1097 "lex.yy.cc"
+#line 1094 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2110,4 +2107,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 240 "shell.l"
+#line 237 "shell.l"

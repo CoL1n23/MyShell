@@ -146,44 +146,6 @@ void myunputc(int c) {
   int ret = fork();
   if (ret == 0) {
     // child process
-    // redirect input/output
-   
-    /* 
-    // read from parent process
-    char result[100];
-    read(0, result, 100);
-    result[strlen(result)] = '\0';
-    
-    // print out what is read from pipe
-    for (int i = 0; i < 100; i++) {
-      fprintf(stderr, "%c", result[i]);
-    }
-    fprintf(stderr, "\n");
-    */
-    /*
-    // get argument list
-    int n_space = 0;
-    for (int i = 0; i < strlen(result); i++) {
-      if (result[i] == ' ') {
-        n_space++;
-      }
-    }
-
-    char** args = new char*[n_space + 2];
-    args[n_space + 1] = NULL;
-    char* token = strtok(result, " ");
-    int index = 0;
-    while (token != NULL) {
-      args[index] = token;
-      token = strtok(NULL, " ");
-      index++;
-    }
-
-    for (int i = 0; i < args.size(); i++) {
-      fprintf("%s\n", args[i];
-    }
-    */
-
     const char** args = (const char **) malloc(2 * sizeof(const char *));
     args[1] = "proc/self/exe";
     args[2]  = NULL;
@@ -198,7 +160,6 @@ void myunputc(int c) {
     perror("fork subshell");
     exit(1);
   }
-
   // parent process
   // redirect input/output
   dup2(tmpin, 0);
@@ -208,7 +169,6 @@ void myunputc(int c) {
   close(tmpout);
   close(tmperr);
 
-  fprintf(stderr, "back here\n");
   char* sub_result_char;
   char* sub_result = new char[1000];
   int counter = 0;
@@ -221,7 +181,7 @@ void myunputc(int c) {
     }
   }
   close(pout[0]);
-  sub_result[counter] = '\0';
+  sub_result[strlen(sub_result)] = '\0';
   fprintf(stderr, "%s\n", sub_result);
 
   for (int i = strlen(sub_result) - 1; i >= 0; i--) {

@@ -984,8 +984,8 @@ YY_RULE_SETUP
     // redirect input/output
     dup2(pin[0], 0);
     dup2(pout[1], 1);
-    // close(pin[0]);
-    close(pout[1]);
+    //close(pin[0]);
+    //close(pout[1]);
     close(pin[1]);   // close writing end of pin
     close(pout[0]);  // close reading end of pout
     

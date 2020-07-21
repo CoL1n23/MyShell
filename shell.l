@@ -173,7 +173,7 @@ void myunputc(int c) {
     */
 
     // execute argument list
-    execvp("/proc/self/exe", NULL);
+    execvp("/proc/self/exe", result);
     perror("execvp subshell");
     _exit(1);
   }

@@ -201,7 +201,7 @@ void myunputc(int c) {
 
     // write to child process
     write(pin[1], sub_command, strlen(sub_command) + 1);
-    write(pin[1], "exit\n", 6);
+    // write(pin[1], "exit\n", 6);
 
     close(pin[1]);
   }

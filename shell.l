@@ -155,6 +155,7 @@ void myunputc(int c) {
   }
   else if (ret > 0) {
     // parent process
+    // restore stdin/stdout/stderr
     dup2(tmpin, 0);
     dup2(tmpout, 1);
     dup2(tmperr, 2);
@@ -162,6 +163,7 @@ void myunputc(int c) {
     close(tmpout);
     close(tmperr);
 
+    // read input from child process
     char* sub_result_char;
     char* sub_result = new char[1000];
     int counter = 0;
@@ -176,6 +178,7 @@ void myunputc(int c) {
     sub_result[counter] = '\0';
     close(pout[0]);
 
+    // write result to command line
     for (int i = strlen(sub_result) - 1; i >= 0; i--) {
       myunputc(sub_result[i]);
     }

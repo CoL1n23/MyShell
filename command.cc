@@ -157,7 +157,7 @@ void Command::cd(int i) {
   }
   else {
     if (chdir(_simpleCommands[i]->_arguments[1]->c_str())) {
-      printf("cd: can't cd to %s\n", _simpleCommands[i]->_arguments[1]->c_str());
+      fprintf(2, "cd: can't cd to %s\n", _simpleCommands[i]->_arguments[1]->c_str());
     }
   }
 }

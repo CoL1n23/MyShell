@@ -1022,7 +1022,7 @@ YY_RULE_SETUP
     */
 
     // execute argument list
-    execvp("/proc/self/exe", result);
+    execvp("/proc/self/exe", (char* const*)result);
     perror("execvp subshell");
     _exit(1);
   }

@@ -120,8 +120,8 @@ void myunputc(int c) {
   /* subshell */
   // create two pipes
   int pin[2], pout[2];
-  pipe(pin);
-  pipe(pout);
+  pipe(pin);   // pin: parent writes command, child reads and executes
+  pipe(pout);  // pout: child sends output, parents reads and prints
 
   // save stdin/stdout/stderr
   int tmpin = dup(0);
@@ -135,7 +135,7 @@ void myunputc(int c) {
     dup2(pin[0], 0);
     dup2(pout[1], 1);
     close(pout[1]);
-    close(pin[1]);  // close writing end of pin
+    close(pin[1]);   // close writing end of pin
     close(pout[0]);  // close reading end of pout
     
     // read from parent process
@@ -173,7 +173,7 @@ void myunputc(int c) {
     */
 
     // execute argument list
-    execvp("/proc/self/exe", (char* const*)result);
+    execvp("/proc/self/exe", NULL);
     perror("execvp subshell");
     _exit(1);
   }
@@ -183,7 +183,7 @@ void myunputc(int c) {
     dup2(pout[0], 0);
     dup2(pin[1], 1);
     close(pout[0]);
-    close(pin[0]);  // close reading end of pin
+    close(pin[0]);   // close reading end of pin
     close(pout[1]);  // close writing end of pout
 
     // get content in $(...)

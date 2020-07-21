@@ -992,7 +992,6 @@ YY_RULE_SETUP
     // read from parent process
     char result[100];
     read(0, result, 100);
-    close(0);
     
     // print out what is read from pipe
     for (int i = 0; i < 100; i++) {
@@ -1088,10 +1087,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 240 "shell.l"
+#line 239 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1095 "lex.yy.cc"
+#line 1094 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2108,4 +2107,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 240 "shell.l"
+#line 239 "shell.l"

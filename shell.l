@@ -144,7 +144,6 @@ void myunputc(int c) {
   int ret = fork();
   if (ret == 0) {
     // child process
-    // const char** args = (const char **) malloc(2 * sizeof(const char *));
     const char** args = new const char*[2];
     args[1] = "proc/self/exe";
     args[2]  = NULL;

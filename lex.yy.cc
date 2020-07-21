@@ -991,7 +991,8 @@ YY_RULE_SETUP
   int ret = fork();
   if (ret == 0) {
     // child process
-    const char** args = (const char **) malloc(2 * sizeof(const char *));
+    // const char** args = (const char **) malloc(2 * sizeof(const char *));
+    const char** args = new const char*[2];
     args[1] = "proc/self/exe";
     args[2]  = NULL;
 
@@ -1000,42 +1001,43 @@ YY_RULE_SETUP
     perror("execvp subshell");
     _exit(1);
   }
-  else if (ret < 0) {
+  else if (ret > 0) {
+    // parent process
+    dup2(tmpin, 0);
+    dup2(tmpout, 1);
+    dup2(tmperr, 2);
+    close(tmpin);
+    close(tmpout);
+    close(tmperr);
+
+    char* sub_result_char;
+    char* sub_result = new char[1000];
+    int counter = 0;
+    while (read(pout[0], sub_result_char, 1)) {
+      if (*sub_result_char == '\n' || *sub_result_char == '\t') {
+        sub_result[counter++] = ' ';
+      }
+      else {
+        sub_result[counter++] = *sub_result_char;
+      }
+    }
+    sub_result[counter] = '\0';
+    close(pout[0]);
+
+    for (int i = strlen(sub_result) - 1; i >= 0; i--) {
+      myunputc(sub_result[i]);
+    }
+  }
+  else {
     // fork failed
     perror("fork subshell");
     exit(1);
-  } else {
-
-  dup2(tmpin, 0);
-  dup2(tmpout, 1);
-  dup2(tmperr, 2);
-  close(tmpin);
-  close(tmpout);
-  close(tmperr);
-
-  char* sub_result_char;
-  char* sub_result = new char[1000];
-  int counter = 0;
-  while (read(pout[0], sub_result_char, 1)) {
-    if (*sub_result_char == '\n' || *sub_result_char == '\t') {
-      sub_result[counter++] = ' ';
-    }
-    else {
-      sub_result[counter++] = *sub_result_char;
-    }
-  }
-  sub_result[counter] = '\0';
-  close(pout[0]);
-
-  for (int i = strlen(sub_result) - 1; i >= 0; i--) {
-    myunputc(sub_result[i]);
-  }
-}
+  } 
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 189 "shell.l"
+#line 191 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1044,10 +1046,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 194 "shell.l"
+#line 196 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1051 "lex.yy.cc"
+#line 1053 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2064,4 +2066,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 194 "shell.l"
+#line 196 "shell.l"

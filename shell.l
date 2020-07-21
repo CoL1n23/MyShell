@@ -150,7 +150,6 @@ void myunputc(int c) {
     }
     fprintf(stderr, "\n");
     result[strlen(result)] = '\0';
-    fprintf(stderr, "%s %d\n", result, strlen(result));
 
     /*
     // get argument list

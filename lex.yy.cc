@@ -975,7 +975,7 @@ YY_RULE_SETUP
 
   write(pin[1], sub_command, strlen(sub_command) + 1);
   write(pin[1], "\n", 1);
-  write(pin[1], "exit\n", 6);
+  // write(pin[1], "exit\n", 6);
   close(pin[1]);
 
   // save stdin/stdout/stderr
@@ -1005,8 +1005,7 @@ YY_RULE_SETUP
     perror("fork subshell");
     exit(1);
   }
-  // parent process
-  // redirect input/output
+
   dup2(tmpin, 0);
   dup2(tmpout, 1);
   dup2(tmperr, 2);
@@ -1025,8 +1024,8 @@ YY_RULE_SETUP
       sub_result[counter++] = *sub_result_char;
     }
   }
-  close(pout[0]);
   sub_result[counter] = '\0';
+  close(pout[0]);
 
   for (int i = strlen(sub_result) - 1; i >= 0; i--) {
     myunputc(sub_result[i]);
@@ -1035,7 +1034,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 189 "shell.l"
+#line 188 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1044,10 +1043,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 194 "shell.l"
+#line 193 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1051 "lex.yy.cc"
+#line 1050 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2064,4 +2063,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 194 "shell.l"
+#line 193 "shell.l"

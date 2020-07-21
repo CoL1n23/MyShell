@@ -157,7 +157,7 @@ void myunputc(int c) {
     // fork failed
     perror("fork subshell");
     exit(1);
-  }
+  } else {
 
   dup2(tmpin, 0);
   dup2(tmpout, 1);
@@ -183,6 +183,7 @@ void myunputc(int c) {
   for (int i = strlen(sub_result) - 1; i >= 0; i--) {
     myunputc(sub_result[i]);
   }
+}
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

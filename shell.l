@@ -143,13 +143,13 @@ void myunputc(int c) {
     // read from parent process
     char result[100];
     read(0, result, 100);
+    result[strlen(result)] = '\0';
     
     // print out what is read from pipe
     for (int i = 0; i < 100; i++) {
       fprintf(stderr, "%c", result[i]);
     }
     fprintf(stderr, "\n");
-    result[strlen(result)] = '\0';
 
     /*
     // get argument list

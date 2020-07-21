@@ -128,7 +128,7 @@ void myunputc(int c) {
 
   write(pin[1], sub_command, strlen(sub_command) + 1);
   write(pin[1], "\n", 1);
-  write(pin[1], "exit\n", 6);
+  // write(pin[1], "exit\n", 6);
   close(pin[1]);
 
   // save stdin/stdout/stderr
@@ -158,8 +158,7 @@ void myunputc(int c) {
     perror("fork subshell");
     exit(1);
   }
-  // parent process
-  // redirect input/output
+
   dup2(tmpin, 0);
   dup2(tmpout, 1);
   dup2(tmperr, 2);
@@ -178,8 +177,8 @@ void myunputc(int c) {
       sub_result[counter++] = *sub_result_char;
     }
   }
-  close(pout[0]);
   sub_result[counter] = '\0';
+  close(pout[0]);
 
   for (int i = strlen(sub_result) - 1; i >= 0; i--) {
     myunputc(sub_result[i]);

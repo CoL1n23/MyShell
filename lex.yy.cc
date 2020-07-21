@@ -959,8 +959,6 @@ YY_RULE_SETUP
 #line 113 "shell.l"
 {
   /* subshell */
-  fprintf(stderr, "%s\n", yytext);
-
   // create two pipes
   int pin[2], pout[2];
   pipe(pin);   // pin: parent writes command, child reads and executes
@@ -1029,7 +1027,6 @@ YY_RULE_SETUP
   }
   close(pout[0]);
   sub_result[counter] = '\0';
-  fprintf(stderr, "%s\n", sub_result);
 
   for (int i = strlen(sub_result) - 1; i >= 0; i--) {
     myunputc(sub_result[i]);
@@ -1038,7 +1035,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 192 "shell.l"
+#line 189 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1047,10 +1044,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 197 "shell.l"
+#line 194 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1054 "lex.yy.cc"
+#line 1051 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2067,4 +2064,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 197 "shell.l"
+#line 194 "shell.l"

@@ -205,11 +205,11 @@ void myunputc(int c) {
 
     char* result_char;
     char* result = new char[100];
-    int index = 0;
+    int counter = 0;
     while (read(0, result_char, 1)) {
-      result[index++] = *result_char;
+      result[counter++] = *result_char;
     }
-    result[index] = '\0';
+    result[counter] = '\0';
 
     for (int i = strlen(result) - 1; i >= 0; i--) {
       myunputc(result[i]);

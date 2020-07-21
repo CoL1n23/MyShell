@@ -119,6 +119,7 @@ void myunputc(int c) {
 
 \$\([^\t\n]*\) {
   /* subshell */
+  fprintf(stderr, "%s\n", yytext);
   // create two pipes
   int pin[2], pout[2];
   pipe(pin);   // pin: parent writes command, child reads and executes

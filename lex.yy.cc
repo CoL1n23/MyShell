@@ -1069,8 +1069,6 @@ YY_RULE_SETUP
     for (int i = strlen(sub_result) - 1; i >= 0; i--) {
       myunputc(sub_result[i]);
     }
-
-    close(pin[1]);
   }
   else {
     // fork failed
@@ -1088,10 +1086,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 240 "shell.l"
+#line 238 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1095 "lex.yy.cc"
+#line 1093 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2108,4 +2106,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 240 "shell.l"
+#line 238 "shell.l"

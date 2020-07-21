@@ -12,6 +12,7 @@
 #include <cstring>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "y.tab.hh"
 
 static void yyunput (int c, char *buf_ptr);

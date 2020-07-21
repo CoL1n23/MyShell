@@ -1052,7 +1052,7 @@ YY_RULE_SETUP
     write(1, sub_command, strlen(sub_command) + 1);
     write(1, "exit\n", 6);
 
-    wait(NULL);
+    waitpid(ret, NULL, 0);
 
     char* sub_result_char;
     char* sub_result = new char[100];

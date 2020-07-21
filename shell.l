@@ -207,7 +207,7 @@ void myunputc(int c) {
     write(1, "exit\n", 6);
 
     waitpid(ret, NULL, 0);
-
+    fprintf(stderr, "back here\n");
     char* sub_result_char;
     char* sub_result = new char[100];
     int counter = 0;

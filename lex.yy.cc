@@ -984,6 +984,7 @@ YY_RULE_SETUP
     // redirect input/output
     dup2(pin[0], 0);
     dup2(pout[1], 1);
+    close(pin[0]);
     close(pout[1]);
     close(pin[1]);   // close writing end of pin
     close(pout[0]);  // close reading end of pout
@@ -1087,10 +1088,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 239 "shell.l"
+#line 240 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1094 "lex.yy.cc"
+#line 1095 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2107,4 +2108,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 239 "shell.l"
+#line 240 "shell.l"

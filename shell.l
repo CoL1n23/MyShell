@@ -139,12 +139,12 @@ void myunputc(int c) {
     close(pout[0]);  // close reading end of pout
     
     // read from parent process
-    char result[100];
-    read(pin[0], result, 100);
+    char result[6];
+    read(pin[0], result, 6);
     close(pin[0]);
     
     // print out what is read from pipe
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 6; i++) {
       fprintf(stderr, "%c", result[i]);
     }
     fprintf(stderr, "\n");

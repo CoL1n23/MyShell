@@ -193,7 +193,7 @@ void myunputc(int c) {
 
     // get content in $(...)
     char* sub_command = new char[strlen(yytext) - 2];
-    sub_command[strlen(sub_command) - 1] = '\n'; 
+    sub_command[strlen(sub_command) - 1] = '\0'; 
     
     int index = 0;
     for (int i = 2; i < strlen(yytext) - 1; i++) {
@@ -203,6 +203,7 @@ void myunputc(int c) {
 
     // write to child process
     write(1, sub_command, strlen(sub_command) + 1);
+    write(1, "\n", 1);
     write(1, "exit\n", 6);
 
     waitpid(ret, NULL, 0);

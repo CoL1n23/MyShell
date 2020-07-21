@@ -991,6 +991,7 @@ YY_RULE_SETUP
     char result[100];
     read(pin[0], result, 100);
     close(pin[0]);
+    result[strlen(result)] = '\0';
     fprintf(stderr, "%s %d\n", result, strlen(result));
 
     /*
@@ -1063,10 +1064,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 215 "shell.l"
+#line 216 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1070 "lex.yy.cc"
+#line 1071 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2083,4 +2084,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 215 "shell.l"
+#line 216 "shell.l"

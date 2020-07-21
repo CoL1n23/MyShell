@@ -968,6 +968,7 @@ YY_RULE_SETUP
 #line 120 "shell.l"
 {
   /* subshell */
+  fprintf(stderr, "%s\n", yytext);
   // create two pipes
   int pin[2], pout[2];
   pipe(pin);   // pin: parent writes command, child reads and executes
@@ -1086,10 +1087,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 238 "shell.l"
+#line 239 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1093 "lex.yy.cc"
+#line 1094 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2106,4 +2107,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 238 "shell.l"
+#line 239 "shell.l"

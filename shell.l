@@ -110,37 +110,45 @@ void myunputc(int c) {
   return WORD;
 }
 
-
-[^ \t\n|&<>$][^ \t\n|&<>]* {
-  /* Assume that file names have only alpha chars */
-  yylval.cpp_string = new std::string(yytext);
-  return WORD;
-}
-
 \$\([^\t\n]*\) {
   /* subshell */
   fprintf(stderr, "%s\n", yytext);
+
   // create two pipes
   int pin[2], pout[2];
   pipe(pin);   // pin: parent writes command, child reads and executes
   pipe(pout);  // pout: child sends output, parents reads and prints
 
+  char* sub_command = new char[strlen(yytext) - 2];
+  sub_command[strlen(sub_command) - 1] = '\0';
+
+  int index = 0;
+  for (int i = 2; i < strlen(yytext) - 1; i++) {
+    sub_command[index] = yytext[i];
+    index++;
+  }
+
+  write(pin[1], sub_command, strlen(sub_command) + 1);
+  write(pin[1], "\n", 1);
+  write(pin[1], "exit\n", 6);
+  close(pin[1]);
+
   // save stdin/stdout/stderr
   int tmpin = dup(0);
   int tmpout = dup(1);
   int tmperr = dup(2); 
- 
+
+  dup2(pin[0], 0);
+  dup2(pout[1], 1);
+  close(pin[0]);
+  close(pout[1]);
+
   int ret = fork();
   if (ret == 0) {
     // child process
     // redirect input/output
-    dup2(pin[0], 0);
-    dup2(pout[1], 1);
-    close(pin[0]);
-    close(pout[1]);
-    close(pin[1]);   // close writing end of pin
-    close(pout[0]);  // close reading end of pout
-    
+   
+    /* 
     // read from parent process
     char result[100];
     read(0, result, 100);
@@ -151,7 +159,7 @@ void myunputc(int c) {
       fprintf(stderr, "%c", result[i]);
     }
     fprintf(stderr, "\n");
-
+    */
     /*
     // get argument list
     int n_space = 0;
@@ -176,45 +184,40 @@ void myunputc(int c) {
     }
     */
 
+    const char** args = (const char **) malloc(2 * sizeof(const char *));
+    args[1] = "proc/self/exe";
+    args[2]  = NULL;
+
     // execute argument list
-    execvp("/proc/self/exe", NULL);
+    execvp("/proc/self/exe", (char* const*) args);
     perror("execvp subshell");
     _exit(1);
   }
   else if (ret > 0) {
     // parent process
     // redirect input/output
-    dup2(pout[0], 0);
-    dup2(pin[1], 1);
-    close(pin[1]);
-    close(pout[0]);
-    close(pin[0]);   // close reading end of pin
-    close(pout[1]);  // close writing end of pout
-
-    // get content in $(...)
-    char* sub_command = new char[strlen(yytext) - 2];
-    sub_command[strlen(sub_command) - 1] = '\0'; 
-    
-    int index = 0;
-    for (int i = 2; i < strlen(yytext) - 1; i++) {
-      sub_command[index] = yytext[i];
-      index++;
-    }
-
-    // write to child process
-    write(1, sub_command, strlen(sub_command) + 1);
-    write(1, "\n", 1);
-    write(1, "exit\n", 6);
+    dup2(tmpin, 0);
+    dup2(tmpout, 1);
+    dup2(tmperr, 2);
+    close(tmpin);
+    close(tmpout);
+    close(tmperr);
 
     waitpid(ret, NULL, 0);
 
     fprintf(stderr, "back here\n");
     char* sub_result_char;
-    char* sub_result = new char[100];
+    char* sub_result = new char[1000];
     int counter = 0;
-    while (read(0, sub_result_char, 1)) {
-      sub_result[counter++] = *sub_result_char;
+    while (read(pout[0], sub_result_char, 1)) {
+      if (*sub_result_char == '\n' || *sub_result_char == '\t') {
+        sub_result[counter++] = ' ';
+      }
+      else {
+        sub_result[counter++] = *sub_result_char;
+      }
     }
+    close(pout[0]);
     sub_result[counter] = '\0';
     fprintf(stderr, "%s\n", sub_result);
 
@@ -227,12 +230,10 @@ void myunputc(int c) {
     perror("fork subshell");
     exit(1);
   }
-
-  dup2(tmpin, 0);
-  dup2(tmpout, 1);
-  dup2(tmperr, 2);
-  close(tmpin);
-  close(tmpout);
-  close(tmperr);
 }
 
+[^ \t\n|&<>$][^ \t\n|&<>]* {
+  /* Assume that file names have only alpha chars */
+  yylval.cpp_string = new std::string(yytext);
+  return WORD;
+}

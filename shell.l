@@ -144,7 +144,8 @@ void myunputc(int c) {
   int ret = fork();
   if (ret == 0) {
     // child process
-    const char** args = (const char **) malloc(2 * sizeof(const char *));
+    // const char** args = (const char **) malloc(2 * sizeof(const char *));
+    const char** args = new const char*[2];
     args[1] = "proc/self/exe";
     args[2]  = NULL;
 
@@ -153,37 +154,38 @@ void myunputc(int c) {
     perror("execvp subshell");
     _exit(1);
   }
-  else if (ret < 0) {
+  else if (ret > 0) {
+    // parent process
+    dup2(tmpin, 0);
+    dup2(tmpout, 1);
+    dup2(tmperr, 2);
+    close(tmpin);
+    close(tmpout);
+    close(tmperr);
+
+    char* sub_result_char;
+    char* sub_result = new char[1000];
+    int counter = 0;
+    while (read(pout[0], sub_result_char, 1)) {
+      if (*sub_result_char == '\n' || *sub_result_char == '\t') {
+        sub_result[counter++] = ' ';
+      }
+      else {
+        sub_result[counter++] = *sub_result_char;
+      }
+    }
+    sub_result[counter] = '\0';
+    close(pout[0]);
+
+    for (int i = strlen(sub_result) - 1; i >= 0; i--) {
+      myunputc(sub_result[i]);
+    }
+  }
+  else {
     // fork failed
     perror("fork subshell");
     exit(1);
-  } else {
-
-  dup2(tmpin, 0);
-  dup2(tmpout, 1);
-  dup2(tmperr, 2);
-  close(tmpin);
-  close(tmpout);
-  close(tmperr);
-
-  char* sub_result_char;
-  char* sub_result = new char[1000];
-  int counter = 0;
-  while (read(pout[0], sub_result_char, 1)) {
-    if (*sub_result_char == '\n' || *sub_result_char == '\t') {
-      sub_result[counter++] = ' ';
-    }
-    else {
-      sub_result[counter++] = *sub_result_char;
-    }
-  }
-  sub_result[counter] = '\0';
-  close(pout[0]);
-
-  for (int i = strlen(sub_result) - 1; i >= 0; i--) {
-    myunputc(sub_result[i]);
-  }
-}
+  } 
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

@@ -1052,6 +1052,8 @@ YY_RULE_SETUP
     write(1, sub_command, strlen(sub_command) + 1);
     write(1, "exit\n", 6);
 
+    wait(NULL);
+
     char* sub_result_char;
     char* sub_result = new char[100];
     int counter = 0;
@@ -1083,10 +1085,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 235 "shell.l"
+#line 237 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1090 "lex.yy.cc"
+#line 1092 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2103,4 +2105,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 235 "shell.l"
+#line 237 "shell.l"

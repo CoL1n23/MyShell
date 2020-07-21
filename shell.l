@@ -181,7 +181,7 @@ void myunputc(int c) {
     }
   }
   close(pout[0]);
-  sub_result[strlen(sub_result)] = '\0';
+  sub_result[counter] = '\0';
   fprintf(stderr, "%s\n", sub_result);
 
   for (int i = strlen(sub_result) - 1; i >= 0; i--) {

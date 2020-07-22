@@ -226,7 +226,7 @@ source[ ].* {
   free(line);
 }
 
-[^ \n\t]\$\{[^ \t\n|&<>$]*\} {
+[^ \n\t]*\$\{[^ \t\n|&<>$]*\} {
   /* environment var expansion */
   printf("enviton\n");
 }

@@ -29,6 +29,8 @@ void sigChildHandler (int sig) {
 }
 
 int main() {
+  int f_source = open("");
+
   Shell::prompt();
 
   // handle SIGINT
@@ -54,16 +56,6 @@ int main() {
     perror("sigaction");
     exit(-1);
   }
-
-  /*
-  char s[20];
-  fflush(stdout);
-  fgets(s, 20, stdin);
-  if (!strcmp(s, "exit\n")) {
-    printf("Exiting...\n");
-    exit(1);
-  }
-  */
 
   yyparse();
 }

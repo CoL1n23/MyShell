@@ -190,6 +190,10 @@ void myunputc(int c) {
   } 
 }
 
+source* {
+  printf("%s\n", yytext);
+}
+
 [^ \t\n|&<>$][^ \t\n|&<>]* {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);

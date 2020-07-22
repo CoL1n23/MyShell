@@ -211,7 +211,7 @@ source.* {
     ssize_t char_count = getline(&line, &length, file);
     if (char_count != -1) {
       // get line in source file
-      ret = fork();
+      int ret = fork();
       if (ret == 0) {
         const char** args = new const char*[2];
         args[1] = "proc/self/exe";

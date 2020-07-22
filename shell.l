@@ -198,7 +198,23 @@ source.* {
   for (int i = 7; i < strlen(yytext); i++) {
     filename[index++] = yytext[i];
   }
-  printf("%s %d\n", filename, strlen(filename));
+
+  char* line = NULL;
+  size_t length = 0;
+  FILE* file = fopen(filename, "r");
+  if (file == NULL) {
+    perror("fopen");
+    exit(1);
+  }
+  while (true) {
+    ssize_t char_count = getline(&line, &length, file);
+    if (char_count != -1) {
+      printf("%s\n", line);
+    }
+    else {
+      break;
+    }
+  }
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

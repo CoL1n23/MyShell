@@ -239,6 +239,7 @@ source[ ].* {
       end_index = index - 1;
       break;
     }
+    index++;
   }
 
   char* env_name = new char[end_index - start_index + 2];

@@ -226,9 +226,27 @@ source[ ].* {
   free(line);
 }
 
-[^ \n\t]*\$\{[^ \t\n|&<>$]*\} {
+[^ \n\t]*\$\{[^ \t\n|&<>$]*\}[^ \n\t]* {
   /* environment var expansion */
-  printf("enviton\n");
+  int index = 0;
+  int start_index = 0;
+  int end_index = 0;
+  while (yytext[index] != NULL) {
+    if (yytext[index] == '{') {
+      start_index = index + 1;
+    }
+    else if (yytext[index] == '}') {
+      end_index = index - 1;
+    }
+  }
+
+  const char* env_name = new const char[end_index - start_index + 2];
+  env_name[strlen(env_name) - 1] = '\0';
+  for (int i = 0; i < strlen(env_name) - 1; i++) {
+    env_name[i] = yytext[start_index + i];
+  }
+
+  printf("%s\n", env_name);
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

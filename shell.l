@@ -272,10 +272,11 @@ source[ ].* {
     if (!strcmp(env_names[i], "$")) {
       int pid = getpid();
       sprintf(env_names[i], "%d", pid);
-      printf("%s\n", env_names[i]);
     }
-    env_strs[i] = getenv(env_names[i]);
-    // printf("%s\n", env_strs[i]);
+    else {
+      env_strs[i] = getenv(env_names[i]);
+    }
+    printf("%s\n", env_strs[i]);
   }
 
   char** others = new char*[env_num + 1];

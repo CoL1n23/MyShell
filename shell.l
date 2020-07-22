@@ -190,7 +190,7 @@ void myunputc(int c) {
   } 
 }
 
-source* {
+source.* {
   printf("%s\n", yytext);
 }
 

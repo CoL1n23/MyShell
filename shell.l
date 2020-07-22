@@ -192,6 +192,7 @@ void myunputc(int c) {
 
 source.* {
   // handle source file
+  // get source file name
   char* filename = new char[strlen(yytext) - 6];
   filename[strlen(filename) - 1] = '\0';
   int index = 0;
@@ -209,7 +210,18 @@ source.* {
   while (true) {
     ssize_t char_count = getline(&line, &length, file);
     if (char_count != -1) {
-      printf("%s\n", line);
+      // get line in source file
+      ret = fork();
+      if (ret == 0) {
+        const char** args = new const char*[2];
+        args[1] = "proc/self/exe";
+        args[2]  = NULL;
+
+        // execute argument list
+        execvp("/proc/self/exe", (char* const*) args);
+        perror("execvp subshell");
+        _exit(1);
+      }
     }
     else {
       break;

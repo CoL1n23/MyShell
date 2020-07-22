@@ -228,6 +228,7 @@ source[ ].* {
 
 [^ \n\t]*\$\{[^ \t\n|&<>$]*\}[^ \n\t]* {
   /* environment var expansion */
+  // get environment var name
   int index = 0;
   int start_index = 0;
   int end_index = 0;
@@ -246,6 +247,7 @@ source[ ].* {
   for (int i = 0; i < end_index - start_index + 1; i++) {
     env_name[i] = yytext[start_index + i];
   }
+
   yylval.cpp_string = new std::string(getenv(env_name));
   return WORD;
 }

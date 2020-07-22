@@ -248,8 +248,10 @@ source[ ].* {
     env_name[i] = yytext[start_index + i];
   }
 
-  yylval.cpp_string = new std::string(getenv(env_name));
-  return WORD;
+  char* env_str = getenv(env_name);
+  for (int i = (int)(strlen(env_str) - 1); i >= 0; i--) {
+    myunputc(line[i]);
+  }
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

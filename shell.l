@@ -289,7 +289,7 @@ source[ ].* {
         others[i] = NULL;
       }
       else {
-        others[i] = new char[end_indices[i - 1] - 1];
+        others[i] = new char[strlen(yytext) - end_indices[i - 1] - 2];
         others[i][end_indices[i - 1] - 2] = '\0';
         for (int j = end_indices[i - 1] + 2; j < strlen(yytext); j++) {
           others[i][ctr++] = yytext[j];

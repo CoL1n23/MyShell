@@ -211,7 +211,7 @@ source.* {
     ssize_t char_count = getline(&line, &length, file);
     if (char_count != -1) {
       // unput line in source file
-      printf("%s", line);
+      printf("%s %d\n", line, strlen(line));
       for (size_t i = strlen(line) - 1; i >= 0; i--) {
         myunputc(line[i]);
       }

@@ -191,7 +191,15 @@ void myunputc(int c) {
 }
 
 source.* {
+  // handle source file
   printf("%s\n", yytext);
+  char* filename = new char[strlen(yytext) - 6];
+  filename[strlen(filename) - 1] = '\0';
+  int index = 0;
+  for (int i = 7; i < strlen(yytext); i++) {
+    filename[index++] = yytext[i];
+  }
+  printf("%s\n", filename);
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

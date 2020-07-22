@@ -1359,9 +1359,9 @@ YY_RULE_SETUP
   char** env_strs = new char*[env_num];
   for (int i = 0; i < env_num; i++) {
     if (!strcmp(env_names[i], "$")) {
-      env_names[i] = new char[10];
+      env_strs[i] = new char[10];
       int pid = getpid();
-      sprintf(env_names[i], "%d", pid);
+      sprintf(env_strs[i], "%d", pid);
     }
     else {
       env_strs[i] = getenv(env_names[i]);

@@ -337,7 +337,7 @@ source[ ].* {
     }
   }
 
-  printf("%s\n", result);
+  // printf("%s\n", result);
   yylval.cpp_string = new std::string(result);
   return WORD;
 }

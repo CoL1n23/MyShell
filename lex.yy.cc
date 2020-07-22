@@ -1380,7 +1380,7 @@ YY_RULE_SETUP
   char** env_strs = new char*[env_num];
   for (int i = 0; i < env_num; i++) {
     env_strs[i] = getenv(env_names[i]);
-    printf("%s\n", env_strs[i]);
+    // printf("%s\n", env_strs[i]);
   }
 
   char** others = new char*[env_num + 1];
@@ -1442,7 +1442,7 @@ YY_RULE_SETUP
     strcat(result, others[i + 1]);
   }
 
-  printf("%s\n", result);
+  // printf("%s\n", result);
   yylval.cpp_string = new std::string(result);
   return WORD;
 }

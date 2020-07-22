@@ -1422,7 +1422,7 @@ YY_RULE_SETUP
         }
       }
     }
-/*
+
     if (others[i] != NULL) {
       printf("%s\n", others[i]);
     }
@@ -1430,7 +1430,7 @@ YY_RULE_SETUP
       printf("NULL\n");
     }
     ctr = 0;
-*/
+
   }
 
   char* result = new char[1000];

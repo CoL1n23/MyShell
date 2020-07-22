@@ -309,15 +309,15 @@ source[ ].* {
         }
       }
     }
-
+/*
     if (others[i] != NULL) {
       printf("%s\n", others[i]);
     }
     else {
       printf("NULL\n");
     }
+*/
     ctr = 0;
-
   }
 
   char* result = new char[1000];

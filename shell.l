@@ -253,19 +253,16 @@ source[ ].* {
     }
     index++;
   }
-  printf("%d\n", counter);
-/*
-  char* env_name = new char[end_index - start_index + 2];
-  env_name[strlen(env_name) - 1] = '\0';
-  for (int i = 0; i < end_index - start_index + 1; i++) {
-    env_name[i] = yytext[start_index + i];
-  }
 
-  char* env_str = getenv(env_name);
-  for (int i = (int)(strlen(env_str) - 1); i >= 0; i--) {
-    myunputc(env_str[i]);
+  char** env_names = new char*[env_num];
+  for (int i = 0; i < env_num; i++) {
+    char* env_names[i] = new char[end_indices[i] - start_indices[i] + 2];
+    env_names[i][end_indices[i] - start_indices[i] + 1] = '\0';
+    for (int j = 0; j < end_indices[i] - start_indices[i] + 1; j++) {
+      env_names[i][j] = yytext[start_indices[i] + j];
+    }
+    printf("%s\n", env_names[i]);
   }
-*/
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

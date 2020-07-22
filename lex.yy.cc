@@ -1332,7 +1332,7 @@ YY_RULE_SETUP
   int index = 0;
   int start_index = 0;
   int end_index = 0;
-  while (yytext[index] != NULL) {
+  while (yytext[index] != '\0') {
     if (yytext[index] == '{') {
       start_index = index + 1;
     }

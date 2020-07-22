@@ -272,9 +272,8 @@ source[ ].* {
     if (!strcmp(env_names[i], "$")) {
       env_strs[i] = new char[10];
       int pid = getpid();
-      // sprintf(env_strs[i], "%d", pid);
-      std::string pid_s = std::to_string(pid);
-      yylval.cpp_string = &pid_s;
+      sprintf(env_strs[i], "%d", pid);
+      yylval.cpp_string = new std::string(env_strs[i]);
       return WORD;
     }
     else {

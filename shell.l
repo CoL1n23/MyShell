@@ -190,7 +190,7 @@ void myunputc(int c) {
   } 
 }
 
-source.* {
+source .* {
   // handle source file
   // get source file name
   char* filename = new char[strlen(yytext) - 6];
@@ -200,6 +200,7 @@ source.* {
     filename[index++] = yytext[i];
   }
 
+  // read content in source file
   char* line = NULL;
   size_t length = 0;
   FILE* file = fopen(filename, "r");
@@ -210,7 +211,7 @@ source.* {
   while (true) {
     ssize_t char_count = getline(&line, &length, file);
     if (char_count != -1) {
-      // unput line in source file
+      // unput line in source file to shell
       for (int i = (int)(strlen(line) - 1); i >= 0; i--) {
         myunputc(line[i]);
       }

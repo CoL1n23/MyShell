@@ -212,10 +212,11 @@ source.* {
     if (char_count != -1) {
       // get line in source file
       int ret = fork();
+      dup2(1, 2);
       if (ret == 0) {
         const char** args = new const char*[3];
         args[0] = "echo";
-        args[1] = "hello";
+        args[1] = "hello1";
         args[2] = NULL;
 
         // execute argument list

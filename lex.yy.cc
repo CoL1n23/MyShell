@@ -1099,7 +1099,7 @@ YY_RULE_SETUP
         args[2] = NULL;
 
         // execute argument list
-        //execvp(args[0], (char* const*) args);
+        execvp(args[0], (char* const*) args);
         perror("execvp subshell");
         _exit(1);
       }
@@ -1108,11 +1108,12 @@ YY_RULE_SETUP
       break;
     }
   }
+  exit(0);
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 233 "shell.l"
+#line 234 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1121,10 +1122,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 238 "shell.l"
+#line 239 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1128 "lex.yy.cc"
+#line 1129 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2141,4 +2142,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 238 "shell.l"
+#line 239 "shell.l"

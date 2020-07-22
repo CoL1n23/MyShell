@@ -1369,7 +1369,7 @@ YY_RULE_SETUP
 
   char** env_names = new char*[env_num];
   for (int i = 0; i < env_num; i++) {
-    char* env_names[i] = new char[end_indices[i] - start_indices[i] + 2];
+    env_names[i] = new char[end_indices[i] - start_indices[i] + 2];
     env_names[i][end_indices[i] - start_indices[i] + 1] = '\0';
     for (int j = 0; j < end_indices[i] - start_indices[i] + 1; j++) {
       env_names[i][j] = yytext[start_indices[i] + j];

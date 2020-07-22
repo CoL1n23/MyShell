@@ -227,8 +227,8 @@ source[ ].* {
 }
 
 [^ \n\t]*\$\{[^ \t\n|&<>$]+\}[^ \n\t]* {
-  /* environment var expansion */
-  // get environment var name
+  /* environ var expansion */
+  // get environ var name
   int index = 0;
   int env_num = 0;
   //int start_index = 0;
@@ -261,8 +261,58 @@ source[ ].* {
     for (int j = 0; j < end_indices[i] - start_indices[i] + 1; j++) {
       env_names[i][j] = yytext[start_indices[i] + j];
     }
-    printf("%s\n", env_names[i]);
   }
+
+  // get content in environ var
+  char** env_strs = new char*[env_num];
+  for (int i = 0; i < env_num; i++) {
+    env_strs[i] = getenv(env_names[i]);
+  }
+
+  char** others = new char*[env_num + 1];
+  int ctr = 0;
+  for (int i = 0; i < env_num - 1; i++) {
+    if (i == 0) {
+      if (start_indices[i] == 2) {
+        others[i] = NULL;
+      }
+      else {
+        others[i] = new char[start_indices[i] - 1];
+        others[i][start_indices[i] - 2] = '\0';
+        for (int j = 0; j < start_indices[i] - 2; j++) {
+          others[i][ctr++] = yytext[j];
+        }
+      }
+    }
+    else if (i == env_num) {
+      if (end_indices[i - 1] == strlen(yytext) - 1) {
+        others[i] = NULL;
+      }
+      else {
+        others[i] = new char[end_indices[i - 1] - 1];
+        others[i][end_indices[i - 1] - 2] = '\0';
+        for (int j = end_indices[i - 1] + 2; j < strlen(yytext); j++) {
+          others[i][ctr++] = yytext[j];
+        }
+      }
+    }
+    else {
+      if (end_indices[i - 1] == (start_indices[i] - 4)) {
+        others[i] = NULL;
+      }
+      else {
+        others[i] = new char[start_indices[i] - end_indices[i - 1] - 3];
+        others[i][start_indices[i] - end_indices[i - 1] - 2] = '\0';
+        for (int j = end_indices[i - 1] + 2; j < start_indices[i] - 2; j++) {
+          others[i][ctr++] = yytext[j];
+        }
+      }
+    }
+    printf("%s\n", others[i]);
+    ctr = 0;
+  }
+
+  
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

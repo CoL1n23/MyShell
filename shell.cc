@@ -29,8 +29,6 @@ void sigChildHandler (int sig) {
 }
 
 int main() {
-  int f_source = open("");
-
   Shell::prompt();
 
   // handle SIGINT

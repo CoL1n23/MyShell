@@ -1366,24 +1366,21 @@ YY_RULE_SETUP
     }
     index++;
   }
-  printf("%d\n", counter);
-/*
-  char* env_name = new char[end_index - start_index + 2];
-  env_name[strlen(env_name) - 1] = '\0';
-  for (int i = 0; i < end_index - start_index + 1; i++) {
-    env_name[i] = yytext[start_index + i];
-  }
 
-  char* env_str = getenv(env_name);
-  for (int i = (int)(strlen(env_str) - 1); i >= 0; i--) {
-    myunputc(env_str[i]);
+  char** env_names = new char*[env_num];
+  for (int i = 0; i < env_num; i++) {
+    char* env_names[i] = new char[end_indices[i] - start_indices[i] + 2];
+    env_names[i][end_indices[i] - start_indices[i] + 1] = '\0';
+    for (int j = 0; j < end_indices[i] - start_indices[i] + 1; j++) {
+      env_names[i][j] = yytext[start_indices[i] + j];
+    }
+    printf("%s\n", env_names[i]);
   }
-*/
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 271 "shell.l"
+#line 268 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1392,10 +1389,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 276 "shell.l"
+#line 273 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1399 "lex.yy.cc"
+#line 1396 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2412,4 +2409,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 276 "shell.l"
+#line 273 "shell.l"

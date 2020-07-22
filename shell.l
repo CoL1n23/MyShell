@@ -273,8 +273,18 @@ source[ ].* {
       env_strs[i] = new char[10];
       int pid = getpid();
       sprintf(env_strs[i], "%d", pid);
-      yylval.cpp_string = new std::string(env_strs[i]);
-      return WORD;
+    }
+    else if (!strcmp(env_names[i], "?")) {
+      printf("?\n");
+    }
+    else if (!strcmp(env_names[i], "!")) {
+      printf("?\n");
+    }
+    else if (!strcmp(env_names[i], "_")) {
+      printf("?\n");
+    }
+    else if (!strcmp(env_names[i], "SHELL")) {
+      printf("?\n");
     }
     else {
       env_strs[i] = getenv(env_names[i]);

@@ -1433,10 +1433,10 @@ YY_RULE_SETUP
   char* result = new char[1000];
   for (int i = 0; i < env_num; i++) {
     if (i == 0) {
-      strcpy(result, others[i];
+      strcpy(result, others[i]);
     }
     strcat(result, env_strs[i]);
-    strcat(result, others[i + 1];
+    strcat(result, others[i + 1]);
   }
 
   printf("%s\n", result);

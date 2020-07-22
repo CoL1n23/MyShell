@@ -308,6 +308,7 @@ source[ ].* {
         }
       }
     }
+/*
     if (others[i] != NULL) {
       printf("%s\n", others[i]);
     }
@@ -315,6 +316,7 @@ source[ ].* {
       printf("NULL\n");
     }
     ctr = 0;
+*/
   }
 
   char* result = new char[1000];
@@ -325,8 +327,8 @@ source[ ].* {
     strcat(result, env_strs[i]);
     strcat(result, others[i + 1]);
   }
-
-  printf("%s\n", result);
+  yylval.cpp_string = new std::string(result);
+  return WORD;
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

@@ -270,6 +270,7 @@ source[ ].* {
   char** env_strs = new char*[env_num];
   for (int i = 0; i < env_num; i++) {
     if (!strcmp(env_names[i], "$")) {
+      env_names[i] = new char[10];
       int pid = getpid();
       sprintf(env_names[i], "%d", pid);
     }

@@ -226,7 +226,7 @@ source[ ].* {
   free(line);
 }
 
-[^\n\t]*\$\{[^ \t\n|&<>$]*\}[^\n\t]* {
+[^ \n\t]*\$\{[^ \t\n|&<>$]*\}[^ \n\t]* {
   /* environment var expansion */
   // get environment var name
   int index = 0;

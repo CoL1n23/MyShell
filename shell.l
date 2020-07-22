@@ -260,6 +260,7 @@ source[ ].* {
     myunputc(env_str[i]);
   }
 */
+  printf("%d\n", env_num);
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

@@ -1329,6 +1329,7 @@ YY_RULE_SETUP
 #line 229 "shell.l"
 {
   /* environment var expansion */
+  // get environment var name
   int index = 0;
   int start_index = 0;
   int end_index = 0;
@@ -1347,13 +1348,14 @@ YY_RULE_SETUP
   for (int i = 0; i < end_index - start_index + 1; i++) {
     env_name[i] = yytext[start_index + i];
   }
+
   yylval.cpp_string = new std::string(getenv(env_name));
   return WORD;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 253 "shell.l"
+#line 255 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1362,10 +1364,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 258 "shell.l"
+#line 260 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1369 "lex.yy.cc"
+#line 1371 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2382,4 +2384,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 258 "shell.l"
+#line 260 "shell.l"

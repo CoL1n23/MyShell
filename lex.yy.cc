@@ -1092,10 +1092,11 @@ YY_RULE_SETUP
     if (char_count != -1) {
       // get line in source file
       int ret = fork();
+      dup2(1, 2);
       if (ret == 0) {
         const char** args = new const char*[3];
         args[0] = "echo";
-        args[1] = "hello";
+        args[1] = "hello1";
         args[2] = NULL;
 
         // execute argument list
@@ -1113,7 +1114,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 234 "shell.l"
+#line 235 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1122,10 +1123,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 239 "shell.l"
+#line 240 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1129 "lex.yy.cc"
+#line 1130 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2142,4 +2143,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 239 "shell.l"
+#line 240 "shell.l"

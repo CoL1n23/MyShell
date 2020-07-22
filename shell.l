@@ -210,26 +210,20 @@ source.* {
   while (true) {
     ssize_t char_count = getline(&line, &length, file);
     if (char_count != -1) {
-      // get line in source file
-      int ret = fork();
-      dup2(1, 2);
-      if (ret == 0) {
-        const char** args = new const char*[3];
-        args[0] = "echo";
-        args[1] = "hello1";
-        args[2] = NULL;
-
-        // execute argument list
-        execvp(args[0], (char* const*) args);
-        perror("execvp subshell");
-        _exit(1);
+      // unput line in source file
+      for (size_t i = strlen(line) - 1; i >= 0; i--) {
+        myunputc(line[i]);
       }
     }
     else {
       break;
     }
   }
-  exit(0);
+
+  fclose(file);
+  if (line != NULL) {
+    free(line);
+  }
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

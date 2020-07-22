@@ -13,6 +13,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdio.h>
+
 #include "y.tab.hh"
 
 static void yyunput (int c, char *buf_ptr);
@@ -266,6 +268,10 @@ source[ ].* {
   // get content in environ var
   char** env_strs = new char*[env_num];
   for (int i = 0; i < env_num; i++) {
+    if (!strcmp(env_names[i], "$")) {
+      int pid = getpid();
+      sprintf(env_names[i], "%d", pid);
+    }
     env_strs[i] = getenv(env_names[i]);
     // printf("%s\n", env_strs[i]);
   }
@@ -309,14 +315,6 @@ source[ ].* {
         }
       }
     }
-/*
-    if (others[i] != NULL) {
-      printf("%s\n", others[i]);
-    }
-    else {
-      printf("NULL\n");
-    }
-*/
     ctr = 0;
   }
 

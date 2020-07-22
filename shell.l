@@ -237,17 +237,23 @@ source[ ].* {
     if (yytext[index] == '$') {
       env_num++;
     }
-/*
-    if (yytext[index] == '{') {
-      start_index = index + 1;
-    }
-    else if (yytext[index] == '}') {
-      end_index = index - 1;
-      break;
-    }
-*/
     index++;
   }
+
+  index = 0;
+  int* start_indices = new int[env_num];
+  int* end_indicies = new int[env_num];
+  int counter = 0;
+  while (yytext[index] != '\0') {
+    if (yytext[index] == '{') {
+      start_indices[counter] = index + 1;
+    }
+    else if (yytext[index] == '}') {
+      end_indices[counter++] = index - 1;
+    }
+    index++;
+  }
+  printf("%d\n", counter);
 /*
   char* env_name = new char[end_index - start_index + 2];
   env_name[strlen(env_name) - 1] = '\0';
@@ -260,7 +266,6 @@ source[ ].* {
     myunputc(env_str[i]);
   }
 */
-  printf("%d\n", env_num);
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

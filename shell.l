@@ -213,12 +213,13 @@ source.* {
       // get line in source file
       int ret = fork();
       if (ret == 0) {
-        const char** args = new const char*[2];
-        args[1] = "proc/self/exe";
-        args[2]  = NULL;
+        const char** args = new const char*[3];
+        args[1] = "echo";
+        args[2] = "hello";
+        args[3]  = NULL;
 
         // execute argument list
-        execvp("/proc/self/exe", (char* const*) args);
+        execvp(args[0], (char* const*) args);
         perror("execvp subshell");
         _exit(1);
       }

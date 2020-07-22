@@ -219,7 +219,7 @@ source.* {
         args[2] = NULL;
 
         // execute argument list
-        //execvp(args[0], (char* const*) args);
+        execvp(args[0], (char* const*) args);
         perror("execvp subshell");
         _exit(1);
       }
@@ -228,6 +228,7 @@ source.* {
       break;
     }
   }
+  exit(0);
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

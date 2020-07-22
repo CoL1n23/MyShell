@@ -1341,7 +1341,7 @@ YY_RULE_SETUP
     }
   }
 
-  const char* env_name = new const char[end_index - start_index + 2];
+  char* env_name = new char[end_index - start_index + 2];
   env_name[strlen(env_name) - 1] = '\0';
   for (int i = 0; i < strlen(env_name) - 1; i++) {
     env_name[i] = yytext[start_index + i];

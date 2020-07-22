@@ -237,6 +237,7 @@ source[ ].* {
     }
     else if (yytext[index] == '}') {
       end_index = index - 1;
+      break;
     }
   }
 

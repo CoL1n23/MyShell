@@ -327,6 +327,8 @@ source[ ].* {
     strcat(result, env_strs[i]);
     strcat(result, others[i + 1]);
   }
+
+  printf("%s\n", result);
   yylval.cpp_string = new std::string(result);
   return WORD;
 }

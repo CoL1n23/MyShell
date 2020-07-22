@@ -228,7 +228,7 @@ source[ ].* {
   free(line);
 }
 
-[^ \n\t]*\$\{[^ \t\n|&<>$]+\}[^ \n\t]* {
+[^ \n\t]*\$\{[^ \t\n|&<>]+\}[^ \n\t]* {
   /* environ var expansion */
   // get environ var name
   int index = 0;

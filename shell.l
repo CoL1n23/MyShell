@@ -191,7 +191,7 @@ void myunputc(int c) {
 }
 
 source[ ].* {
-  // handle source file
+  /* source file */
   // get source file name
   char* filename = new char[strlen(yytext) - 6];
   filename[strlen(filename) - 1] = '\0';
@@ -224,6 +224,11 @@ source[ ].* {
 
   fclose(file);
   free(line);
+}
+
+[^ \n\t]\$\{[^ \t\n|&<>$]*\} {
+  /* environment var expansion */
+  printf("enviton\n");
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

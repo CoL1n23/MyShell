@@ -1362,7 +1362,8 @@ YY_RULE_SETUP
       env_strs[i] = new char[10];
       int pid = getpid();
       // sprintf(env_strs[i], "%d", pid);
-      yylval.cpp_string = std::to_string(pid);
+      std::string pid_s = std::to_string(pid);
+      yylval.cpp_string = pid_s;
       return WORD;
     }
     else {
@@ -1433,7 +1434,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 345 "shell.l"
+#line 346 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1442,10 +1443,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 350 "shell.l"
+#line 351 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1449 "lex.yy.cc"
+#line 1450 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2462,4 +2463,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 350 "shell.l"
+#line 351 "shell.l"

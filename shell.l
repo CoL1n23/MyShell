@@ -13,7 +13,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 #include "y.tab.hh"
 
@@ -272,7 +272,7 @@ source[ ].* {
     if (!strcmp(env_names[i], "$")) {
       env_strs[i] = new char[10];
       int pid = getpid();
-      sprintf(env_strs[i], "%d", pid);
+      itoa(pid, env_strs[i], 10);
     }
     else {
       env_strs[i] = getenv(env_names[i]);

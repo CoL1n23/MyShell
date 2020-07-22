@@ -1351,6 +1351,7 @@ YY_RULE_SETUP
   while (yytext[index] != '\0') {
     if (yytext[index] == '$') {
       env_num++;
+      index += 2;
     }
     index++;
   }
@@ -1452,7 +1453,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 340 "shell.l"
+#line 341 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1461,10 +1462,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 345 "shell.l"
+#line 346 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1468 "lex.yy.cc"
+#line 1469 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2481,4 +2482,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 345 "shell.l"
+#line 346 "shell.l"

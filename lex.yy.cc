@@ -1384,7 +1384,7 @@ YY_RULE_SETUP
 
   char** others = new char*[env_num + 1];
   int ctr = 0;
-  for (int i = 0; i < env_num - 1; i++) {
+  for (int i = 0; i < env_num + 1; i++) {
     if (i == 0) {
       if (start_indices[i] == 2) {
         others[i] = NULL;

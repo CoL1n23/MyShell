@@ -1360,7 +1360,7 @@ YY_RULE_SETUP
   for (int i = 0; i < env_num; i++) {
     if (!strcmp(env_names[i], "$")) {
       env_strs[i] = new char[10];
-      int pid = getpid();
+      pid_t pid = getpid();
       sprintf(env_strs[i], "%d", pid);
     }
     else if (!strcmp(env_names[i], "?")) {

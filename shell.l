@@ -233,8 +233,6 @@ source[ ].* {
   // get environ var name
   int index = 0;
   int env_num = 0;
-  //int start_index = 0;
-  //int end_index = 0;
   while (yytext[index] != '\0') {
     if (yytext[index] == '$') {
       env_num++;
@@ -334,6 +332,7 @@ source[ ].* {
     ctr = 0;
   }
 
+  // concat everything to final result
   char* result = new char[1000];
   for (int i = 0; i < env_num; i++) {
     if (i == 0) {

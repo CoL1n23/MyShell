@@ -238,6 +238,7 @@ source[ ].* {
   while (yytext[index] != '\0') {
     if (yytext[index] == '$') {
       env_num++;
+      index += 2;
     }
     index++;
   }

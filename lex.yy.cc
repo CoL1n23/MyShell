@@ -1362,7 +1362,7 @@ YY_RULE_SETUP
       env_strs[i] = new char[10];
       int pid = getpid();
       // sprintf(env_strs[i], "%d", pid);
-      yylval.cpp_string = new std::string(pid);
+      yylval.cpp_string = std::to_string(pid);
       return WORD;
     }
     else {

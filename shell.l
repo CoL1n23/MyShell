@@ -190,7 +190,7 @@ void myunputc(int c) {
   } 
 }
 
-source .* {
+source[ ].* {
   // handle source file
   // get source file name
   char* filename = new char[strlen(yytext) - 6];

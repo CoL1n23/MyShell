@@ -223,9 +223,7 @@ source.* {
   }
 
   fclose(file);
-  if (line != NULL) {
-    free(line);
-  }
+  free(line);
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

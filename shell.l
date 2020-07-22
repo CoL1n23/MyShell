@@ -214,9 +214,9 @@ source.* {
       int ret = fork();
       if (ret == 0) {
         const char** args = new const char*[3];
-        args[1] = "echo";
-        args[2] = "hello";
-        args[3]  = NULL;
+        args[0] = "echo";
+        args[1] = "hello";
+        args[2] = NULL;
 
         // execute argument list
         execvp(args[0], (char* const*) args);

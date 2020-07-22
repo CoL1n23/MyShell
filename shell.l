@@ -215,6 +215,7 @@ source.* {
       for (size_t i = strlen(line) - 1; i >= 0; i--) {
         myunputc(line[i]);
       }
+      myunputc("\n");
     }
     else {
       break;

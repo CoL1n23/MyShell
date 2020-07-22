@@ -244,7 +244,7 @@ source[ ].* {
   printf("%d %d\n", start_index, end_index);
   char* env_name = new char[end_index - start_index + 2];
   env_name[strlen(env_name) - 1] = '\0';
-  for (int i = 0; i < strlen(env_name) - 1; i++) {
+  for (int i = 0; i < strlen(env_name); i++) {
     env_name[i] = yytext[start_index + i];
   }
 

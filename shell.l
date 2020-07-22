@@ -308,7 +308,9 @@ source[ ].* {
         }
       }
     }
-    printf("%s\n", others[i]);
+    if (others[i] != NULL) {
+      printf("%s\n", others[i]);
+    }
     ctr = 0;
   }
 

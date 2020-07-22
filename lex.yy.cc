@@ -1322,8 +1322,6 @@ YY_RULE_SETUP
   // get environ var name
   int index = 0;
   int env_num = 0;
-  //int start_index = 0;
-  //int end_index = 0;
   while (yytext[index] != '\0') {
     if (yytext[index] == '$') {
       env_num++;
@@ -1423,6 +1421,7 @@ YY_RULE_SETUP
     ctr = 0;
   }
 
+  // concat everything to final result
   char* result = new char[1000];
   for (int i = 0; i < env_num; i++) {
     if (i == 0) {
@@ -1443,7 +1442,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 355 "shell.l"
+#line 354 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1452,10 +1451,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 360 "shell.l"
+#line 359 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1459 "lex.yy.cc"
+#line 1458 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2472,4 +2471,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 360 "shell.l"
+#line 359 "shell.l"

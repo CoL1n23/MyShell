@@ -1351,7 +1351,7 @@ YY_RULE_SETUP
 
   char* env_str = getenv(env_name);
   for (int i = (int)(strlen(env_str) - 1); i >= 0; i--) {
-    myunputc(line[i]);
+    myunputc(env_str[i]);
   }
 }
 	YY_BREAK

@@ -226,13 +226,18 @@ source[ ].* {
   free(line);
 }
 
-[^ \n\t]*\$\{[^ \t\n|&<>$]*\}[^ \n\t]* {
+[^ \n\t]*\$\{[^ \t\n|&<>$]+\}[^ \n\t]* {
   /* environment var expansion */
   // get environment var name
   int index = 0;
-  int start_index = 0;
-  int end_index = 0;
+  int env_num = 0;
+  //int start_index = 0;
+  //int end_index = 0;
   while (yytext[index] != '\0') {
+    if (yytext[index] == '$') {
+      env_num++;
+    }
+/*
     if (yytext[index] == '{') {
       start_index = index + 1;
     }
@@ -240,8 +245,10 @@ source[ ].* {
       end_index = index - 1;
       break;
     }
+*/
     index++;
   }
+/*
   char* env_name = new char[end_index - start_index + 2];
   env_name[strlen(env_name) - 1] = '\0';
   for (int i = 0; i < end_index - start_index + 1; i++) {
@@ -252,6 +259,7 @@ source[ ].* {
   for (int i = (int)(strlen(env_str) - 1); i >= 0; i--) {
     myunputc(env_str[i]);
   }
+*/
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

@@ -242,7 +242,7 @@ source[ ].* {
 
   index = 0;
   int* start_indices = new int[env_num];
-  int* end_indicies = new int[env_num];
+  int* end_indices = new int[env_num];
   int counter = 0;
   while (yytext[index] != '\0') {
     if (yytext[index] == '{') {

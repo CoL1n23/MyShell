@@ -285,7 +285,7 @@ source[ ].* {
       }
     }
     else if (i == env_num) {
-      if (end_indices[i - 1] == strlen(yytext) - 1) {
+      if (end_indices[i - 1] == strlen(yytext) - 2) {
         others[i] = NULL;
       }
       else {

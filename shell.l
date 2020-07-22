@@ -212,9 +212,14 @@ source.* {
     if (char_count != -1) {
       // unput line in source file
       printf("%s %d\n", line, strlen(line));
-      for (size_t i = strlen(line) - 1; i >= 0; i--) {
-        printf("%c\n", line[i]);
-        myunputc(line[i]);
+      char* linec = new char[strlen(line) + 1];
+      for (int i = 0; i < strlen(line); i++) {
+        linec[i] = line[i];
+      }
+      linec[strlen(line)] = '\0';
+      for (size_t i = strlen(linec) - 1; i >= 0; i--) {
+        printf("%c\n", linec[i]);
+        myunputc(linec[i]);
       }
       myunputc('\n');
     }

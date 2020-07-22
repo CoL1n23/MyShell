@@ -1090,31 +1090,25 @@ YY_RULE_SETUP
   while (true) {
     ssize_t char_count = getline(&line, &length, file);
     if (char_count != -1) {
-      // get line in source file
-      int ret = fork();
-      dup2(1, 2);
-      if (ret == 0) {
-        const char** args = new const char*[3];
-        args[0] = "echo";
-        args[1] = "hello1";
-        args[2] = NULL;
-
-        // execute argument list
-        execvp(args[0], (char* const*) args);
-        perror("execvp subshell");
-        _exit(1);
+      // unput line in source file
+      for (size_t i = strlen(line) - 1; i >= 0; i--) {
+        myunputc(line[i]);
       }
     }
     else {
       break;
     }
   }
-  exit(0);
+
+  fclose(file);
+  if (line != NULL) {
+    free(line);
+  }
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 235 "shell.l"
+#line 229 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1123,10 +1117,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 240 "shell.l"
+#line 234 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1130 "lex.yy.cc"
+#line 1124 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2143,4 +2137,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 240 "shell.l"
+#line 234 "shell.l"

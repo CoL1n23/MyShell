@@ -246,8 +246,8 @@ source[ ].* {
   for (int i = 0; i < end_index - start_index + 1; i++) {
     env_name[i] = yytext[start_index + i];
   }
-
-  printf("%s\n", env_name);
+  yylval.cpp_string = new std::string(getenv(env_name));
+  return WORD;
 }
 
 [^ \t\n|&<>$][^ \t\n|&<>]* {

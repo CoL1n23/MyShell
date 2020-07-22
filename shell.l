@@ -217,8 +217,8 @@ source.* {
         linec[i] = line[i];
       }
       linec[strlen(line)] = '\0';
-      for (size_t i = strlen(linec) - 1; i >= 0; i--) {
-        printf("%c\n", linec[i]);
+      for (size_t i = (strlen(linec) - 1); i >= 0; i--) {
+        printf("%c %d\n", linec[i], i);
         myunputc(linec[i]);
       }
       myunputc('\n');

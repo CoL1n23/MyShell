@@ -102,6 +102,7 @@ void expandWildcards(std::string* arg_s) {
     }
   }
   closedir(dir);
+  free(regex);
 }
 
 %}

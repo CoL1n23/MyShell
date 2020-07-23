@@ -229,7 +229,7 @@ void expandWildcards(std::string* arg_s) {
   regmatch_t match;
   while ((ent = readdir(dir)) != NULL) {
     if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
-      std::string new_arg = new std::string(ent->d_name);
+      std::string* new_arg = new std::string(ent->d_name);
       Command::_currentSimpleCommand->insertArgument(new_arg);
     }
   }

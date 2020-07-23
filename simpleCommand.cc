@@ -25,11 +25,12 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   regex_t regex;
   int result = regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
   if (result != 0) {
-    printf("error\n");
+    perror("regcomp");
+    exit(1);
   }
   regmatch_t match;
   result = regexec(&regex, string, 1, &match, 0);
-  printf("%d\n", result);
+  printf("result is %d\n", result);
   if (result == 0) {
     int index = 0;
     int env_num = 0;

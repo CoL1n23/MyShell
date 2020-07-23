@@ -23,7 +23,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
   
   // check for environ var expansion
-  const char env_var[] = "^.*\$\{[^\}]+\}.*$";
+  const char env_var[] = "^.*\\$\\{[^\\}][^\\}]*\\}.*$";
 
   regex_t regex_env;
   int outcome_env = regcomp(&regex_env, env_var, REG_EXTENDED|REG_NOSUB);

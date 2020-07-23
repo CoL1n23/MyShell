@@ -20,7 +20,13 @@ SimpleCommand::~SimpleCommand() {
 
 void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
-  char target[] = "^.*${[^}][^}].*$";
+  char target_c[] = "^.*${[^}][^}].*$";
+  char* target = new char[17];
+  target[16] = '\0';
+  for (int i = 0; i < strlen(target_c); i++) {
+    target[i] = target_c[i];
+  }
+
   regex_t regex;
   regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
   regmatch_t match;

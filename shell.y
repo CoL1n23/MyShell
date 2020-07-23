@@ -34,10 +34,73 @@
 //#define yylex yylex
 #include <cstdio>
 #include <string.h>
+#include <sys/types.h>
+#include <regex.h>
+#include <dirent.h>
 #include "shell.hh"
 
 void yyerror(const char * s);
 int yylex();
+
+void expandWildcards(std::string* arg_s) {
+  const char* arg_c = arg_s->c_str();
+  if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?' == NULL)) {
+    Command::_currentSimpleCommand->insertArgument(arg_s);
+    return;
+  }
+
+  char* regex = (char *)malloc(2 * strlen(arg_c) + 10);
+  *regex = '^';
+  regex++;
+  while (*arg_c) {
+    if (*arg_c == '*') {
+      *regex = '.';
+      regex++;
+      *regex = '*';
+      regex++;
+    }
+    else if (*arg_c == '?') {
+      *regex = '.';
+      regex++;
+    }
+    else if (*arg_c == '.') {
+      *regex = '\\';
+      regex++;
+      *regex = '.';
+      regex++;
+    }
+    else {
+      *regex = *arg_c;
+      regex++;
+    }
+    arg_c++;
+  }
+  *regex = '$';
+  regex++;
+  *regex = 0;
+
+  regex_t re;
+  int result = regcomp(&re, regex, REG_EXTENDED|REG_NOSUB);
+  if (result != 0) {
+    perror("regcomp");
+    return;
+  }
+
+  DIR* dir = opendir(".");
+  if (dir == NULL) {
+    perror("opendir");
+    return;
+  }
+
+  struct dirent* ent;
+  while ((ent = readdir(dir)) != NULL) {
+    if (regexec(ent->d_name, re) == 0) {
+      std::string new_arg = std::string(ent->d_name);
+      Command::_currentSimpleCommand->insertArgument(&new_arg);
+    }
+  }
+  closedir(dir);
+}
 
 %}
 
@@ -50,7 +113,8 @@ goal:
 arg_list:
   arg_list WORD {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
-    Command::_currentSimpleCommand->insertArgument( $2 );
+    expandWildcards($2);
+    /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }
   | /* can be empty */
   ;

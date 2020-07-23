@@ -1379,6 +1379,9 @@ YY_RULE_SETUP
     // printf("%s\n", env_strs[i]);
   }
 
+  /*
+  * following code just replaces content with env var and return it
+  */
   char** others = new char*[env_num + 1];
   int ctr = 0;
   for (int i = 0; i < env_num + 1; i++) {
@@ -1444,7 +1447,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 356 "shell.l"
+#line 359 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1453,10 +1456,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 361 "shell.l"
+#line 364 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1460 "lex.yy.cc"
+#line 1463 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2473,4 +2476,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 361 "shell.l"
+#line 364 "shell.l"

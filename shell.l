@@ -352,7 +352,8 @@ source[ ].* {
 
   // strcat(result, "wrong");
   // printf("%s\n", result);
-  yylval.cpp_string = new std::string(result);
+  std::string result_s(result);
+  yylval.cpp_string(result_s);
   return WORD;
 }
 

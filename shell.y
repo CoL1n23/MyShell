@@ -44,7 +44,7 @@ int yylex();
 
 void expandWildcards(std::string* arg_s) {
   const char* arg_c = arg_s->c_str();
-  if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?' == NULL)) {
+  if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?') == NULL) {
     Command::_currentSimpleCommand->insertArgument(arg_s);
     return;
   }
@@ -93,8 +93,9 @@ void expandWildcards(std::string* arg_s) {
   }
 
   struct dirent* ent;
+  regmatch_t match;
   while ((ent = readdir(dir)) != NULL) {
-    if (regexec(ent->d_name, re) == 0) {
+    if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
       std::string new_arg = std::string(ent->d_name);
       Command::_currentSimpleCommand->insertArgument(&new_arg);
     }

@@ -23,7 +23,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
   
   // check for environ var expansion
-  const char env_var[] = "^.*\\$\\{[^\\}]+\\}.*$";
+  const char env_var[] = "^.*\$\{[^\}]+\}.*$";
 
   regex_t regex_env;
   int outcome_env = regcomp(&regex_env, env_var, REG_EXTENDED|REG_NOSUB);
@@ -33,7 +33,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_env;
   outcome_env = regexec(&regex_env, string, 0, &match_env, 0);
-  // printf("%s result env is %d\n", string, outcome_env);
+  printf("%s result env is %d\n", string, outcome_env);
   if (outcome_env == 0) {  // matches
     printf("match\n");
     int index = 0;
@@ -156,7 +156,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     argument = new std::string(result);
   }
 
-  // check for tilde expansion
+  // check for tilde expansion (has 3 parts)
   const char tilde1[] = "^~[/]?$";
 
   regex_t regex_t1;

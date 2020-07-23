@@ -206,7 +206,26 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   outcome_t3 = regexec(&regex_t3, string, 0, &match_t3, 0);
   printf("%s result t3 is %d\n", string, outcome_t3);
   if (outcome_t3 == 0) {
-    printf("match\n");
+    int index = 2; // index of second slash
+    while (argument->c_str()[index] != '/') {
+      index++;
+    }
+    char* username = new char[index];
+    username[index - 1] = '\0';
+    for (int i = 1; i < index; i++) {
+      username[i - 1] = argument->c_str()[i];
+    }
+    struct passwd *result = getpwnam(username);
+
+    char* fullpath = new char[100];
+    strcpy(fullpath, result->pw_dir);
+    char* rest = new char[(int)argument->size() - index];
+    for (int i = index + 1; i < (int)argument->size(); i++) {
+      rest[i - index - 1] = argument->c_str()[i];
+    }
+    rest[(int)argument->size() - index - 1] = '\0';
+    strcat(fullpath, rest);
+    printf("%s\n", fullpath);
     exit(0);
   }
 

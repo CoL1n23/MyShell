@@ -174,13 +174,13 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
- 
+
     // detect "exit" and exit shell
     if (!strcmp(_simpleCommands[0]->_arguments[0]->c_str(), "exit")) {
       if (isatty(0)) {
 	printf("Exiting...\n");
-        exit(1);
       }
+      exit(0);
     }
     
     if (_multi_output == true) {

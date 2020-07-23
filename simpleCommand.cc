@@ -184,11 +184,11 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   outcome_t2 = regexec(&regex_t2, string, 0, &match_t2, 0);
   printf("%s result2 is %d\n", string, outcome_t2);
   if (outcome_t2 == 0) {
-    printf("%d\n", argument->size());
     char* username = new char[(int)argument->size()];
     for (int i = 1; i < (int)argument->size(); i++) {
       username[i - 1] = argument->c_str()[i];
     }
+    username[(int)argument->size() - 1] = '\0';
     printf("%s\n", username);
     exit(0);
   }

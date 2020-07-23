@@ -33,6 +33,7 @@
 %{
 //#define yylex yylex
 #include <cstdio>
+#include <cstring>
 #include <string.h>
 #include <sys/types.h>
 #include <regex.h>

@@ -169,6 +169,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   printf("%s result2 is %d\n", string, outcome2);
   if (outcome2 == 0) {
     printf("match2\n");
+    argument = new std::string(getenv("HOME"));
     exit(0);
   }
 

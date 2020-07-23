@@ -219,11 +219,11 @@ void SimpleCommand::insertArgument( std::string * argument ) {
 
     char* fullpath = new char[100];
     strcpy(fullpath, result->pw_dir);
-    char* rest = new char[(int)argument->size() - index];
-    for (int i = index + 1; i < (int)argument->size(); i++) {
-      rest[i - index - 1] = argument->c_str()[i];
+    char* rest = new char[(int)argument->size() - index + 1];
+    for (int i = index; i < (int)argument->size(); i++) {
+      rest[i - index] = argument->c_str()[i];
     }
-    rest[(int)argument->size() - index - 1] = '\0';
+    rest[(int)argument->size() - index] = '\0';
     strcat(fullpath, rest);
     printf("%s\n", fullpath);
     exit(0);

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sys/types.h>
 #include <string.h>
+#include <unistd.h>
 #include "simpleCommand.hh"
 
 SimpleCommand::SimpleCommand() {
@@ -19,7 +20,7 @@ SimpleCommand::~SimpleCommand() {
 
 void SimpleCommand::insertArgument( std::string * argument ) {
   char* string = argument->c_str();
-  char* target = new char[]{"^.*${[^}][^}]*}.*$"};
+  char target[] = "^.*${[^}][^}]*}.*$";
   regex_t regex;
   regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
   regmatch_t match;
@@ -100,13 +101,13 @@ void SimpleCommand::insertArgument( std::string * argument ) {
         }
       }
       else if (i == env_num) {
-        if (end_indices[i - 1] == strlen(string) - 2) {
+        if (end_indices[i - 1] == (int)strlen(string) - 2) {
           others[i] = NULL;
         }
         else {
           others[i] = new char[strlen(string) - end_indices[i - 1] - 2];
           others[i][end_indices[i - 1] - 2] = '\0';
-          for (int j = end_indices[i - 1] + 2; j < strlen(string); j++) {
+          for (int j = end_indices[i - 1] + 2; j < (int)strlen(string); j++) {
             others[i][ctr++] = string[j];
           }
         }

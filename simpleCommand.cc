@@ -23,7 +23,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   char target_c[] = "^.*${[^}][^}].*$";
   char* target = new char[17];
   target[16] = '\0';
-  for (int i = 0; i < strlen(target_c); i++) {
+  for (int i = 0; i < (int)strlen(target_c); i++) {
     target[i] = target_c[i];
   }
 

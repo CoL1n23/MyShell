@@ -290,6 +290,9 @@ source[ ].* {
     // printf("%s\n", env_strs[i]);
   }
 
+  /*
+  * following code just replaces content with env var and return it
+  */
   char** others = new char*[env_num + 1];
   int ctr = 0;
   for (int i = 0; i < env_num + 1; i++) {

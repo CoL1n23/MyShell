@@ -156,7 +156,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
 
   // check for tilde expansion
-  const char target2[] = "^~$";
+  const char target2[] = "^~[/]?$";
 
   regex_t regex2;
   int outcome2 = regcomp(&regex2, target2, REG_EXTENDED|REG_NOSUB);

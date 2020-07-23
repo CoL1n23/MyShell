@@ -49,7 +49,7 @@ void expandWildcards(std::string* arg_s) {
     return;
   }
 
-  char* regex = (char *)malloc(2 * strlen(arg_c) + 100);
+  char* regex = (char *)malloc(2 * strlen(arg_c) + 10);
   *regex = '^';
   regex++;
   while (*arg_c) {

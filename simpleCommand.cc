@@ -3,6 +3,7 @@
 #include <regex.h>
 #include <iostream>
 #include <sys/types.h>
+#include <pwd.h>
 #include <string.h>
 #include <unistd.h>
 #include "simpleCommand.hh"
@@ -190,6 +191,8 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     }
     username[(int)argument->size() - 1] = '\0';
     printf("%s\n", username);
+    struct passwd *result = getpwnam(username);
+    printf("%s\n", result->pw_dir);
     exit(0);
   }
 

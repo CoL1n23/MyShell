@@ -177,7 +177,7 @@ void Command::execute() {
  
     // detect "exit" and exit shell
     if (!strcmp(_simpleCommands[0]->_arguments[0]->c_str(), "exit")) {
-      if (isatty(0) {
+      if (isatty(0)) {
 	printf("Exiting...\n");
         exit(1);
       }

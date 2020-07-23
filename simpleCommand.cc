@@ -19,7 +19,7 @@ SimpleCommand::~SimpleCommand() {
 }
 
 void SimpleCommand::insertArgument( std::string * argument ) {
-  char* string = argument->c_str();
+  const char* string = argument->c_str();
   char target[] = "^.*${[^}][^}]*}.*$";
   regex_t regex;
   regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);

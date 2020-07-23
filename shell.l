@@ -352,7 +352,7 @@ source[ ].* {
   return WORD;
 }
 
-^\~$ {
+"~" {
   yylval.cpp_string = new std::string(getenv("HOME"));
   return WORD;
 }

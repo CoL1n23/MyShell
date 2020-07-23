@@ -1000,7 +1000,7 @@ YY_RULE_SETUP
 
   write(pin[1], sub_command, strlen(sub_command) + 1);
   write(pin[1], "\n", 1);
-  // write(pin[1], "exit\n", 6);
+  write(pin[1], "exit\n", 6);
   close(pin[1]);
 
   // save stdin/stdout/stderr

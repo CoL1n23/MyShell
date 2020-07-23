@@ -19,6 +19,7 @@ SimpleCommand::~SimpleCommand() {
 }
 
 void SimpleCommand::insertArgument( std::string * argument ) {
+/*
   const char* string = argument->c_str();
   const char target[] = "^.*\\$\\{[^ ]+\\}.*$";
 
@@ -150,7 +151,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     // printf("%s\n", result);
     argument = new std::string(result);
   }
-
+*/
   // simply add the argument to the vector
   _arguments.push_back(argument);
 }

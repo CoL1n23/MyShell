@@ -32,7 +32,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_env;
   outcome_env = regexec(&regex_env, string, 0, &match_env, 0);
-  printf("%s result1 is %d\n", string, outcome_env);
+  printf("%s result env is %d\n", string, outcome_env);
   if (outcome_env == 0) {  // matches
     printf("match\n");
     int index = 0;
@@ -166,7 +166,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_t1;
   outcome_t1 = regexec(&regex_t1, string, 0, &match_t1, 0);
-  printf("%s result2 is %d\n", string, outcome_t1);
+  printf("%s result t1 is %d\n", string, outcome_t1);
   if (outcome_t1 == 0) {
     printf("match2\n");
     argument = new std::string(getenv("HOME"));
@@ -184,7 +184,11 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   outcome_t2 = regexec(&regex_t2, string, 0, &match_t2, 0);
   printf("%s result2 is %d\n", string, outcome_t2);
   if (outcome_t2 == 0) {
-    printf("match\n");
+    char* username = new char[argument->size()];
+    for (int i = 1; i < argument->size(); i++) {
+      username[i - 1] = argument->c_str()[i];
+    }
+    printf("%s\n", username);
     exit(0);
   }
 

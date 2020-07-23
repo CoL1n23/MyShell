@@ -30,8 +30,8 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match;
   result = regexec(&regex, string, 1, &match, 0);
-  printf("result is %d\n", result);
   if (result == 0) {
+    printf("match\n");
     int index = 0;
     int env_num = 0;
     while (string[index] != '\0') {

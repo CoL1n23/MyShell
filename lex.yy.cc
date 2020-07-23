@@ -1442,7 +1442,7 @@ YY_RULE_SETUP
   // strcat(result, "wrong");
   // printf("%s\n", result);
   std::string result_s(result);
-  yylval.cpp_string(result_s);
+  yylval.cpp_string = result_s;
   return WORD;
 }
 	YY_BREAK

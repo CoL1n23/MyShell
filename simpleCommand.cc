@@ -20,17 +20,19 @@ SimpleCommand::~SimpleCommand() {
 
 void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
-  const char target[] = "^.*\\$\\{[^\\}]+\\}.*$";
+  
+  // check for environ var expansion
+  const char target1[] = "^.*\\$\\{[^\\}]+\\}.*$";
 
-  regex_t regex;
-  int outcome = regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
-  if (outcome != 0) {
-    printf("error\n");
+  regex_t regex1;
+  int outcome1 = regcomp(&regex1, target1, REG_EXTENDED|REG_NOSUB);
+  if (outcome1 != 0) {
+    printf("error in regcomp\n");
     exit(1);
   }
-  regmatch_t match;
-  outcome = regexec(&regex, string, 0, &match, 0);
-  printf("%s result is %d\n", string, outcome);
+  regmatch_t match1;
+  outcome = regexec(&regex1, string, 0, &match1, 0);
+  printf("%s result1 is %d\n", string, outcome1);
   if (outcome == 0) {  // matches
     printf("match\n");
     int index = 0;
@@ -152,6 +154,24 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     // printf("%s\n", result);
     argument = new std::string(result);
   }
+
+  // check for tilde expansion
+  const char target2[] = "^~$";
+
+  regex_t regex2;
+  int outcome2 = regcomp(&regex2, target2, REG_EXTENDED|REG_NOSUB);
+  if (outcome2 != 0) {
+    printf("error in regcomp2\n");
+    exit(1);
+  }
+  regmatch_t match2;
+  outcome2 = regexec(&regex2, string, 0, &match2, 0);
+  printf("%s result2 is %d\n", string, outcome2);
+  if (outcome2 == 0) {
+    printf("match2\n");
+    exit(0);
+  }
+
   // simply add the argument to the vector
   _arguments.push_back(argument);
 }

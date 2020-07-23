@@ -19,20 +19,19 @@ SimpleCommand::~SimpleCommand() {
 }
 
 void SimpleCommand::insertArgument( std::string * argument ) {
-/*
   const char* string = argument->c_str();
-  const char target[] = "^.*\\$\\{[^ ]+\\}.*$";
+  const char target[] = "^.*\\$\\{[^ \\t\\n]+\\}.*$";
 
   regex_t regex;
-  int result = regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
-  if (result != 0) {
+  int outcome = regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
+  if (outcome != 0) {
     printf("error\n");
     exit(1);
   }
   regmatch_t match;
-  result = regexec(&regex, string, 0, &match, 0);
-  printf("%s result is %d\n", string, result);
-  if (result == 0) {
+  outcome = regexec(&regex, string, 0, &match, 0);
+  printf("%s result is %d\n", string, outcome);
+  if (outcome == 0) {  // matches
     printf("match\n");
     int index = 0;
     int env_num = 0;
@@ -142,16 +141,17 @@ void SimpleCommand::insertArgument( std::string * argument ) {
           strcpy(result, others[i]);
         }
       }
-      strcat(result, env_strs[i]);
+      if (env_strs[i] != NULL) {
+        strcat(result, env_strs[i]);
+      }
       if (others[i + 1] != NULL) {
         strcat(result, others[i + 1]);
       }
     }
-    strcat(result, "wrong");
+    // strcat(result, "wrong");
     // printf("%s\n", result);
     argument = new std::string(result);
   }
-*/
   // simply add the argument to the vector
   _arguments.push_back(argument);
 }

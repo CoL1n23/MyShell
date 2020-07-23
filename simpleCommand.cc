@@ -22,18 +22,18 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
   
   // check for environ var expansion
-  const char target1[] = "^.*\\$\\{[^\\}]+\\}.*$";
+  const char env_var[] = "^.*\\$\\{[^\\}]+\\}.*$";
 
-  regex_t regex1;
-  int outcome1 = regcomp(&regex1, target1, REG_EXTENDED|REG_NOSUB);
-  if (outcome1 != 0) {
+  regex_t regex_env;
+  int outcome_env = regcomp(&regex_env, env_var, REG_EXTENDED|REG_NOSUB);
+  if (outcome_env != 0) {
     printf("error in regcomp\n");
     exit(1);
   }
-  regmatch_t match1;
-  outcome1 = regexec(&regex1, string, 0, &match1, 0);
-  printf("%s result1 is %d\n", string, outcome1);
-  if (outcome1 == 0) {  // matches
+  regmatch_t match_env;
+  outcome_env = regexec(&regex1, string, 0, &match_env, 0);
+  printf("%s result1 is %d\n", string, outcome_env);
+  if (outcome_env == 0) {  // matches
     printf("match\n");
     int index = 0;
     int env_num = 0;
@@ -156,20 +156,36 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
 
   // check for tilde expansion
-  const char target2[] = "^~[/]?$";
+  const char tilde1[] = "^~[/]?$";
 
-  regex_t regex2;
-  int outcome2 = regcomp(&regex2, target2, REG_EXTENDED|REG_NOSUB);
-  if (outcome2 != 0) {
-    printf("error in regcomp2\n");
+  regex_t regex_t1;
+  int outcome_t1 = regcomp(&regex_t1, tilde1, REG_EXTENDED|REG_NOSUB);
+  if (outcome_t1 != 0) {
+    printf("error in regcomp\n");
     exit(1);
   }
-  regmatch_t match2;
-  outcome2 = regexec(&regex2, string, 0, &match2, 0);
-  printf("%s result2 is %d\n", string, outcome2);
-  if (outcome2 == 0) {
+  regmatch_t match_t1;
+  outcome_t1 = regexec(&regex_t1, string, 0, &match_t1, 0);
+  printf("%s result2 is %d\n", string, outcome_t1);
+  if (outcome_t1 == 0) {
     printf("match2\n");
     argument = new std::string(getenv("HOME"));
+  }
+
+  const char tilde2[] = "^~[/]?[^\\]+$";
+
+  regex_t regex_t2;
+  int outcome_t2 = regcomp(&regex_t2, tilde2, REG_EXTENDED|REG_NOSUB);
+  if (outcome_t2 != 0) {
+    printf("error in regcomp\n");
+    exit(1);
+  }
+  regmatch_t match_t2;
+  outcome_t2 = regexec(&regex_t2, string, 0, &match_t2, 0);
+  printf("%s result2 is %d\n", string, outcome_t2);
+  if (outcome_t2 == 0) {
+    printf("match\n");
+    exit(0);
   }
 
   // simply add the argument to the vector

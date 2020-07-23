@@ -31,7 +31,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     exit(1);
   }
   regmatch_t match_env;
-  outcome_env = regexec(&regex1, string, 0, &match_env, 0);
+  outcome_env = regexec(&regex_env, string, 0, &match_env, 0);
   printf("%s result1 is %d\n", string, outcome_env);
   if (outcome_env == 0) {  // matches
     printf("match\n");

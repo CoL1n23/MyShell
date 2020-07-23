@@ -23,9 +23,12 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   const char target[] = "^.*${[^}][^}].*$";
 
   regex_t regex;
-  regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
+  int result = regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
+  if (result != 0) {
+    printf("error\n");
+  }
   regmatch_t match;
-  int result = regexec(&regex, string, 1, &match, 0);
+  result = regexec(&regex, string, 1, &match, 0);
   printf("%d\n", result);
   if (result == 0) {
     int index = 0;

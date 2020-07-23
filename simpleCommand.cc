@@ -170,7 +170,6 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   if (outcome2 == 0) {
     printf("match2\n");
     argument = new std::string(getenv("HOME"));
-    exit(0);
   }
 
   // simply add the argument to the vector

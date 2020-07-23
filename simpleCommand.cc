@@ -1,8 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
-#include <regex.h>
 #include <iostream>
 #include <sys/types.h>
+#include <regex.h>
 #include <pwd.h>
 #include <string.h>
 #include <unistd.h>
@@ -21,7 +21,7 @@ SimpleCommand::~SimpleCommand() {
 
 void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
-  
+/*  
   // check for environ var expansion
   const char env_var[] = "^.*\\$\\{[^\\}][^\\}]*\\}.*$";
 
@@ -155,7 +155,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     // printf("%s\n", result);
     argument = new std::string(result);
   }
-
+*/
   // check for tilde expansion (has 3 parts)
   const char tilde1[] = "^~[/]?$";
 

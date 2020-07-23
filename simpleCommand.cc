@@ -183,7 +183,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_t2;
   outcome_t2 = regexec(&regex_t2, string, 0, &match_t2, 0);
-  printf("%s result2 is %d\n", string, outcome_t2);
+  printf("%s result t2 is %d\n", string, outcome_t2);
   if (outcome_t2 == 0) {
     char* username = new char[(int)argument->size()];
     for (int i = 1; i < (int)argument->size(); i++) {
@@ -192,6 +192,22 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     username[(int)argument->size() - 1] = '\0';
     struct passwd *result = getpwnam(username);
     argument = new std::string(result->pw_dir);
+  }
+
+  const char tilde3[] = "^~[/]?[^\/]+\/.*$";
+
+  regex_t regex_t3;
+  int outcome_t3 = regcomp(&regex_t3, tilde3, REG_EXTENDED|REG_NOSUB);
+  if (outcome_t3 != 0) {
+    printf("error in regcomp\n");
+    exit(1);
+  }
+  regmatch_t match_t3;
+  outcome_t3 = regexec(&regex_t3, string, 0, &match_t3, 0);
+  printf("%s result t3 is %d\n", string, outcome_t3);
+  if (outcome_t3 == 0) {
+    printf("match\n");
+    exit(0);
   }
 
   // simply add the argument to the vector

@@ -190,10 +190,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
       username[i - 1] = argument->c_str()[i];
     }
     username[(int)argument->size() - 1] = '\0';
-    printf("%s\n", username);
     struct passwd *result = getpwnam(username);
-    printf("%s\n", result->pw_dir);
-    exit(0);
   }
 
   // simply add the argument to the vector

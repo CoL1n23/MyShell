@@ -185,7 +185,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   printf("%s result2 is %d\n", string, outcome_t2);
   if (outcome_t2 == 0) {
     char* username = new char[argument->size()];
-    for (int i = 1; i < argument->size(); i++) {
+    for (int i = 1; i < (int)argument->size(); i++) {
       username[i - 1] = argument->c_str()[i];
     }
     printf("%s\n", username);

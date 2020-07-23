@@ -133,7 +133,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
       }
       ctr = 0;
     }
-      // concat everything to final result
+    // concat everything to final result
     char* result = new char[1000];
     for (int i = 0; i < env_num; i++) {
       if (i == 0) {
@@ -150,7 +150,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     // printf("%s\n", result);
     argument = new std::string(result);
   }
-	
+
   // simply add the argument to the vector
   _arguments.push_back(argument);
 }

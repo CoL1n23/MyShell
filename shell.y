@@ -101,6 +101,7 @@ void expandWildcards(std::string* arg_s) {
     }
   }
   closedir(dir);
+  free(regex);
 }
 
 %}
@@ -114,8 +115,8 @@ goal:
 arg_list:
   arg_list WORD {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
-    /* expandWildcards($2); */
-    Command::_currentSimpleCommand->insertArgument( $2 );
+    expandWildcards($2);
+    /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }
   | /* can be empty */
   ;

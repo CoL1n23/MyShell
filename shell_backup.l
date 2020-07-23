@@ -228,6 +228,130 @@ source[ ].* {
   free(line);
 }
 
+[^ \n\t]*\$\{[^ \t\n|&<>]+\}[^ \n\t]* {
+  /* environ var expansion */
+  // get environ var name
+  int index = 0;
+  int env_num = 0;
+  while (yytext[index] != '\0') {
+    if (yytext[index] == '$') {
+      env_num++;
+      index += 2;
+    }
+    index++;
+  }
+
+  index = 0;
+  int* start_indices = new int[env_num];
+  int* end_indices = new int[env_num];
+  int counter = 0;
+  while (yytext[index] != '\0') {
+    if (yytext[index] == '{') {
+      start_indices[counter] = index + 1;
+    }
+    else if (yytext[index] == '}') {
+      end_indices[counter++] = index - 1;
+    }
+    index++;
+  }
+
+  char** env_names = new char*[env_num];
+  for (int i = 0; i < env_num; i++) {
+    env_names[i] = new char[end_indices[i] - start_indices[i] + 2];
+    env_names[i][end_indices[i] - start_indices[i] + 1] = '\0';
+    for (int j = 0; j < end_indices[i] - start_indices[i] + 1; j++) {
+      env_names[i][j] = yytext[start_indices[i] + j];
+    }
+  }
+
+  // get content in environ var
+  char** env_strs = new char*[env_num];
+  for (int i = 0; i < env_num; i++) {
+    if (!strcmp(env_names[i], "$")) {
+      env_strs[i] = new char[10];
+      pid_t pid = getpid();
+      sprintf(env_strs[i], "%d", pid);
+    }
+    else if (!strcmp(env_names[i], "?")) {
+      printf("?\n");
+    }
+    else if (!strcmp(env_names[i], "!")) {
+      printf("?\n");
+    }
+    else if (!strcmp(env_names[i], "_")) {
+      printf("?\n");
+    }
+    else if (!strcmp(env_names[i], "SHELL")) {
+      printf("?\n");
+    }
+    else {
+      env_strs[i] = getenv(env_names[i]);
+    }
+    // printf("%s\n", env_strs[i]);
+  }
+
+  char** others = new char*[env_num + 1];
+  int ctr = 0;
+  for (int i = 0; i < env_num + 1; i++) {
+    if (i == 0) {
+      if (start_indices[i] == 2) {
+        others[i] = NULL;
+      }
+      else {
+        others[i] = new char[start_indices[i] - 1];
+        others[i][start_indices[i] - 2] = '\0';
+        for (int j = 0; j < start_indices[i] - 2; j++) {
+          others[i][ctr++] = yytext[j];
+        }
+      }
+    }
+    else if (i == env_num) {
+      if (end_indices[i - 1] == strlen(yytext) - 2) {
+        others[i] = NULL;
+      }
+      else {
+        others[i] = new char[strlen(yytext) - end_indices[i - 1] - 2];
+        others[i][end_indices[i - 1] - 2] = '\0';
+        for (int j = end_indices[i - 1] + 2; j < strlen(yytext); j++) {
+          others[i][ctr++] = yytext[j];
+        }
+      }
+    }
+    else {
+      if (end_indices[i - 1] == (start_indices[i] - 4)) {
+        others[i] = NULL;
+      }
+      else {
+        others[i] = new char[start_indices[i] - end_indices[i - 1] - 3];
+        others[i][start_indices[i] - end_indices[i - 1] - 2] = '\0';
+        for (int j = end_indices[i - 1] + 2; j < start_indices[i] - 2; j++) {
+          others[i][ctr++] = yytext[j];
+        }
+      }
+    }
+    ctr = 0;
+  }
+
+  // concat everything to final result
+  char* result = new char[1000];
+  for (int i = 0; i < env_num; i++) {
+    if (i == 0) {
+      if (others[i] != NULL) {
+        strcpy(result, others[i]);
+      }
+    }
+    strcat(result, env_strs[i]);
+    if (others[i + 1] != NULL) {
+      strcat(result, others[i + 1]);
+    }
+  }
+
+  strcat(result, "wrong");
+  // printf("%s\n", result);
+  yylval.cpp_string = new std::string(result);
+  return WORD;
+}
+
 ~[/]?[^ \t\n|&<>]* {
   yylval.cpp_string = new std::string(getenv("HOME"));
   return WORD;

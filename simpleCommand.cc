@@ -25,7 +25,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   regex_t regex;
   int result = regcomp(&regex, target, REG_EXTENDED|REG_NOSUB);
   if (result != 0) {
-    perror("regcomp");
+    printf("error\n");
     exit(1);
   }
   regmatch_t match;

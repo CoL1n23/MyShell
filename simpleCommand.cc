@@ -29,7 +29,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     exit(1);
   }
   regmatch_t match;
-  result = regexec(&regex, string, 1, &match, 0);
+  result = regexec(&regex, string, 0, &match, 0);
   printf("%s result is %d\n", string, result);
   if (result == 0) {
     printf("match\n");

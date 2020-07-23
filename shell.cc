@@ -24,6 +24,8 @@ void sigIntHandler (int sig) {
 void sigChildHandler (int sig) {
   if (sig == SIGCHLD) {
     while (waitpid(-1, NULL, WNOHANG) > 0) {
+      int pid = wait3(0, 0, NULL);
+      printf("%d exited.\n", pid);
     }
   }
 }

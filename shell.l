@@ -339,7 +339,9 @@ source[ ].* {
         strcpy(result, others[i]);
       }
     }
-    strcat(result, env_strs[i]);
+    if (env_strs[i] != NULL) {
+      strcat(result, env_strs[i]);
+    }
     if (others[i + 1] != NULL) {
       strcat(result, others[i + 1]);
     }

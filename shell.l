@@ -282,8 +282,8 @@ source[ ].* {
       printf("?\n");
     }
     else if (!strcmp(env_names[i], "SHELL")) {
-      char* path = new char[100];
-      readlink("/proc/self/exe", path, 100);
+      char* env_strs[i] = new char[100];
+      readlink("/proc/self/exe", env_strs[i], 100);
     }
     else {
       env_strs[i] = getenv(env_names[i]);

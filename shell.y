@@ -67,7 +67,7 @@ char** sortFiles(char** files, int n_files) {
         cp2[index] = tolower(cp2[index]);
         index++;
       }
-      printf("%s %s\n", cp1, cp2);
+      //printf("%s %s\n", cp1, cp2);
       if (strcmp(cp1, cp2) > 0) {
         strcpy(temp, files[j + 1]);
         strcpy(files[j + 1], files[j]);

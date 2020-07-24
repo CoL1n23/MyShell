@@ -124,10 +124,10 @@ void expandWildcards(std::string* arg_s) {
   }
   closedir(dir);
 
-  char** files_sorted = sortFiles(files, n_files);
+  files = sortFiles(files, n_files);
 
   for (int i = 0; i < n_files; i++) {
-    std::string* new_arg = new std::string(files_sorted[i]);
+    std::string* new_arg = new std::string(files[i]);
     Command::_currentSimpleCommand->insertArgument(new_arg);
   }
 

@@ -39,41 +39,31 @@
 #include <regex.h>
 #include <dirent.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "shell.hh"
 
 void yyerror(const char * s);
 int yylex();
 
-char** sortFiles(char** files, int n_files) {
-  char* temp = new char[100];
-  char* cp1;
-  char* cp2;
-  for (int i = 1; i < n_files; i++) {
-    for (int j = 0; j < n_files - i; j++) {
-      cp1 = strdup(files[j]);
-      cp2 = strdup(files[j + 1]);
-      
-      int index = 0;
-      while (cp1[index] != '\0') {
-        cp1[index] = tolower(cp1[index]);
-        index++;
-      }
-      index = 0;
-      while (cp2[index] != '\0') {
-        cp2[index] = tolower(cp2[index]);
-        index++;
-      }
-      //printf("%s %s\n", cp1, cp2);
-      if (strcmp(cp1, cp2) > 0) {
-        strcpy(temp, files[j + 1]);
-        strcpy(files[j + 1], files[j]);
-        strcpy(files[j], temp);
-      }
-    }
+int compareFiles(char* file1, char* file2) {
+  char* cp1 = strdup(file1);
+  char* cp2 = strdup(file2);
+  
+  int index = 0;    
+  while (cp1[index] != '\0') {
+    cp1[index] = tolower(cp1[index]);
+    index++;
   }
+  index = 0;
+  while (cp2[index] != '\0') {
+    cp2[index] = tolower(cp2[index]);
+    index++;
+  }
+  //printf("%s %s\n", cp1, cp2);
+  int ret_val = strcmp(cp1, cp2);
   free(cp1);
   free(cp2);
-  return files;
+  return ret_val;
 }
 
 void expandWildcards(std::string* arg_s) {
@@ -151,7 +141,7 @@ void expandWildcards(std::string* arg_s) {
   }
   closedir(dir);
 
-  files = sortFiles(files, n_files);
+  qsort(files, n_files, sizeof(char *), compareFiles);
 
   for (int i = 0; i < n_files; i++) {
     std::string* new_arg = new std::string(files[i]);

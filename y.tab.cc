@@ -175,7 +175,7 @@ int yyparse (void);
 
 void yyerror(const char * s);
 int yylex();
-
+/*
 char** sortFiles(char** files, int n_files) {
   char* temp = new char[100];
   char* cp1;
@@ -295,7 +295,7 @@ void expandWildcards(std::string* arg_s) {
   }
   free(files);
 }
-
+*/
 
 #line 301 "y.tab.cc" /* yacc.c:358  */
 
@@ -1391,8 +1391,8 @@ yyreduce:
 #line 176 "shell.y" /* yacc.c:1646  */
     {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
-    expandWildcards((yyvsp[0].cpp_string));
-    /* Command::_currentSimpleCommand->insertArgument( $2 ); */
+    /* expandWildcards($2);*/
+    Command::_currentSimpleCommand->insertArgument( (yyvsp[0].cpp_string) );
   }
 #line 1398 "y.tab.cc" /* yacc.c:1646  */
     break;

@@ -274,7 +274,8 @@ source[ ].* {
       sprintf(env_strs[i], "%d", pid);
     }
     else if (!strcmp(env_names[i], "?")) {
-      printf("?\n");
+      env_strs[i] = new char[5];
+      sprintf(env_strs[i], "%d", ret_code);
     }
     else if (!strcmp(env_names[i], "!")) {
       env_strs[i] = new char[10];

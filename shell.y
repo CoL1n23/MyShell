@@ -115,7 +115,7 @@ void expandWildcards(std::string* arg_s) {
     if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
       if (n_files == max) {
         max *= 2;
-        files = realloc(files, max * sizeof(char *));
+        files = (char **) realloc(files, max * sizeof(char *));
       }
       files[n_files] = new strdup(ent->d_name);
       n_files++;

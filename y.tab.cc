@@ -180,7 +180,7 @@ char** sortFiles(char** files, int n_files) {
   for (int i = 1; i < n_files; i++) {
     for (int j = 0; j < n_files - i; j++) {
       if (strcmp(files[j], files[j + 1]) > 0) {
-        strcpy(temp, files[j + 1];
+        strcpy(temp, files[j + 1]);
         strcpy(files[j + 1], files[j]);
         strcpy(files[j], temp);
       }
@@ -262,7 +262,7 @@ void expandWildcards(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(new_arg);
   }
 
-  for (int i = 0; i < files.size(); i++) {
+  for (int i = 0; i < files.length(); i++) {
     free(files[i]);
   }
   free(files);

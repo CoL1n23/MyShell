@@ -171,7 +171,7 @@ void myunputc(int c) {
     char* sub_result = new char[1000];
     int counter = 0;
     while (read(pout[0], sub_result_char, 1)) {
-      if (*sub_result_char == 0) {
+      if ((int)*sub_result_char == 0) {
         printf("null in sub\n");
         continue;
       }

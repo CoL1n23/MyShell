@@ -43,6 +43,19 @@
 void yyerror(const char * s);
 int yylex();
 
+char** sortFiles(char** files, int n_files) {
+  char* temp = new char[100];
+  for (int i = 1; i < n_files; i++) {
+    for (int j = 0; j < n_files - i; j++) {
+      if (strcmp(files[j], files[j + 1]) > 0) {
+        strcpy(temp, files[j + 1];
+        strcpy(files[j + 1], files[j]);
+        strcpy(files[j], temp);
+      }
+    }
+  }
+}
+
 void expandWildcards(std::string* arg_s) {
   const char* arg_c = arg_s->c_str();
   if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?') == NULL) {
@@ -94,15 +107,33 @@ void expandWildcards(std::string* arg_s) {
   }
 
   struct dirent* ent;
+  int max = 10;
+  int n_files = 0;
+  char** files = (char **) malloc(max * sizeof(char *));
   regmatch_t match;
   while ((ent = readdir(dir)) != NULL) {
     if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
-      std::string* new_arg = new std::string(ent->d_name);
-      Command::_currentSimpleCommand->insertArgument(new_arg);
+      if (n_files == max) {
+        max *= 2;
+        files = realloc(files, max * sizeof(char *));
+      }
+      files[n_files] = new strdup(ent->d_name);
+      n_files++;
     }
   }
   closedir(dir);
-  free(regex);
+
+  char** files_sorted = sortFiles(files, n_files);
+
+  for (int i = 0; i < n_files; i++) {
+    std::string* new_arg = new std::string(files_sorted[i]);
+    Command::_currentSimpleCommand->insertArgument(new_arg);
+  }
+
+  for (int i = 0; i < files.size(); i++) {
+    free(files[i]);
+  }
+  free(files);
 }
 
 %}

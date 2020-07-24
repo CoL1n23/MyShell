@@ -185,11 +185,11 @@ char** sortFiles(char** files, int n_files) {
       cp2 = strdup(files[j + 1]);
       for (char* temp1 = cp1; *temp1 != '\0'; ++*temp1) {
         *temp1 = std::tolower(*temp1);
+        printf("%s\n", temp1);
       }
       for (char* temp2 = cp2; *temp2 != '\0'; ++*temp2) {
         *temp2 = std::tolower(*temp2);
       }
-      printf("%s\n", temp1);
       if (strcmp(files[j], files[j + 1]) > 0) {
         strcpy(temp, files[j + 1]);
         strcpy(files[j + 1], files[j]);

@@ -16,6 +16,7 @@
 #include <stdio.h>
 
 #include "y.tab.hh"
+#include "command.hh"
 
 static void yyunput (int c, char *buf_ptr);
 
@@ -276,10 +277,11 @@ source[ ].* {
       printf("?\n");
     }
     else if (!strcmp(env_names[i], "!")) {
-      printf("?\n");
+      env_strs[i] = new char[10];
+      sprintf(env_strs[i], "%d", last_bg);
     }
     else if (!strcmp(env_names[i], "_")) {
-      printf("?\n");
+      env_strs[i] = prev_command;
     }
     else if (!strcmp(env_names[i], "SHELL")) {
       env_strs[i] = new char[100];

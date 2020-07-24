@@ -27,6 +27,9 @@
 #include "command.hh"
 #include "shell.hh"
 
+int ret_code;
+int last_bg;
+char* prev_command;
 
 Command::Command() {
     // Initialize a new vector of Simple Commands
@@ -262,6 +265,8 @@ void Command::execute() {
 	else {
           fdout = dup(tmpout);
 	}
+
+	prev_command = _simpleCommmands[i]->_arguments[_simpleCommmands[i]->_arguments.size() - 1]->c.str();
       }
       else {
         // not last simple command
@@ -320,6 +325,9 @@ void Command::execute() {
     // handle background optional
     if (!_background) {
       waitpid(ret, NULL, 0);
+    }
+    else {
+      last_bg = ret;
     }
 
     // Clear to prepare for next command

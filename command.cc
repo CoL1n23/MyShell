@@ -325,8 +325,8 @@ void Command::execute() {
     // handle background optional
     if (!_background) {
       int s;
-      ret_code = waitpid(ret, &s, WEXITSTATUS(s));
-      
+      waitpid(ret, &s, 0);
+      ret_code = WEXITSTATUS(s);
     }
     else {
       last_bg = ret;

@@ -156,7 +156,7 @@ void myunputc(int c) {
     perror("execvp subshell");
     _exit(1);
   }
-  else if (ret > 0) {
+  //else if (ret > 0) {
     // parent process
     // restore stdin/stdout/stderr
     dup2(tmpin, 0);
@@ -171,10 +171,6 @@ void myunputc(int c) {
     char* sub_result = new char[1000];
     int counter = 0;
     while (read(pout[0], sub_result_char, 1)) {
-      if ((int)*sub_result_char == 0) {
-        printf("null in sub\n");
-        continue;
-      }
       if (*sub_result_char == '\n' || *sub_result_char == '\t') {
         sub_result[counter++] = ' ';
       }
@@ -189,12 +185,14 @@ void myunputc(int c) {
     for (int i = strlen(sub_result) - 1; i >= 0; i--) {
       myunputc(sub_result[i]);
     }
-  }
+  //}
+/*
   else {
     // fork failed
     perror("fork subshell");
     exit(1);
-  } 
+  }
+*/ 
 }
 
 source[ ].* {

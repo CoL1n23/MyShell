@@ -266,7 +266,7 @@ void Command::execute() {
           fdout = dup(tmpout);
 	}
 
-	prev_command = _simpleCommands[i]->_arguments[_simpleCommands[i]->_arguments.size() - 1]->c_str();
+	prev_command = _simpleCommands[i]->_arguments[_simpleCommands[i]->_arguments.size() - 1][0]->c_str();
       }
       else {
         // not last simple command

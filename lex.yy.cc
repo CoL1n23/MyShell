@@ -1377,7 +1377,7 @@ YY_RULE_SETUP
     else {
       env_strs[i] = getenv(env_names[i]);
     }
-    printf("%s\n", env_strs[i]);
+    // printf("%s\n", env_strs[i]);
   }
 
   /*

@@ -54,6 +54,7 @@ char** sortFiles(char** files, int n_files) {
       }
     }
   }
+  return files;
 }
 
 void expandWildcards(std::string* arg_s) {

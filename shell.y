@@ -49,7 +49,6 @@ int compareFiles(const void* file1, const void* file2) {
   char* cp1 = strdup((const char *)file1);
   char* cp2 = strdup((const char *)file2);
  
-  /* 
   int index = 0;    
   while (cp1[index] != '\0') {
     cp1[index] = tolower(cp1[index]);
@@ -60,9 +59,9 @@ int compareFiles(const void* file1, const void* file2) {
     cp2[index] = tolower(cp2[index]);
     index++;
   }
-  */
-  //printf("%s %s\n", cp1, cp2);
-  int ret_val = strcmp(cp2, cp1);
+
+  printf("%s %s\n", cp1, cp2);
+  int ret_val = strcmp(cp1, cp2);
   free(cp1);
   free(cp2);
   return ret_val;

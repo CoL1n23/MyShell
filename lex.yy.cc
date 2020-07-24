@@ -1248,15 +1248,15 @@ YY_RULE_SETUP
     close(tmperr);
 
     // read input from child process
-    char* sub_result_char;
+    char sub_result_char;
     char* sub_result = new char[1000];
     int counter = 0;
-    while (read(pout[0], sub_result_char, 1)) {
+    while (read(pout[0], &sub_result_char, 1)) {
       if (sub_result_char == '\n' || sub_result_char == '\t') {
         sub_result[counter++] = ' ';
       }
       else {
-        sub_result[counter++] = *sub_result_char;
+        sub_result[counter++] = sub_result_char;
       }
     }
     sub_result[counter] = '\0';

@@ -43,7 +43,6 @@
 
 void yyerror(const char * s);
 int yylex();
-/*
 char** sortFiles(char** files, int n_files) {
   char* temp = new char[100];
   char* cp1;
@@ -163,7 +162,6 @@ void expandWildcards(std::string* arg_s) {
   }
   free(files);
 }
-*/
 %}
 
 %%
@@ -175,8 +173,8 @@ goal:
 arg_list:
   arg_list WORD {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
-    /* expandWildcards($2);*/
-    Command::_currentSimpleCommand->insertArgument( $2 );
+    expandWildcards($2);
+    /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }
   | /* can be empty */
   ;

@@ -60,6 +60,8 @@ int main() {
     exit(-1);
   }
 
+  // create a file, fopen, .shellrc, yyrestart
+
   yyparse();
 }
 

@@ -299,7 +299,6 @@ void Command::execute() {
 	for (size_t j = 0; j < _simpleCommands[i]->_arguments.size(); j++) {
           args[j] = _simpleCommands[i]->_arguments[j]->c_str();
 	  strcpy(prev_command, args[j]);
-	  printf("prev is %s\n", prev_command);
 	}
 
 	// execute cmd_and_args

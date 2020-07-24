@@ -45,8 +45,19 @@ int yylex();
 
 char** sortFiles(char** files, int n_files) {
   char* temp = new char[100];
+  char* cp1;
+  char* cp2;
   for (int i = 1; i < n_files; i++) {
     for (int j = 0; j < n_files - i; j++) {
+      cp1 = strdup(files[j]);
+      cp2 = strdup(files[j + 1]);
+      for (char* temp1 = cp1; *temp1 != '\0'; ++*temp1) {
+        *temp1 = std::tolower(*temp1);
+      }
+      for (char* temp2 = cp2; *temp2 != '\0'; ++*temp2) {
+        *temp2 = std::tolower(*temp2);
+      }
+      printf("%s\n", temp1);
       if (strcmp(files[j], files[j + 1]) > 0) {
         strcpy(temp, files[j + 1]);
         strcpy(files[j + 1], files[j]);
@@ -54,6 +65,8 @@ char** sortFiles(char** files, int n_files) {
       }
     }
   }
+  free(cp1);
+  free(cp2);
   return files;
 }
 

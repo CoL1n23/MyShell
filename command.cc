@@ -298,8 +298,9 @@ void Command::execute() {
 	// convert all cpp_strings to c_strings
 	for (size_t j = 0; j < _simpleCommands[i]->_arguments.size(); j++) {
           args[j] = _simpleCommands[i]->_arguments[j]->c_str();
-	  printf("%s\n", args[j]);
+	  printf("arg is %s\n", args[j]);
 	  prev_command = args[j];
+	  printf("prev is %s\n", prev_command);
 	}
 
 	// execute cmd_and_args

@@ -1252,7 +1252,7 @@ YY_RULE_SETUP
     char* sub_result = new char[1000];
     int counter = 0;
     while (read(pout[0], sub_result_char, 1)) {
-      if (*sub_result_char == '\n' || *sub_result_char == '\t') {
+      if (sub_result_char == '\n' || sub_result_char == '\t') {
         sub_result[counter++] = ' ';
       }
       else {

@@ -43,6 +43,7 @@
 
 void yyerror(const char * s);
 int yylex();
+
 char** sortFiles(char** files, int n_files) {
   char* temp = new char[100];
   char* cp1;

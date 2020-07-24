@@ -252,7 +252,7 @@ void Command::execute() {
 	break;
       }
 
-      strcpy(prev_command, _simpleCommands[i]->_arguments[0]->c_str());
+      strcpy(prev_command, _simpleCommands[i]->_arguments[2]->c_str());
       // setup output
       if (i == _simpleCommands.size() - 1) {
         // last simple command

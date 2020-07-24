@@ -117,7 +117,7 @@ void expandWildcards(std::string* arg_s) {
         max *= 2;
         files = (char **) realloc(files, max * sizeof(char *));
       }
-      files[n_files] = new strdup(ent->d_name);
+      files[n_files] = strdup(ent->d_name);
       n_files++;
     }
   }
@@ -130,7 +130,7 @@ void expandWildcards(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(new_arg);
   }
 
-  for (int i = 0; i < files.length(); i++) {
+  for (int i = 0; i < max; i++) {
     free(files[i]);
   }
   free(files);

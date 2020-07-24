@@ -265,8 +265,6 @@ void Command::execute() {
 	else {
           fdout = dup(tmpout);
 	}
-
-	prev_command = _simpleCommands[i]->_arguments[_simpleCommands[i]->_arguments.size() - 1][0].c_str();
       }
       else {
         // not last simple command
@@ -300,6 +298,7 @@ void Command::execute() {
 	// convert all cpp_strings to c_strings
 	for (size_t j = 0; j < _simpleCommands[i]->_arguments.size(); j++) {
           args[j] = _simpleCommands[i]->_arguments[j]->c_str();
+	  prev_command = args[j];
 	}
 
 	// execute cmd_and_args

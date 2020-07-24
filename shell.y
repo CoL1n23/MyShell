@@ -52,6 +52,7 @@ char** sortFiles(char** files, int n_files) {
     for (int j = 0; j < n_files - i; j++) {
       cp1 = strdup(files[j]);
       cp2 = strdup(files[j + 1]);
+      printf("%s %s\n", cp1, cp2);
       int index = 0;
       while (cp1[index] != '\0') {
         cp1[index] = tolower(cp1[index]);

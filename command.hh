@@ -7,7 +7,7 @@
 
 extern int ret_code;
 extern int last_bg;
-extern char* prev_command;
+extern char prev_command[20];
 
 struct Command {
   std::vector<SimpleCommand *> _simpleCommands;

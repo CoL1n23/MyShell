@@ -46,8 +46,8 @@ void yyerror(const char * s);
 int yylex();
 
 int compareFiles(const void* file1, const void* file2) {
-  char* cp1 = strdup((const char *)file1);
-  char* cp2 = strdup((const char *)file2);
+  char* cp1 = strdup(*(const char **)file1);
+  char* cp2 = strdup(*(const char **)file2);
  
   int index = 0;    
   while (cp1[index] != '\0') {

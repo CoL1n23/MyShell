@@ -27,9 +27,9 @@
 #include "command.hh"
 #include "shell.hh"
 
-int ret_code;
-int last_bg;
-char* prev_command;
+int ret_code = -1;
+int last_bg = -1;
+char prev_command[20];
 
 Command::Command() {
     // Initialize a new vector of Simple Commands

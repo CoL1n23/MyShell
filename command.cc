@@ -324,7 +324,9 @@ void Command::execute() {
 
     // handle background optional
     if (!_background) {
-      waitpid(ret, NULL, 0);
+      int s;
+      waitpid(ret, &s, 0);
+      printf("%d\n", s);
     }
     else {
       last_bg = ret;

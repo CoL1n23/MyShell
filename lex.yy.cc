@@ -1382,7 +1382,7 @@ YY_RULE_SETUP
   }
 
   /*
-  * following code just replaces content with env var and return it
+  * following code just replaces content with env var and returns it
   */
   char** others = new char*[env_num + 1];
   int ctr = 0;

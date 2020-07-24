@@ -112,7 +112,7 @@ void myunputc(int c) {
   return WORD;
 }
 
-\$\(.*\) {
+\$\([^\t\n]*\) {
   /* subshell */
   // create two pipes
   int pin[2], pout[2];

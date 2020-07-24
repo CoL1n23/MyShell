@@ -38,6 +38,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <dirent.h>
+#include <ctype.h>
 #include "shell.hh"
 
 void yyerror(const char * s);
@@ -51,15 +52,17 @@ char** sortFiles(char** files, int n_files) {
     for (int j = 0; j < n_files - i; j++) {
       cp1 = strdup(files[j]);
       cp2 = strdup(files[j + 1]);
-      for (char* temp1 = cp1; *temp1 != '\0'; ++*temp1) {
-        *temp1 = std::tolower(*temp1);
-        ++*temp1;
+      int index = 0;
+      while (cp1[index] != '\0') {
+        cp1[index] = tolower(cp1[index]);
+        index++;
       }
-      for (char* temp2 = cp2; *temp2 != '\0'; ++*temp2) {
-        *temp2 = std::tolower(*temp2);
+      index = 0;
+      while (cp2[index] != '\0') {
+        cp2[index] = tolower(cp2[index]);
+        index++;
       }
-      printf("%s\n", cp1);
-      if (strcmp(files[j], files[j + 1]) > 0) {
+      if (strcmp(cp1, cp2) > 0) {
         strcpy(temp, files[j + 1]);
         strcpy(files[j + 1], files[j]);
         strcpy(files[j], temp);

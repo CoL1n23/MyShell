@@ -29,7 +29,7 @@
 
 int ret_code = -1;
 int last_bg = -1;
-char prev_command[20];
+char* prev_command = new char[20];
 
 Command::Command() {
     // Initialize a new vector of Simple Commands

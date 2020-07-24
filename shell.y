@@ -121,12 +121,13 @@ void expandWildcards(std::string* arg_s) {
       if (ent->d_name[0] == '.') {
         if (arg_c[0] == '.') {
         files[n_files] = strdup(ent->d_name);
+        n_files++;
         }
       }
       else {
         files[n_files] = strdup(ent->d_name);
+        n_files++;
       }
-      n_files++;
     }
   }
   closedir(dir);

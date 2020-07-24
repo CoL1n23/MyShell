@@ -1369,6 +1369,7 @@ YY_RULE_SETUP
     }
     else if (!strcmp(env_names[i], "_")) {
       env_strs[i] = new char[20];
+      printf("%s\n", prev_command);
       strcpy(env_strs[i], prev_command);
     }
     else if (!strcmp(env_names[i], "SHELL")) {
@@ -1449,7 +1450,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 363 "shell.l"
+#line 364 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1458,10 +1459,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 368 "shell.l"
+#line 369 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1465 "lex.yy.cc"
+#line 1466 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2478,4 +2479,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 368 "shell.l"
+#line 369 "shell.l"

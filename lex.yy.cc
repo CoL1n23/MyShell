@@ -1237,7 +1237,7 @@ YY_RULE_SETUP
     perror("execvp subshell");
     _exit(1);
   }
-  else if (ret > 0) {
+  //else if (ret > 0) {
     // parent process
     // restore stdin/stdout/stderr
     dup2(tmpin, 0);
@@ -1252,10 +1252,6 @@ YY_RULE_SETUP
     char* sub_result = new char[1000];
     int counter = 0;
     while (read(pout[0], sub_result_char, 1)) {
-      if ((int)*sub_result_char == 0) {
-        printf("null in sub\n");
-        continue;
-      }
       if (*sub_result_char == '\n' || *sub_result_char == '\t') {
         sub_result[counter++] = ' ';
       }
@@ -1270,17 +1266,19 @@ YY_RULE_SETUP
     for (int i = strlen(sub_result) - 1; i >= 0; i--) {
       myunputc(sub_result[i]);
     }
-  }
+  //}
+/*
   else {
     // fork failed
     perror("fork subshell");
     exit(1);
-  } 
+  }
+*/ 
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 200 "shell.l"
+#line 198 "shell.l"
 {
   /* source file */
   // get source file name
@@ -1319,7 +1317,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 236 "shell.l"
+#line 234 "shell.l"
 {
   /* environ var expansion */
   // get environ var name
@@ -1457,7 +1455,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 371 "shell.l"
+#line 369 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1466,10 +1464,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 376 "shell.l"
+#line 374 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1473 "lex.yy.cc"
+#line 1471 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2486,4 +2484,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 376 "shell.l"
+#line 374 "shell.l"

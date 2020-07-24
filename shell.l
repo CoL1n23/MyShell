@@ -16,7 +16,6 @@
 #include <stdio.h>
 
 #include "y.tab.hh"
-#include "command.hh"
 
 static void yyunput (int c, char *buf_ptr);
 
@@ -156,7 +155,7 @@ void myunputc(int c) {
     perror("execvp subshell");
     _exit(1);
   }
-  //else if (ret > 0) {
+  else if (ret > 0) {
     // parent process
     // restore stdin/stdout/stderr
     dup2(tmpin, 0);
@@ -185,14 +184,12 @@ void myunputc(int c) {
     for (int i = strlen(sub_result) - 1; i >= 0; i--) {
       myunputc(sub_result[i]);
     }
-  //}
-/*
+  }
   else {
     // fork failed
     perror("fork subshell");
     exit(1);
   }
-*/ 
 }
 
 source[ ].* {
@@ -279,16 +276,18 @@ source[ ].* {
       printf("?\n");
     }
     else if (!strcmp(env_names[i], "!")) {
-      env_strs[i] = new char[10];
-      sprintf(env_strs[i], "%d", last_bg);
+      //env_strs[i] = new char[10];
+      //sprintf(env_strs[i], "%d", last_bg);
     }
     else if (!strcmp(env_names[i], "_")) {
+      /*
       if (prev_command == NULL) {
         printf("null\n");
         exit(1);
       }
       printf("%s\n", prev_command);
       env_strs[i] = prev_command;
+*/
     }
     else if (!strcmp(env_names[i], "SHELL")) {
       env_strs[i] = new char[100];

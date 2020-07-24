@@ -24,9 +24,9 @@ void sigIntHandler (int sig) {
 void sigChildHandler (int sig) {
   if (sig == SIGCHLD) {
     while (waitpid(-1, NULL, WNOHANG) > 0) {
-      if (Shell::_currentCommand._background == true) {
-        printf("%d terminated.\n", getpid());
-      }
+      //if (Shell::_currentCommand._background == true) {
+        //printf("%d terminated.\n", getpid());
+      //}
     }
   }
 }

@@ -118,7 +118,14 @@ void expandWildcards(std::string* arg_s) {
         max *= 2;
         files = (char **) realloc(files, max * sizeof(char *));
       }
-      files[n_files] = strdup(ent->d_name);
+      if (ent->d_name[0] == '.') {
+        if (arg_c[0] == '.') {
+        files[n_files] = strdup(ent->d_name);
+        }
+      }
+      else {
+        files[n_files] = strdup(ent->d_name);
+      }
       n_files++;
     }
   }

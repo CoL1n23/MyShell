@@ -281,7 +281,6 @@ source[ ].* {
       sprintf(env_strs[i], "%d", last_bg);
     }
     else if (!strcmp(env_names[i], "_")) {
-      printf("%s\n", prev_command);
       env_strs[i] = prev_command;
     }
     else if (!strcmp(env_names[i], "SHELL")) {

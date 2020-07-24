@@ -48,10 +48,15 @@ char** sortFiles(char** files, int n_files) {
   char* temp = new char[100];
   char* cp1;
   char* cp2;
+  const char dot[2] = ".";
   for (int i = 1; i < n_files; i++) {
     for (int j = 0; j < n_files - i; j++) {
       cp1 = strdup(files[j]);
       cp2 = strdup(files[j + 1]);
+      
+      cp1 = strtok(cp1, dot);
+      cp2 = strtok(cp2, dot);
+
       int index = 0;
       while (cp1[index] != '\0') {
         cp1[index] = tolower(cp1[index]);

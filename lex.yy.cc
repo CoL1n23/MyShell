@@ -1371,7 +1371,7 @@ YY_RULE_SETUP
       printf("?\n");
     }
     else if (!strcmp(env_names[i], "SHELL")) {
-      char* env_strs[i] = new char[100];
+      char env_strs[i] = new char[100];
       readlink("/proc/self/exe", env_strs[i], 100);
     }
     else {

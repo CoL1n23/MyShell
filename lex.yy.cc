@@ -1252,6 +1252,10 @@ YY_RULE_SETUP
     char* sub_result = new char[1000];
     int counter = 0;
     while (read(pout[0], sub_result_char, 1)) {
+      if (*sub_result_char == NULL) {
+        printf("null in sub\n");
+        continue;
+      }
       if (*sub_result_char == '\n' || *sub_result_char == '\t') {
         sub_result[counter++] = ' ';
       }
@@ -1276,7 +1280,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 196 "shell.l"
+#line 200 "shell.l"
 {
   /* source file */
   // get source file name
@@ -1315,7 +1319,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 232 "shell.l"
+#line 236 "shell.l"
 {
   /* environ var expansion */
   // get environ var name
@@ -1453,7 +1457,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 367 "shell.l"
+#line 371 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1462,10 +1466,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 372 "shell.l"
+#line 376 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1469 "lex.yy.cc"
+#line 1473 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2482,4 +2486,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 372 "shell.l"
+#line 376 "shell.l"

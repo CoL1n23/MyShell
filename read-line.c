@@ -25,7 +25,7 @@ int cursor;
 // This history does not change. 
 // Yours have to be updated.
 int history_index = 0;
-char* history[1000];
+char * history[1000];
 /*= {
   "ls -al | grep x", 
   "ps -e",

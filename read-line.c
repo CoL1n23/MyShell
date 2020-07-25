@@ -135,9 +135,9 @@ char * read_line() {
       }
       else {
 	// move everything after cursor forward by 1
-        for (int i = cursor - 1; i < line_length - 1; i++) {
-          line_buffer[i] = line_buffer[i + 1];
-	  write(1, &line_buffer[i], 1);
+        for (int i = cursor; i < line_length; i++) {
+          line_buffer[i - 1] = line_buffer[i];
+	  write(1, &line_buffer[i - 1], 1);
 	}
 
 	// ease last character

@@ -61,7 +61,7 @@ int compareFiles(const void* file1, const void* file2) {
 void expandWildcard(char* prefix, char* suffix) {
   if (suffix[0] == 0) {
     if (n_files == max_files) {
-      max *= 2;
+      max_files *= 2;
       files = (char **) realloc(files, max * sizeof(char *));
     }
     files[n_files] = prefix;

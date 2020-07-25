@@ -24,7 +24,7 @@ int cursor;
 // Simple history array
 // This history does not change. 
 // Yours have to be updated.
-int history_index = 0;
+int history_index;
 char history[1000][2048];
 /*= {
   "ls -al | grep x", 
@@ -54,6 +54,8 @@ char * read_line() {
 
   // Set terminal in raw mode
   tty_raw_mode();
+
+  history_index = 0;
 
   line_length = 0;
   cursor = 0;

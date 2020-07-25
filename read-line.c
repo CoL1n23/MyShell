@@ -86,7 +86,7 @@ char * read_line() {
 	write(1,&ch,1);
 
 	// restore rear line_buffer
-	for (int i = cursor + 1; i < length + 1; i++) {
+	for (int i = cursor + 1; i < line_length + 1; i++) {
 	  line_buffer[i] = rear[i - cursor - 1];
 	}
 
@@ -206,7 +206,7 @@ char * read_line() {
       else if (ch1 == 91 && ch2 == 67) {
 	// right arrow
         if (cursor < line_length) {
-          ch = line_buffer[location];
+          ch = line_buffer[cursor];
 	  write(1,&ch,1);
 	  cursor++;
 	}

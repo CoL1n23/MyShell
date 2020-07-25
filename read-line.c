@@ -116,7 +116,7 @@ char * read_line() {
     }
     else if ((ch == 8 || ch == 127) && cursor > 0) {
       // <backspace> was typed. Remove previous character read.
-
+	write(1, "delete",10);
       // Go back one character
       ch = 8;
       write(1,&ch,1);
@@ -156,6 +156,7 @@ char * read_line() {
       cursor--;
     }
     else if (ch == 4 && cursor < line_length) {
+      // handle ctrl-h
       for (int i = cursor; i < line_length - 1; i++) {
         line_buffer[i] = line_buffer[i + 1];
 	write(1, &line_buffer[i + 1], 1);

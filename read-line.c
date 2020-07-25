@@ -91,7 +91,7 @@ char * read_line() {
 	}
 
 	// cursor goes back to previous position
-	for (int i = cursor + 1; i < length + 1; i++) {
+	for (int i = cursor + 1; i < line_length + 1; i++) {
 	  ch = 8;
 	  write(1,&ch,1);
         }

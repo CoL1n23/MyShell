@@ -84,10 +84,11 @@ void expandWildcard(char* prefix, char* suffix) {
     return;
   }
 
+  // get next component in suffix
   char* s = strchr(suffix, '/');
   char component[MAXFILENAME];
   if (s != NULL) {
-    strcpy(component, suffix, (size_t) s - suffix);
+    strcpy(component, suffix, (size_t)(s - suffix));
     suffix = s + 1;
   }
   else {
@@ -104,31 +105,32 @@ void expandWildcard(char* prefix, char* suffix) {
   }
 
   // expand wildcards
-  char* regex = (char*)malloc(2 * strlen(suffix) + 10);
+  char* regex = (char*)malloc(2 * strlen(component) + 10);
   *regex = '^';
   regex++;
-  while (*arg_c) {
-    if (*arg_c == '*') {
+  char *c = component;
+  while (*c) {
+    if (*c == '*') {
       *regex = '.';
       regex++;
       *regex = '*';
       regex++;
     }
-    else if (*arg_c == '?') {
+    else if (*c == '?') {
       *regex = '.';
       regex++;
     }
-    else if (*arg_c == '.') {
+    else if (*c == '.') {
       *regex = '\\';
       regex++;
       *regex = '.';
       regex++;
     }
     else {
-      *regex = *arg_c;
+      *regex = *c;
       regex++;
     }
-    arg_c++;
+    c++;
   }
   *regex = '$';
   regex++;

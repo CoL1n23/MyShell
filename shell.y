@@ -106,35 +106,36 @@ void expandWildcard(char* prefix, char* suffix) {
 
   // translate wildcards to regex
   char* regex = (char*) malloc(2 * strlen(component) + 10);
-  *regex = '^';
-  regex++;
   char* c = component;
+  char* r = regex;
+  *r = '^';
+  r++;
   while (*c) {
     if (*c == '*') {
-      *regex = '.';
-      regex++;
-      *regex = '*';
-      regex++;
+      *r = '.';
+      r++;
+      *r = '*';
+      r++;
     }
     else if (*c == '?') {
-      *regex = '.';
-      regex++;
+      *r = '.';
+      r++;
     }
     else if (*c == '.') {
-      *regex = '\\';
-      regex++;
-      *regex = '.';
-      regex++;
+      *r = '\\';
+      r++;
+      *r = '.';
+      r++;
     }
     else {
-      *regex = *c;
-      regex++;
+      *r = *c;
+      r++;
     }
     c++;
   }
-  *regex = '$';
-  regex++;
-  *regex = 0;
+  *r = '$';
+  r++;
+  *r = 0;
 
   // compile regex
   regex_t re;

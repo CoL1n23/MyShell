@@ -108,7 +108,7 @@ char * read_line() {
       // <Enter> was typed. Return line
       
       if (strlen(line_buffer) > 0) {
-	strncpy(history[history_length++], line_buffer, strlen(line_buffer) - 1);
+	strcpy(history[history_length++], line_buffer);
       }
 
       // Print newline

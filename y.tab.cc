@@ -197,7 +197,7 @@ void expandWildcard(char* prefix, char* suffix) {
       files = (char **) realloc(files, max_files * sizeof(char *));
     }
     printf("%s\n", prefix);
-    files[n_files] = prefix;
+    files[n_files] = (char *)prefix;
     n_files++;
     return;
   }

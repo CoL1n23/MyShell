@@ -156,7 +156,7 @@ void expandWildcard(char* prefix, char* suffix) {
   struct dirent* ent;
   regmatch_t match;
   while ((ent = readdir(d)) != NULL) {
-    if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
+    if (regexec(&re, ent->d_name, 1, &match, 0) == 0) {
       if (ent->d_name[0] == '.') {
         if (component[0] == '.') {
           // if user has specified hidden files
@@ -170,7 +170,6 @@ void expandWildcard(char* prefix, char* suffix) {
         }
       }
       else {
-        // add unhidden files
         if (prefix == NULL) {
           sprintf(new_prefix, "%s", ent->d_name);
         }

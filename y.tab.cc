@@ -321,8 +321,6 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     return;
   }
 
-  max_files = 10;
-  // n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
@@ -345,7 +343,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
 }
 
 
-#line 349 "y.tab.cc" /* yacc.c:358  */
+#line 347 "y.tab.cc" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -643,7 +641,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   220,   220,   224,   229,   233,   233,   243,   244,   248,
+       0,   218,   218,   222,   229,   233,   233,   243,   244,   248,
      260,   271,   288,   299,   315,   329,   330,   334,   337,   341,
      345,   348,   354,   355
 };
@@ -1436,9 +1434,11 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 224 "shell.y" /* yacc.c:1646  */
+#line 222 "shell.y" /* yacc.c:1646  */
     {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
+    max_files = 10;
+    n_files = 0;
     expandWildcardsIfNecessary((yyvsp[0].cpp_string));
     /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }

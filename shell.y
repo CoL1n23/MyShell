@@ -59,6 +59,10 @@ int compareFiles(const void* file1, const void* file2) {
 }
 
 void expandWildcard(char* prefix, char* suffix) {
+  if (files == NULL) {
+    files = (char **) malloc(max_files * sizeof(char *));
+  }
+
   if (suffix[0] == 0) {
     if (n_files == max_files) {
       max_files *= 2;
@@ -188,8 +192,6 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(arg_s);
     return;
   }
-
-  files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
   for (int i = 0; i < n_files; i++) {

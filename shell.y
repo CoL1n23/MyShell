@@ -206,14 +206,18 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
+/*
   for (int i = 0; i < n_files; i++) {
     printf("%s 1\n", files[i]);
   }
+*/
 
   qsort(files, n_files, sizeof(char *), compareFiles);
+/*
   for (int i = 0; i < n_files; i++) {
     printf("%s\n", files[i]);
   }
+*/
 
   for (int i = 0; i < n_files; i++) {
     // printf("%s %d\n", files[i], n_files);

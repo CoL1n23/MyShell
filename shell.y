@@ -42,13 +42,19 @@
 #include <stdlib.h>
 #include "shell.hh"
 
+#define MAXFILENAME 1024
+
 void yyerror(const char * s);
 int yylex();
+
+int max;
+int n_files;
+char** files;
 
 int compareFiles(const void* file1, const void* file2) {
   char* cp1 = strdup(*(const char **)file1);
   char* cp2 = strdup(*(const char **)file2);
-/* 
+ 
   int index = 0;    
   while (cp1[index] != '\0') {
     cp1[index] = tolower(cp1[index]);
@@ -59,7 +65,7 @@ int compareFiles(const void* file1, const void* file2) {
     cp2[index] = tolower(cp2[index]);
     index++;
   }
-*/
+
   // printf("%s %s\n", cp1, cp2);
   int ret_val = strcmp(cp1, cp2);
   free(cp1);
@@ -67,13 +73,37 @@ int compareFiles(const void* file1, const void* file2) {
   return ret_val;
 }
 
-void expandWildcards(std::string* arg_s) {
-  const char* arg_c = arg_s->c_str();
-  if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?') == NULL) {
-    Command::_currentSimpleCommand->insertArgument(arg_s);
+void expandWildcard(char* prefix, char* suffix) {
+  if (suffix[0] == 0) {
+    if (n_files == max) {
+      max *= 2;
+      files = (char **) realloc(files, max * sizeof(char *));
+    }
+    files[n_files] = prefix;
+    n_files++;
     return;
   }
 
+  char* s = strchr(suffix, '/');
+  char component[MAXFILENAME];
+  if (s != NULL) {
+    strcpy(component, suffix, s - suffix);
+    suffix = s + 1;
+  }
+  else {
+    strcpy(component, suffix);
+    suffix += strlen(suffix);
+  }
+
+  // expand component
+  char new_prefix[MAXFILENAME];
+  if (strchr(component, '*') == NULL && strchr(component, '?') == NULL) {
+    sprintf(new_prefix, "%s/%s", prefix, component);
+    expandWildcard(new_prefix, suffix);
+    return;
+  }
+
+  // expand wildcards
   char* regex = (char*)malloc(2 * strlen(arg_c) + 10);
   *regex = '^';
   regex++;
@@ -104,6 +134,7 @@ void expandWildcards(std::string* arg_s) {
   regex++;
   *regex = 0;
 
+  // compile regex
   regex_t re;
   int result = regcomp(&re, regex, REG_EXTENDED|REG_NOSUB);
   if (result != 0) {
@@ -111,37 +142,52 @@ void expandWildcards(std::string* arg_s) {
     return;
   }
 
-  DIR* dir = opendir(".");
-  if (dir == NULL) {
-    perror("opendir");
+  char* dir;
+  if (prefix[0] == 0) {
+    dir = ".";
+  }
+  else {
+    dir = prefix;
+  }
+
+  DIR* d = opendir(dir);
+  if (d == NULL) {
     return;
   }
 
+  // check what entries match
   struct dirent* ent;
-  int max = 10;
-  int n_files = 0;
-  char** files = (char **) malloc(max * sizeof(char *));
   regmatch_t match;
   while ((ent = readdir(dir)) != NULL) {
     if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
-      if (n_files == max) {
-        max *= 2;
-        files = (char **) realloc(files, max * sizeof(char *));
-      }
+      sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       if (ent->d_name[0] == '.') {
         if (arg_c[0] == '.') {
-        files[n_files] = strdup(ent->d_name);
-        n_files++;
+          expandWildcard(new_prefix, suffix);
         }
       }
       else {
-        files[n_files] = strdup(ent->d_name);
-        n_files++;
+        expandWildcard(new_prefix, suffix);
       }
     }
   }
   closedir(dir);
+}
 
+void expandWildcardsIfNecessary(std::string* arg_s) {
+  const char* arg_c = arg_s->c_str();
+
+  // check if argument has wildcard
+  if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?') == NULL) {
+    Command::_currentSimpleCommand->insertArgument(arg_s);
+    return;
+  }
+
+  max = 10;
+  n_files = 0;
+  files = (char **) malloc(max * sizeof(char *));
+
+  expandWildcard(NULL, arg_c);
   qsort(files, n_files, sizeof(char *), compareFiles);
 
   for (int i = 0; i < n_files; i++) {
@@ -154,6 +200,7 @@ void expandWildcards(std::string* arg_s) {
   }
   free(files);
 }
+
 %}
 
 %%
@@ -165,7 +212,7 @@ goal:
 arg_list:
   arg_list WORD {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
-    expandWildcards($2);
+    expandWildcardsIfNecessary($2);
     /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }
   | /* can be empty */

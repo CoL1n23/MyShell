@@ -164,6 +164,8 @@ void expandWildcard(char* prefix, char* suffix) {
         sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       }
 
+      expandWildcard(new_prefix, suffix);
+/*
       if (ent->d_name[0] == '.') {
         if (component[0] == '.') {
           // if user has specified hidden files
@@ -174,6 +176,7 @@ void expandWildcard(char* prefix, char* suffix) {
         expandWildcard(new_prefix, suffix);
       }
     }
+*/
   }
   closedir(d);
 }

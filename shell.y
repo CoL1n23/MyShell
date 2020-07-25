@@ -55,7 +55,7 @@ int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
   const char* filename2 = *(const char**) file2;
 
-  return strcoll(f1, f2);
+  return strcoll(filename1, filename2);
 }
 
 void expandWildcard(char* prefix, char* suffix) {

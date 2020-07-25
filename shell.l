@@ -290,13 +290,6 @@ source[ ].* {
       readlink("/proc/self/exe", env_strs[i], 100);
     }
     else {
-      int fd = open("error_message", O_CREAT | O_WRONLY| O_TRUNC, 0644);
-      if (fd < 0) {
-        perror("open");
-        exit(1);
-      }
-      dup2(fd, 2);
-      close(fd);
       env_strs[i] = getenv(env_names[i]);
     }
     // printf("%s\n", env_strs[i]);

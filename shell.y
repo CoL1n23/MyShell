@@ -47,9 +47,9 @@
 void yyerror(const char * s);
 int yylex();
 
-int max_files;
-int n_files;
-char** files;
+int max_files = 10;
+int n_files = 0;
+char** files = (char **) malloc(max_files * sizeof(char *));
 
 int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
@@ -194,10 +194,6 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(arg_s);
     return;
   }
-
-  max_files = 10;
-  n_files = 0;
-  files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
   for (int i = 0; i < n_files; i++) {

@@ -240,7 +240,7 @@ char * read_line() {
 	line_length = strlen(line_buffer);
 
 	// echo line
-	write(1, line_buffer, line_length);
+	write(1, line_buffer, line_length - 1);
 	cursor = line_length;
       }
       else if (ch1 == 91 && ch2 == 66) {

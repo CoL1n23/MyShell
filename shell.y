@@ -94,13 +94,14 @@ void expandWildcard(char* prefix, char* suffix) {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
     expandWildcard(new_prefix, suffix);  // move on to next component
+    return;  
   }
 
   // translate wildcards to regex
-  char* regex = (char*)malloc(2 * strlen(component) + 10);
+  char* regex = (char*) malloc(2 * strlen(component) + 10);
   *regex = '^';
   regex++;
-  char *c = component;
+  char* c = component;
   while (*c) {
     if (*c == '*') {
       *regex = '.';
@@ -136,6 +137,7 @@ void expandWildcard(char* prefix, char* suffix) {
     return;
   }
 
+  // set up dir
   char* dir;
   if (prefix == NULL) {
     // set dir to current dir if prefix is empty

@@ -14,7 +14,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
-
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "y.tab.hh"
 #include "command.hh"
 

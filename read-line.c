@@ -63,7 +63,7 @@ char * read_line() {
     char ch;
     read(0, &ch, 1);
 
-    if (ch>=32) {
+    if (ch>=32 && ch != 127) {
       // It is a printable character. 
 
       // If max number of character reached return.
@@ -116,7 +116,6 @@ char * read_line() {
     }
     else if ((ch == 8 || ch == 127) && cursor > 0) {
       // <backspace> was typed. Remove previous character read.
-	write(1, "delete",10);
       // Go back one character
       ch = 8;
       write(1,&ch,1);

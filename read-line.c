@@ -18,6 +18,9 @@ extern void tty_raw_mode(void);
 int line_length;
 char line_buffer[MAX_BUFFER_LINE];
 
+// Cursor location
+int cursor;
+
 // Simple history array
 // This history does not change. 
 // Yours have to be updated.
@@ -51,6 +54,7 @@ char * read_line() {
   tty_raw_mode();
 
   line_length = 0;
+  cursor = 0;
 
   // Read one line until enter is typed
   while (1) {
@@ -62,15 +66,38 @@ char * read_line() {
     if (ch>=32) {
       // It is a printable character. 
 
-      // Do echo
-      write(1,&ch,1);
-
       // If max number of character reached return.
       if (line_length==MAX_BUFFER_LINE-2) break; 
 
-      // add char to buffer.
-      line_buffer[line_length]=ch;
+      if (cursor == line_length) {
+        // add char to buffer.
+        line_buffer[line_length]=ch;
+	write(1,&ch,1);
+      }
+      else {
+	// backup rear line_buffer
+	char* rear = new char[line_length - cursor];
+	for (int i = cursor; i < line_length; i++) {
+	  rear[i - cursor] = line_buffer[i];
+	}
+
+	// insert at cursor position
+	line_buffer[cursor] = ch;
+	write(1,&ch,1);
+
+	// restore rear line_buffer
+	for (int i = cursor + 1; i < length + 1; i++) {
+	  line_buffer[i] = rear[i - cursor - 1];
+	}
+
+	// cursor goes back to previous position
+	for (int i = cursor + 1; i < length + 1; i++) {
+	  ch = 8;
+	  write(1,&ch,1);
+        }
+      }
       line_length++;
+      cursor++;
     }
     else if (ch==10) {
       // <Enter> was typed. Return line
@@ -86,7 +113,7 @@ char * read_line() {
       line_buffer[0]=0;
       break;
     }
-    else if (ch == 8) {
+    else if (ch == 8 && cursor > 0) {
       // <backspace> was typed. Remove previous character read.
 
       // Go back one character
@@ -102,7 +129,28 @@ char * read_line() {
       write(1,&ch,1);
 
       // Remove one character from buffer
+      line_buffer[line_length]=0;
       line_length--;
+
+      cursor--;
+    }
+    else if (ch==1) {
+      while (cursor > 0) {
+	// go back one character
+	ch = 8;
+        write(1,&ch,1);
+
+	cursor--;
+      }
+    }
+    else if (ch==5) {
+      while (cursor < line_length) {
+        // go back one character
+        ch = line_buffer[cursor];
+        write(1,&ch,1);
+
+        cursor++;
+      }
     }
     else if (ch==27) {
       // Escape sequence. Read two chars more
@@ -145,7 +193,24 @@ char * read_line() {
 	// echo line
 	write(1, line_buffer, line_length);
       }
-      
+      else if (ch1 == 91 && ch2 == 68) {
+        // left arrow
+	if (cursor > 0) {
+	  // go back one character
+	  ch = 8;
+          write(1,&ch,1);
+
+	  cursor--;
+	}
+      }
+      else if (ch1 == 91 && ch2 == 67) {
+	// right arrow
+        if (cursor < line_length) {
+          ch = line_buffer[location];
+	  write(1,&ch,1);
+	  cursor++;
+	}
+      }
     }
 
   }

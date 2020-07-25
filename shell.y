@@ -75,7 +75,6 @@ int compareFiles(const void* file1, const void* file2) {
     index++;
   }
 
-  printf("%s %s\n", f1, f2);
   return strcasecmp(f1, f2);
 }
 

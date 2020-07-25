@@ -68,6 +68,9 @@ int compareFiles(const void* file1, const void* file2) {
     else if (f1[index] == '.') {
       f1[index] = '}';
     }
+    else if (f1[index] == '-') {
+      f1[index] = '=';
+    }
     index++;
   }
   index = 0;
@@ -77,6 +80,9 @@ int compareFiles(const void* file1, const void* file2) {
     }
     else if (f2[index] == '.') {
       f2[index] = '}';
+    }
+    else if (f2[index] == '-') {
+      f2[index] = '=';
     }
     index++;
   }

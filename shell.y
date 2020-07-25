@@ -85,12 +85,14 @@ void expandWildcard(char* prefix, char* suffix) {
   // examine component
   char new_prefix[MAXFILENAME];
   if (strchr(component, '*') == NULL && strchr(component, '?') == NULL) {
+    char* com_cpy = new char[MAXFILENAME];
+    strcpy(com_cpy, component);
     // concat component with prefix if no wildcard
     if (prefix == NULL) {
-      sprintf(new_prefix, "%s", component);
+      sprintf(new_prefix, "%s", com_cpy);
     }
     else {
-      sprintf(new_prefix, "%s/%s", prefix, component);
+      sprintf(new_prefix, "%s/%s", prefix, com_cpy);
     }
     expandWildcard(new_prefix, suffix);  // move on to next component
     return;  

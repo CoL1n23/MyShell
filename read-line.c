@@ -131,16 +131,21 @@ char * read_line() {
         write(1,&ch,1);
 
         // Remove one character from buffer
-        line_buffer[line_length - 1]=0;
+        line_buffer[line_length - 1] = 0;
       }
       else {
+	// move everything after cursor forward by 1
         for (int i = cursor - 1; i < line_length - 1; i++) {
           line_buffer[i] = line_buffer[i + 1];
-	  write(1, &line_buffer[i + 1], 1);
+	  write(1, &line_buffer[i], 1);
 	}
+
+	// ease last character
 	ch = ' ';
 	write(1,&ch,1);
 	line_buffer[line_length - 1] = 0;
+
+	// bring cursor back to previous position
 	for (int i = 0; i < line_length - cursor; i++) {
 	  ch = 8;
 	  write(1,&ch,1);

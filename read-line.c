@@ -146,7 +146,7 @@ char * read_line() {
 	line_buffer[line_length - 1] = 0;
 
 	// bring cursor back to previous position
-	for (int i = 0; i < line_length - cursor; i++) {
+	for (int i = 0; i < line_length - cursor + 1; i++) {
 	  ch = 8;
 	  write(1,&ch,1);
 	}

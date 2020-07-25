@@ -189,8 +189,6 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     return;
   }
 
-  max_files = 10;
-  // n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
@@ -223,6 +221,8 @@ goal:
 arg_list:
   arg_list WORD {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
+    max_files = 10;
+    n_files = 0;
     expandWildcardsIfNecessary($2);
     /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }

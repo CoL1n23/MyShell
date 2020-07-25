@@ -55,39 +55,7 @@ int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
   const char* filename2 = *(const char**) file2;
 
-  char* f1 = new char[strlen(filename1) + 1];
-  strcpy(f1, filename1);
-  char* f2 = new char[strlen(filename2) + 1];
-  strcpy(f2, filename2);
-
-  int index = 0;
-  while (f1[index] != '\0') {
-    if (f1[index] == '_') {
-      f1[index] = '{';
-    }
-    else if (f1[index] == '.') {
-      f1[index] = '}';
-    }
-    else if (f1[index] == '-') {
-      f1[index] = '}';
-    }
-    index++;
-  }
-  index = 0;
-  while (f2[index] != '\0') {
-    if (f2[index] == '_') {
-      f2[index] = '{';
-    }
-    else if (f2[index] == '.') {
-      f2[index] = '}';
-    }
-    else if (f2[index] == '-') {
-      f2[index] = '}';
-    }
-    index++;
-  }
-
-  return strcasecmp(f1, f2);
+  return strcoll(f1, f2);
 }
 
 void expandWildcard(char* prefix, char* suffix) {

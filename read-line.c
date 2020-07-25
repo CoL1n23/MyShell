@@ -158,7 +158,7 @@ char * read_line() {
     else if (ch == 4 && cursor < line_length) {
       for (int i = cursor; i < line_length - 1; i++) {
         line_buffer[i] = line_buffer[i + 1];
-	write(1, &line_buffer[i], 1);
+	write(1, &line_buffer[i + 1], 1);
       }
 
       ch = ' ';

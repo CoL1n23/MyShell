@@ -192,7 +192,7 @@ int compareFiles(const void* file1, const void* file2) {
     index++;
   }
 
-  printf("%s %s\n", cp1, cp2);
+  // printf("%s %s\n", cp1, cp2);
   int ret_val = strcmp(cp1, cp2);
   free(cp1);
   free(cp2);

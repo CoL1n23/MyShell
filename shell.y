@@ -69,6 +69,9 @@ void expandWildcard(char* prefix, char* suffix) {
     return;
   }
 
+  char* prefix_cpy = new char[100];
+  strcpy(prefix_cpy, prefix);
+
   // get next component in suffix
   char* s = strchr(suffix, '/');
   char component[MAXFILENAME];
@@ -92,7 +95,7 @@ void expandWildcard(char* prefix, char* suffix) {
       sprintf(new_prefix, "%s", com_cpy);
     }
     else {
-      sprintf(new_prefix, "%s/%s", prefix, com_cpy);
+      sprintf(new_prefix, "%s/%s", prefix_cpy, com_cpy);
     }
     expandWildcard(new_prefix, suffix);  // move on to next component
     return;  
@@ -162,7 +165,7 @@ void expandWildcard(char* prefix, char* suffix) {
         sprintf(new_prefix, "%s", ent->d_name);
       }
       else {
-        sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+        sprintf(new_prefix, "%s/%s", prefix_cpy, ent->d_name);
       }
 
       if (ent->d_name[0] == '.') {

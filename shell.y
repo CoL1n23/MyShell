@@ -63,16 +63,17 @@ int compareFiles(const void* file1, const void* file2) {
   int index = 0;
   while (f1[index] != '\0') {
     if (f1[index] == '_') {
-      f1[index] = '+';
+      f1[index] = '#';
     }
   }
   index = 0;
   while (f2[index] != '\0') {
     if (f2[index] == '_') {
-      f2[index] = '+';
+      f2[index] = '#';
     }
   }
 
+  printf("%s %s\n", f1, f2);
   return strcasecmp(f1, f2);
 }
 

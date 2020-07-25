@@ -64,7 +64,7 @@ void expandWildcard(char* prefix, char* suffix) {
       max_files *= 2;
       files = (char **) realloc(files, max_files * sizeof(char *));
     }
-    printf("%s\n", prefix);
+    // printf("%s\n", prefix);
     files[n_files] = prefix;
     n_files++;
     return;
@@ -194,7 +194,14 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
+  for (int i = 0; i < n_files; i++) {
+    printf("%s\n", files[i]);
+  }
+
   qsort(files, n_files, sizeof(char *), compareFiles);
+  for (int i = 0; i < n_files; i++) {
+    printf("%s\n", files[i]);
+  }
 
   for (int i = 0; i < n_files; i++) {
     printf("%s %d\n", files[i], n_files);

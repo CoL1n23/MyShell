@@ -25,7 +25,7 @@ int cursor;
 // This history does not change. 
 // Yours have to be updated.
 int history_index = 0;
-char * history[1000];
+char history[1000][2048];
 /*= {
   "ls -al | grep x", 
   "ps -e",
@@ -106,7 +106,7 @@ char * read_line() {
       // <Enter> was typed. Return line
       
       if (strlen(line_buffer) > 0) {
-	history[history_length++] = strdup(line_buffer);
+	strcpy(history[history_length++], line_buffer);
       }
 
       // Print newline

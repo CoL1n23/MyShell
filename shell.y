@@ -65,12 +65,14 @@ int compareFiles(const void* file1, const void* file2) {
     if (f1[index] == '_') {
       f1[index] = '#';
     }
+    index++;
   }
   index = 0;
   while (f2[index] != '\0') {
     if (f2[index] == '_') {
       f2[index] = '#';
     }
+    index++;
   }
 
   printf("%s %s\n", f1, f2);

@@ -166,6 +166,7 @@ void expandWildcard(char* prefix, char* suffix) {
             sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
 	  }
           expandWildcard(new_prefix, suffix);
+	  return;
         }
       }
       else {
@@ -177,6 +178,7 @@ void expandWildcard(char* prefix, char* suffix) {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
         expandWildcard(new_prefix, suffix);
+        return;
       }
     }
   }

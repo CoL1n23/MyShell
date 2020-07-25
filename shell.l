@@ -221,42 +221,6 @@ void myunputc(int c) {
   }
 }
 
-source[ ].* {
-  /* source file */
-  // get source file name
-  char* filename = new char[strlen(yytext) - 6];
-  filename[strlen(filename) - 1] = '\0';
-  int index = 0;
-  for (int i = 7; i < strlen(yytext); i++) {
-    filename[index++] = yytext[i];
-  }
-
-  // read content in source file
-  char* line = NULL;
-  size_t length = 0;
-  FILE* file = fopen(filename, "r");
-  if (file == NULL) {
-    perror("fopen");
-    exit(1);
-  }
-  while (true) {
-    ssize_t char_count = getline(&line, &length, file);
-    if (char_count != -1) {
-      // unput line in source file to shell
-      for (int i = (int)(strlen(line) - 1); i >= 0; i--) {
-        myunputc(line[i]);
-      }
-      myunputc('\n');
-    }
-    else {
-      break;
-    }
-  }
-
-  fclose(file);
-  free(line);
-}
-
 [^ \n\t]*\$\{[^ \t\n|&<>]+\}[^ \n\t]* {
   /* environ var expansion */
   // get environ var name

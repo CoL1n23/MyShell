@@ -1,6 +1,7 @@
 bgfile
 err1
 err2
+error_message
 file1.cc
 file-list-1
 file-list-2
@@ -13,7 +14,6 @@ README
 shell-in
 shell-out
 sh-in
-sh-out
 testall
 testall.out
 test_append_output

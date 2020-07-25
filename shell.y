@@ -47,9 +47,9 @@
 void yyerror(const char * s);
 int yylex();
 
-int max_files = 10;
-int n_files = 0;
-char** files = (char **) malloc(max_files * sizeof(char *));
+int max_files;
+int n_files;
+char** files;
 
 int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
@@ -68,9 +68,6 @@ void expandWildcard(char* prefix, char* suffix) {
     n_files++;
     return;
   }
-
-  char* prefix_cpy = new char[MAXFILENAME];
-  strcpy(prefix_cpy, prefix);
 
   // get next component in suffix
   char* s = strchr(suffix, '/');
@@ -92,12 +89,18 @@ void expandWildcard(char* prefix, char* suffix) {
     strcpy(com_cpy, component);
     // concat component with prefix if no wildcard
     if (prefix == NULL) {
-      sprintf(new_prefix, "%s", com_cpy);
+      sprintf(new_prefix, "%s", component);
     }
     else {
-      sprintf(new_prefix, "%s/%s", prefix_cpy, com_cpy);
+      sprintf(new_prefix, "%s/%s", prefix, component);
     }
-    expandWildcard(new_prefix, suffix);  // move on to next component
+
+    char* np_cpy = new char[strlen(new_prefix) + 1];
+    strcpy(np_cpy, new_prefix);
+    char* su_cpy = new char[strlen(suffix) + 1];
+    strcpy(su_cpy, suffix);
+    
+    expandWildcard(np_cpy, su_cpy);  // move on to next component
     return;  
   }
 
@@ -165,17 +168,22 @@ void expandWildcard(char* prefix, char* suffix) {
         sprintf(new_prefix, "%s", ent->d_name);
       }
       else {
-        sprintf(new_prefix, "%s/%s", prefix_cpy, ent->d_name);
+        sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       }
+
+      char* np_cpy2 = new char[strlen(new_prefix) + 1];
+      strcpy(np_cpy2, new_prefix);
+      char* su_cpy2 = new char[strlen(suffix) + 1];
+      strcpy(su_cpy2, suffix);
 
       if (ent->d_name[0] == '.') {
         if (component[0] == '.') {
           // if user has specified hidden files
-          expandWildcard(new_prefix, suffix);
+          expandWildcard(np_cpy2, su_cpy2);
         }
       }
       else {
-        expandWildcard(new_prefix, suffix);
+        expandWildcard(np_cpy2, su_cpy2);
       }
     }
   }
@@ -192,6 +200,10 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(arg_s);
     return;
   }
+
+  max_files = 10;
+  n_files = 0;
+  files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);
   for (int i = 0; i < n_files; i++) {

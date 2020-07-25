@@ -175,8 +175,8 @@ void expandWildcard(char* prefix, char* suffix) {
       else {
         expandWildcard(new_prefix, suffix);
       }
-    }
 */
+    }
   }
   closedir(d);
 }

@@ -296,7 +296,7 @@ void expandWildcard(char* prefix, char* suffix) {
     if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
       sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       if (ent->d_name[0] == '.') {
-        if (arg_c[0] == '.') {
+        if (component[0] == '.') {
           expandWildcard(new_prefix, suffix);
         }
       }

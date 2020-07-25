@@ -88,7 +88,7 @@ void expandWildcard(char* prefix, char* suffix) {
   char* s = strchr(suffix, '/');
   char component[MAXFILENAME];
   if (s != NULL) {
-    strcpy(component, suffix, (size_t)(s - suffix));
+    strncpy(component, suffix, s - suffix);
     suffix = s + 1;
   }
   else {
@@ -144,9 +144,9 @@ void expandWildcard(char* prefix, char* suffix) {
     return;
   }
 
-  char* dir = new char[100];
+  char* dir;
   if (prefix[0] == 0) {
-    dir = ".";
+    dir = (char *)".";
   }
   else {
     dir = prefix;

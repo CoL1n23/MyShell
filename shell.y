@@ -94,7 +94,6 @@ void expandWildcard(char* prefix, char* suffix) {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
     expandWildcard(new_prefix, suffix);  // move on to next component
-    return;
   }
 
   // translate wildcards to regex

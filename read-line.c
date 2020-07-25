@@ -121,18 +121,32 @@ char * read_line() {
       ch = 8;
       write(1,&ch,1);
 
-      // Write a space to erase the last character read
-      ch = ' ';
-      write(1,&ch,1);
+      if (cursor == line_length) {
+        // Write a space to erase the last character read
+        ch = ' ';
+        write(1,&ch,1);
 
-      // Go back one character
-      ch = 8;
-      write(1,&ch,1);
+        // Go back one character
+        ch = 8;
+        write(1,&ch,1);
 
-      // Remove one character from buffer
-      line_buffer[line_length]=0;
+        // Remove one character from buffer
+        line_buffer[line_length]=0;
+      }
+      else {
+        for (int i = cursor - 1; i < line_length - 1; i++) {
+          line_buffer[i] = line_buffer[i + 1];
+	  write(1, &line_buffer[i + 1], 1);
+	}
+	ch = ' ';
+	write(1,&ch,1);
+	for (int i = 0; i < line_length - cursor; i++) {
+	  ch = 8;
+	  write(1,&ch,1);
+	}
+      }
+
       line_length--;
-
       cursor--;
     }
     else if (ch==1) {

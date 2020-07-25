@@ -1377,13 +1377,6 @@ YY_RULE_SETUP
       readlink("/proc/self/exe", env_strs[i], 100);
     }
     else {
-      int fd = open("error_message", O_CREAT | O_WRONLY| O_TRUNC, 0644);
-      if (fd < 0) {
-        perror("open");
-        exit(1);
-      }
-      dup2(fd, 2);
-      close(fd);
       env_strs[i] = getenv(env_names[i]);
     }
     // printf("%s\n", env_strs[i]);
@@ -1458,7 +1451,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 372 "shell.l"
+#line 365 "shell.l"
 {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
@@ -1467,10 +1460,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 377 "shell.l"
+#line 370 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1474 "lex.yy.cc"
+#line 1467 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2487,4 +2480,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 377 "shell.l"
+#line 370 "shell.l"

@@ -69,7 +69,7 @@ void expandWildcard(char* prefix, char* suffix) {
     return;
   }
 
-  char* prefix_cpy = new char[100];
+  char* prefix_cpy = new char[MAXFILENAME];
   strcpy(prefix_cpy, prefix);
 
   // get next component in suffix

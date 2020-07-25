@@ -131,7 +131,7 @@ char * read_line() {
         write(1,&ch,1);
 
         // Remove one character from buffer
-        line_buffer[line_length]=0;
+        line_buffer[line_length - 1]=0;
       }
       else {
         for (int i = cursor - 1; i < line_length - 1; i++) {
@@ -140,6 +140,7 @@ char * read_line() {
 	}
 	ch = ' ';
 	write(1,&ch,1);
+	line_buffer[line_length - 1] = 0;
 	for (int i = 0; i < line_length - cursor; i++) {
 	  ch = 8;
 	  write(1,&ch,1);

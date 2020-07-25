@@ -65,7 +65,7 @@ void expandWildcard(char* prefix, char* suffix) {
       files = (char **) realloc(files, max_files * sizeof(char *));
     }
     printf("%s\n", prefix);
-    files[n_files] = (char *)prefix;
+    files[n_files] = prefix;
     n_files++;
     return;
   }
@@ -154,13 +154,23 @@ void expandWildcard(char* prefix, char* suffix) {
       if (ent->d_name[0] == '.') {
         if (component[0] == '.') {
           // if user has specified hidden files
-          sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+          if (prefix == NULL) {
+	    sprintf(new_prefix, "%s", ent->d_name);
+	  }
+	  else {
+            sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+	  }
           expandWildcard(new_prefix, suffix);
         }
       }
       else {
         // add unhidden files
-        sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+        if (prefix == NULL) {
+          sprintf(new_prefix, "%s", ent->d_name);
+        }
+        else {
+          sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+        }
         expandWildcard(new_prefix, suffix);
       }
     }

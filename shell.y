@@ -157,25 +157,20 @@ void expandWildcard(char* prefix, char* suffix) {
   regmatch_t match;
   while ((ent = readdir(d)) != NULL) {
     if (regexec(&re, ent->d_name, 1, &match, 0) == 0) {
+      if (prefix == NULL) {
+        sprintf(new_prefix, "%s", ent->d_name);
+      }
+      else {
+        sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+      }
+
       if (ent->d_name[0] == '.') {
         if (component[0] == '.') {
           // if user has specified hidden files
-          if (prefix == NULL) {
-	    sprintf(new_prefix, "%s", ent->d_name);
-	  }
-	  else {
-            sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
-	  }
           expandWildcard(new_prefix, suffix);
         }
       }
       else {
-        if (prefix == NULL) {
-          sprintf(new_prefix, "%s", ent->d_name);
-        }
-        else {
-          sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
-        }
         expandWildcard(new_prefix, suffix);
       }
     }

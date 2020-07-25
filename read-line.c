@@ -55,7 +55,7 @@ char * read_line() {
   // Set terminal in raw mode
   tty_raw_mode();
 
-  history_index = 0;
+  history_length = 0;
 
   line_length = 0;
   cursor = 0;
@@ -108,7 +108,7 @@ char * read_line() {
       // <Enter> was typed. Return line
       
       if (strlen(line_buffer) > 0) {
-	strcpy(history[history_length++], line_buffer);
+	strncpy(history[history_length++], line_buffer, strlen(line_buffer) - 1);
       }
 
       // Print newline
@@ -236,7 +236,7 @@ char * read_line() {
           history_index = history_length;
 	}
 	// Copy line from history
-	strcpy(line_buffer, history[history_index]);
+	strcpy(line_buffer, history[history_length - history_index]);
 	line_length = strlen(line_buffer);
 
 	// echo line

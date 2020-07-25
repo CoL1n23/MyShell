@@ -331,7 +331,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(new_arg);
   }
 
-  for (int i = 0; i < max; i++) {
+  for (int i = 0; i < n_files; i++) {
     free(files[i]);
   }
   free(files);

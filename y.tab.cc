@@ -322,7 +322,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     Command::_currentSimpleCommand->insertArgument(new_arg);
   }
 
-  free(files);
+  //free(files);
 }
 
 

@@ -87,7 +87,7 @@ void expandWildcard(char* prefix, char* suffix) {
   char* s = strchr(suffix, '/');
   char component[MAXFILENAME];
   if (s != NULL) {
-    strcpy(component, suffix, s - suffix);
+    strcpy(component, suffix, (size_t) s - suffix);
     suffix = s + 1;
   }
   else {
@@ -104,7 +104,7 @@ void expandWildcard(char* prefix, char* suffix) {
   }
 
   // expand wildcards
-  char* regex = (char*)malloc(2 * strlen(arg_c) + 10);
+  char* regex = (char*)malloc(2 * strlen(suffix) + 10);
   *regex = '^';
   regex++;
   while (*arg_c) {
@@ -142,7 +142,7 @@ void expandWildcard(char* prefix, char* suffix) {
     return;
   }
 
-  char* dir;
+  char* dir = new char[100];
   if (prefix[0] == 0) {
     dir = ".";
   }
@@ -158,7 +158,7 @@ void expandWildcard(char* prefix, char* suffix) {
   // check what entries match
   struct dirent* ent;
   regmatch_t match;
-  while ((ent = readdir(dir)) != NULL) {
+  while ((ent = readdir(d)) != NULL) {
     if (regexec(&re, ent->d_name, 0, &match, 0) == 0) {
       sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       if (ent->d_name[0] == '.') {
@@ -171,11 +171,13 @@ void expandWildcard(char* prefix, char* suffix) {
       }
     }
   }
-  closedir(dir);
+  closedir(d);
 }
 
 void expandWildcardsIfNecessary(std::string* arg_s) {
-  const char* arg_c = arg_s->c_str();
+  const char* arg_cc = arg_s->c_str();
+  char* arg_c = new char[strlen(arg_cc) + 1];
+  strcpy(arg_c, arg_cc);
 
   // check if argument has wildcard
   if (strchr(arg_c, '*') == NULL && strchr(arg_c, '?') == NULL) {

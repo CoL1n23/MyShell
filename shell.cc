@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 
 int yyparse(void);
+void yyrestart(FILE* source);
 
 void Shell::prompt() {
   if (isatty(0)) {

@@ -88,6 +88,7 @@ char * read_line() {
 	// restore rear line_buffer
 	for (int i = cursor + 1; i < line_length + 1; i++) {
 	  line_buffer[i] = rear[i - cursor - 1];
+	  write(1,&rear[i - cursor - 1], 1);
 	}
 
 	// cursor goes back to previous position

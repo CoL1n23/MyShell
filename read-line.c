@@ -25,7 +25,8 @@ int cursor;
 // This history does not change. 
 // Yours have to be updated.
 int history_index = 0;
-char * history [] = {
+char* history[1000];
+/*= {
   "ls -al | grep x", 
   "ps -e",
   "cat read-line-example.c",
@@ -33,7 +34,8 @@ char * history [] = {
   "make",
   "ls -al | grep xxx | grep yyy"
 };
-int history_length = sizeof(history)/sizeof(char *);
+*/
+int history_length = 0;
 
 void read_line_print_usage()
 {
@@ -103,6 +105,10 @@ char * read_line() {
     else if (ch==10) {
       // <Enter> was typed. Return line
       
+      if (strlen(line_buffer) > 0) {
+	history[history_length++] = strdup(line_buffer);
+      }
+
       // Print newline
       write(1,&ch,1);
 
@@ -223,13 +229,19 @@ char * read_line() {
 	  write(1,&ch,1);
 	}	
 
+	history_index++;
+	if (history_index > history_length) {
+          history_index = history_length;
+	}
 	// Copy line from history
 	strcpy(line_buffer, history[history_index]);
 	line_length = strlen(line_buffer);
-	history_index=(history_index+1)%history_length;
 
 	// echo line
 	write(1, line_buffer, line_length);
+      }
+      else if (ch1 == 91 && ch2 == 66) {
+
       }
       else if (ch1 == 91 && ch2 == 68) {
         // left arrow

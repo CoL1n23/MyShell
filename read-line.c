@@ -114,7 +114,7 @@ char * read_line() {
       line_buffer[0]=0;
       break;
     }
-    else if (ch == 8 && cursor > 0) {
+    else if ((ch == 8 || ch == 127) && cursor > 0) {
       // <backspace> was typed. Remove previous character read.
 
       // Go back one character
@@ -154,6 +154,23 @@ char * read_line() {
 
       line_length--;
       cursor--;
+    }
+    else if (ch == 4 && cursor < line_length) {
+      for (int i = cursor; i < line_length - 1; i++) {
+        line_buffer[i] = line_buffer[i + 1];
+	write(1, &line_buffer[i], 1);
+      }
+
+      ch = ' ';
+      write(1, &ch, 1);
+      line_buffer[line_length - 1] = 0;
+
+      for (int i = 0; i < line_length - cursor; i++) {
+	ch = 8;
+	write(1,&ch,1);
+      }
+
+      line_length--;
     }
     else if (ch==1) {
       while (cursor > 0) {

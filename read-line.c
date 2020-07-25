@@ -76,7 +76,7 @@ char * read_line() {
       }
       else {
 	// backup rear line_buffer
-	char* rear = new char[line_length - cursor];
+	char rear[line_length - cursor];
 	for (int i = cursor; i < line_length; i++) {
 	  rear[i - cursor] = line_buffer[i];
 	}

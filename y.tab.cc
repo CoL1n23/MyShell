@@ -277,7 +277,7 @@ void expandWildcard(char* prefix, char* suffix) {
   }
 
   char* dir;
-  if (prefix[0] == 0) {
+  if (prefix == NULL) {
     dir = (char *)".";
   }
   else {

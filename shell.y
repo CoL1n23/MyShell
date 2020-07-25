@@ -190,7 +190,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   }
 
   max_files = 10;
-  n_files = 0;
+  // n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
 
   expandWildcard(NULL, arg_c);

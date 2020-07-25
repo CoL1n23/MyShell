@@ -47,9 +47,9 @@
 void yyerror(const char * s);
 int yylex();
 
-int max_files;
-int n_files;
-char** files;
+int max_files = 10;
+int n_files = 0;
+char** files = (char **) malloc(max_files * sizeof(char *));
 
 int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
@@ -59,10 +59,6 @@ int compareFiles(const void* file1, const void* file2) {
 }
 
 void expandWildcard(char* prefix, char* suffix) {
-  if (files == NULL) {
-    files = (char **) malloc(max_files * sizeof(char *));
-  }
-
   if (suffix[0] == 0) {
     if (n_files == max_files) {
       max_files *= 2;
@@ -223,8 +219,6 @@ goal:
 arg_list:
   arg_list WORD {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
-    max_files = 10;
-    n_files = 0;
     expandWildcardsIfNecessary($2);
     /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }

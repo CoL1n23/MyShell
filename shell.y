@@ -186,7 +186,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   qsort(files, n_files, sizeof(char *), compareFiles);
 
   for (int i = 0; i < n_files; i++) {
-    printf("%s\n", files[i]);
+    printf("%s %d\n", files[i], n_files);
     std::string* new_arg = new std::string(files[i]);
     Command::_currentSimpleCommand->insertArgument(new_arg);
   }

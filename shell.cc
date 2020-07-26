@@ -4,13 +4,27 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 int yyparse(void);
 void yyrestart(FILE* source);
 
 void Shell::prompt() {
   if (isatty(0)) {
-    printf("myshell>");
+    char d_prompt[] = "myshell";
+    char* n_prompt = new char[100];
+    n_prompt = getenv("PROMPT");
+
+    char* final_prompt = new char[100];
+    if (n_prompt == NULL) {
+      strcpy(final_prompt, d_prompt);
+    }
+    else {
+      strcpy(final_prompt, n_prompt);
+    }
+    strcat(final_prompt, ">");
+
+    printf("%s", final_prompt);
     fflush(stdout);
   }
 }

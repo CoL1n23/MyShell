@@ -36,7 +36,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   if (outcome_t1 == 0) {
     argument = new std::string(getenv("HOME"));
   }
-  regfree(&regex_t1);
+  //regfree(&regex_t1);
 
   const char tilde2[] = "^~[/]?[^/]+$";
 
@@ -58,7 +58,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     struct passwd *result = getpwnam(username);
     argument = new std::string(result->pw_dir);
   }
-  regfree(&regex_t2);
+  //regfree(&regex_t2);
 
   const char tilde3[] = "^~[/]?[^/]+/.*$";
 
@@ -93,7 +93,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     strcat(fullpath, rest);
     argument = new std::string(fullpath);
   }
-  regfree(&regex_t3);
+  //regfree(&regex_t3);
 
   // simply add the argument to the vector
   _arguments.push_back(argument);

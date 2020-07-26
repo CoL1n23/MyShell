@@ -229,7 +229,7 @@ void expandWildcard(char* prefix, char* suffix) {
     }
     else {
       if (!strcmp(prefix, "/")) {
-        prefix = "";
+        prefix = (char *)"";
       }
       sprintf(new_prefix, "%s/%s", prefix, component);
     }

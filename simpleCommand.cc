@@ -32,6 +32,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_t1;
   outcome_t1 = regexec(&regex_t1, string, 0, &match_t1, 0);
+  regfree(&regex_t1);
   if (outcome_t1 == 0) {
     argument = new std::string(getenv("HOME"));
   }
@@ -46,6 +47,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_t2;
   outcome_t2 = regexec(&regex_t2, string, 0, &match_t2, 0);
+  regfree(&regex_t2);
   if (outcome_t2 == 0) {
     char* username = new char[(int)argument->size()];
     for (int i = 1; i < (int)argument->size(); i++) {
@@ -66,6 +68,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
   }
   regmatch_t match_t3;
   outcome_t3 = regexec(&regex_t3, string, 0, &match_t3, 0);
+  regfree(&regex_t3);
   if (outcome_t3 == 0) {
     int index = 2; // index of second slash
     while (argument->c_str()[index] != '/') {
@@ -89,10 +92,6 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     argument = new std::string(fullpath);
   }
 
-  regfree(&regex_t1);
-  regfree(&regex_t2);
-  regfree(&regex_t3);
-  
   // simply add the argument to the vector
   _arguments.push_back(argument);
 }

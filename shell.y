@@ -200,7 +200,7 @@ void expandWildcard(char* prefix, char* suffix) {
 
 void expandWildcardsIfNecessary(std::string* arg_s) {
   const char* arg_cc = arg_s->c_str();
-  char* arg_c = new char[strlen(arg_cc) + 1];
+  char arg_c[strlen(arg_cc) + 1];
   strcpy(arg_c, arg_cc);
 
   // check if argument has wildcard
@@ -234,7 +234,6 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     }
   }
 
-  free(arg_c);
   free(files);
 }
 

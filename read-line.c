@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 #define MAX_BUFFER_LINE 2048
 

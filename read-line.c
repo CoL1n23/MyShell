@@ -110,6 +110,7 @@ char * read_line() {
       if (strlen(line_buffer) > 0) {
 	strcpy(history[history_length++], line_buffer);
       }
+      history_index = history_length - 1;
 
       // Print newline
       write(1,&ch,1);
@@ -229,14 +230,14 @@ char * read_line() {
 	for (i =0; i < line_length; i++) {
 	  ch = 8;
 	  write(1,&ch,1);
-	}	
+	}
 
-	history_index++;
-	if (history_index > history_length) {
-          history_index = history_length;
+	history_index--;
+	if (history_index < 0) {
+          history_index = 0;
 	}
 	// Copy line from history
-	strcpy(line_buffer, history[history_length - history_index]);
+	strcpy(line_buffer, history[history_index]);
 	line_length = strlen(line_buffer);
 
 	// echo line

@@ -182,8 +182,8 @@ int yylex();
 int max_files;
 int n_files;
 char** files;
-int expand_time;
-bool home;
+int expand_time;  // set to handle home dir
+bool home_dir;        // set to handle home dir
 
 int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
@@ -284,7 +284,8 @@ void expandWildcard(char* prefix, char* suffix) {
     // set dir to current dir if prefix is empty
     dir = (char *)".";
   }
-  else if (expand_time == 1 && home == true) {
+  else if (expand_time == 1 && home_dir == true) {
+    // use parameters to decide if home dir is needed
     dir = (char *)"/";
   }
   else {
@@ -344,10 +345,10 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
   expand_time = 0;
-  home = false;
+  home_dir = false;
 
   if (arg_c[0] == '/') {
-    home = true;
+    home_dir = true;
   }
   // expand wildcards and sort argument
   expandWildcard(NULL, arg_c);
@@ -369,7 +370,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
 }
 
 
-#line 373 "y.tab.cc" /* yacc.c:358  */
+#line 374 "y.tab.cc" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -667,9 +668,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   244,   244,   248,   253,   257,   257,   267,   268,   272,
-     284,   295,   312,   323,   339,   353,   354,   358,   361,   365,
-     369,   372,   378,   379
+       0,   245,   245,   249,   254,   258,   258,   268,   269,   273,
+     285,   296,   313,   324,   340,   354,   355,   359,   362,   366,
+     370,   373,   379,   380
 };
 #endif
 
@@ -1460,35 +1461,35 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 248 "shell.y" /* yacc.c:1646  */
+#line 249 "shell.y" /* yacc.c:1646  */
     {
     /* printf("   Yacc: insert argument \"%s\"\n", $2->c_str()); */
     expandWildcardsIfNecessary((yyvsp[0].cpp_string));
     /* Command::_currentSimpleCommand->insertArgument( $2 ); */
   }
-#line 1470 "y.tab.cc" /* yacc.c:1646  */
+#line 1471 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 257 "shell.y" /* yacc.c:1646  */
+#line 258 "shell.y" /* yacc.c:1646  */
     {
     /* printf("   Yacc: insert command \"%s\"\n", $1->c_str()); */
     Command::_currentSimpleCommand = new SimpleCommand();
     Command::_currentSimpleCommand->insertArgument( (yyvsp[0].cpp_string) );
   }
-#line 1480 "y.tab.cc" /* yacc.c:1646  */
+#line 1481 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 261 "shell.y" /* yacc.c:1646  */
+#line 262 "shell.y" /* yacc.c:1646  */
     {
     Shell::_currentCommand.insertSimpleCommand( Command::_currentSimpleCommand );
   }
-#line 1488 "y.tab.cc" /* yacc.c:1646  */
+#line 1489 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 272 "shell.y" /* yacc.c:1646  */
+#line 273 "shell.y" /* yacc.c:1646  */
     {
     /* append output to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
@@ -1501,11 +1502,11 @@ yyreduce:
     Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
     Shell::_currentCommand._append = true;
   }
-#line 1505 "y.tab.cc" /* yacc.c:1646  */
+#line 1506 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 284 "shell.y" /* yacc.c:1646  */
+#line 285 "shell.y" /* yacc.c:1646  */
     {
     /* redirect output to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
@@ -1517,11 +1518,11 @@ yyreduce:
 
     Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
   }
-#line 1521 "y.tab.cc" /* yacc.c:1646  */
+#line 1522 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 295 "shell.y" /* yacc.c:1646  */
+#line 296 "shell.y" /* yacc.c:1646  */
     {
     /* append stdout and stderr to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
@@ -1539,11 +1540,11 @@ yyreduce:
     Shell::_currentCommand._errFile = new std::string ((yyvsp[0].cpp_string)->c_str());
     Shell::_currentCommand._append = true;
   }
-#line 1543 "y.tab.cc" /* yacc.c:1646  */
+#line 1544 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 312 "shell.y" /* yacc.c:1646  */
+#line 313 "shell.y" /* yacc.c:1646  */
     {
     /* redirect stderr to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
@@ -1555,11 +1556,11 @@ yyreduce:
 
     Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
   }
-#line 1559 "y.tab.cc" /* yacc.c:1646  */
+#line 1560 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 323 "shell.y" /* yacc.c:1646  */
+#line 324 "shell.y" /* yacc.c:1646  */
     {
     /* redirect stdout and stderr to file */
     /* printf("   Yacc: insert output \"%s\"\n", $2->c_str()); */
@@ -1576,11 +1577,11 @@ yyreduce:
     Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
     Shell::_currentCommand._errFile = new std::string ((yyvsp[0].cpp_string)->c_str());
   }
-#line 1580 "y.tab.cc" /* yacc.c:1646  */
+#line 1581 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 339 "shell.y" /* yacc.c:1646  */
+#line 340 "shell.y" /* yacc.c:1646  */
     {
     /* redirect input to file */
     /* printf("   Yacc: insert input \"%s\"\n", $2->c_str()); */
@@ -1592,44 +1593,44 @@ yyreduce:
 
     Shell::_currentCommand._inFile = (yyvsp[0].cpp_string);
   }
-#line 1596 "y.tab.cc" /* yacc.c:1646  */
+#line 1597 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 358 "shell.y" /* yacc.c:1646  */
+#line 359 "shell.y" /* yacc.c:1646  */
     {
     Shell::_currentCommand._background = true;
   }
-#line 1604 "y.tab.cc" /* yacc.c:1646  */
+#line 1605 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 365 "shell.y" /* yacc.c:1646  */
+#line 366 "shell.y" /* yacc.c:1646  */
     {
     /* printf("   Yacc: Execute command\n"); */
     Shell::_currentCommand.execute();
   }
-#line 1613 "y.tab.cc" /* yacc.c:1646  */
+#line 1614 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 369 "shell.y" /* yacc.c:1646  */
+#line 370 "shell.y" /* yacc.c:1646  */
     {
     Shell::_currentCommand.execute();
   }
-#line 1621 "y.tab.cc" /* yacc.c:1646  */
+#line 1622 "y.tab.cc" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 372 "shell.y" /* yacc.c:1646  */
+#line 373 "shell.y" /* yacc.c:1646  */
     {
     yyerrok;
   }
-#line 1629 "y.tab.cc" /* yacc.c:1646  */
+#line 1630 "y.tab.cc" /* yacc.c:1646  */
     break;
 
 
-#line 1633 "y.tab.cc" /* yacc.c:1646  */
+#line 1634 "y.tab.cc" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1857,7 +1858,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 382 "shell.y" /* yacc.c:1906  */
+#line 383 "shell.y" /* yacc.c:1906  */
 
 
 void

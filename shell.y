@@ -89,7 +89,12 @@ void expandWildcard(char* prefix, char* suffix) {
     strcpy(com_cpy, component);
     // concat component with prefix if no wildcard
     if (prefix == NULL) {
-      sprintf(new_prefix, "%s", component);
+      if (suffix[0] == '/') {
+        sprintf(new_prefix, "/%s", component);
+      }
+      else {
+        sprintf(new_prefix, "%s", component);
+      }
     }
     else {
       sprintf(new_prefix, "%s/%s", prefix, component);
@@ -206,9 +211,11 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
 
+  // expand wildcards and sort argument
   expandWildcard(NULL, arg_c);
   qsort(files, n_files, sizeof(char *), compareFiles);
 
+  // if no matched file is found print out original argument
   if (n_files == 0) {
     Command::_currentSimpleCommand->insertArgument(arg_s);
   }

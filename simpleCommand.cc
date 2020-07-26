@@ -22,7 +22,7 @@ SimpleCommand::~SimpleCommand() {
 void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
 
-  char* slash = strchr(string, '/');
+  const char* slash = strchr(string, '/');
   if (slash == NULL) {
     // simply add the argument to the vector
     _arguments.push_back(argument);

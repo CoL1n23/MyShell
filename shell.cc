@@ -11,20 +11,16 @@ void yyrestart(FILE* source);
 
 void Shell::prompt() {
   if (isatty(0)) {
-    char d_prompt[] = "myshell";
     char* n_prompt = new char[100];
     n_prompt = getenv("PROMPT");
-
-    char* final_prompt = new char[100];
-    if (n_prompt == NULL) {
-      strcpy(final_prompt, d_prompt);
+    
+    if (n_prompt) {
+      printf("%s", n_prompt);
     }
     else {
-      strcpy(final_prompt, n_prompt);
+      printf("myshell>");
     }
-    strcat(final_prompt, ">");
 
-    printf("%s", final_prompt);
     fflush(stdout);
   }
 }

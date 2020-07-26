@@ -328,10 +328,10 @@ void expandWildcard(char* prefix, char* suffix) {
         expand_time++;
         expandWildcard(np_cpy2, su_cpy2);
       }
+      free(np_cpy2);
+      free(su_cpy2);
     }
   }
-  free(np_cpy2);
-  free(su_cpy2);
   closedir(d);
 }
 

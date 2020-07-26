@@ -171,6 +171,8 @@ void expandWildcard(char* prefix, char* suffix) {
   // check what entries match
   struct dirent* ent;
   regmatch_t match;
+  char* np_cpy2;
+  char* su_cpy2;
   while ((ent = readdir(d)) != NULL) {
     if (regexec(&re, ent->d_name, 1, &match, 0) == 0) {
       if (prefix == NULL) {
@@ -180,9 +182,9 @@ void expandWildcard(char* prefix, char* suffix) {
         sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       }
 
-      char* np_cpy2 = (char *) malloc(strlen(new_prefix) + 1);
+      np_cpy2 = (char *) malloc(strlen(new_prefix) + 1);
       strcpy(np_cpy2, new_prefix);
-      char* su_cpy2 = (char *) malloc(strlen(suffix) + 1);
+      su_cpy2 = (char *) malloc(strlen(suffix) + 1);
       strcpy(su_cpy2, suffix);
 
       if (ent->d_name[0] == '.') {
@@ -190,14 +192,16 @@ void expandWildcard(char* prefix, char* suffix) {
           // if user has specified hidden files
           expand_time++;
           expandWildcard(np_cpy2, su_cpy2);
+  free(np_cpy2);
+  free(su_cpy2);
         }
       }
       else {
         expand_time++;
         expandWildcard(np_cpy2, su_cpy2);
+  free(np_cpy2);
+  free(su_cpy2);
       }
-      free(np_cpy2);
-      free(su_cpy2);
     }
   }
   closedir(d);

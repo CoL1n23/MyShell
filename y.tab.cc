@@ -310,9 +310,9 @@ void expandWildcard(char* prefix, char* suffix) {
         sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
       }
 
-      char* np_cpy2 = new char[strlen(new_prefix) + 1];
+      char* np_cpy2[strlen(new_prefix) + 1];
       strcpy(np_cpy2, new_prefix);
-      char* su_cpy2 = new char[strlen(suffix) + 1];
+      char* su_cpy2[strlen(suffix) + 1];
       strcpy(su_cpy2, suffix);
 
       if (ent->d_name[0] == '.') {

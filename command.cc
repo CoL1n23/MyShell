@@ -332,6 +332,12 @@ void Command::execute() {
       last_bg = ret;
     }
 
+    char* force_error = new char[100];
+    force_error = getenv("ON_ERROR");
+    if (force_error) {
+      printf(force_error);
+    }
+
     // Clear to prepare for next command
     clear();
 

@@ -12,8 +12,8 @@ void yyrestart(FILE* source);
 void Shell::prompt() {
   if (isatty(0)) {
     // customize user prompt
-    char* n_prompt = (char *) malloc(100);
-    n_prompt = getenv("PROMPT");
+    //char* n_prompt = (char *) malloc(100);
+    char* n_prompt = getenv("PROMPT");
     
     if (n_prompt) {
       printf("%s ", n_prompt);
@@ -22,7 +22,7 @@ void Shell::prompt() {
       printf("myshell> ");
     }
 
-    free(n_prompt);
+    //free(n_prompt);
     fflush(stdout);
   }
 }

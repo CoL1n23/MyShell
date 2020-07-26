@@ -234,6 +234,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
     }
   }
 
+  free(arg_c);
   free(files);
 }
 

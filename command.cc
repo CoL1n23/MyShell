@@ -332,6 +332,7 @@ void Command::execute() {
       last_bg = ret;
     }
 
+    // print on_error message
     char* force_error = new char[100];
     force_error = getenv("ON_ERROR");
     if (force_error) {

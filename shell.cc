@@ -12,7 +12,7 @@ void yyrestart(FILE* source);
 void Shell::prompt() {
   if (isatty(0)) {
     // customize user prompt
-    char* n_prompt = new char[100];
+    char n_prompt[100];
     n_prompt = getenv("PROMPT");
     
     if (n_prompt) {

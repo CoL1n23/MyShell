@@ -27,8 +27,9 @@ void Shell::prompt() {
 void sigIntHandler (int sig) {
   if (sig == SIGINT) {
     printf("\n");
-    if (_currentCommand._simpleCommands.size() == 0) {
-      prompt();
+    if (Shell::_currentCommand._simpleCommands.size() == 0) {
+      Shell::prompt();
+    }
   }
 }
 

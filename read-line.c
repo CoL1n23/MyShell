@@ -111,7 +111,7 @@ char * read_line() {
       
       if (strlen(line_buffer) > 0) {
 	strcpy(history[history_length++], line_buffer);
-	history_index = history_length - 1;
+	history_index = history_length;
       }
 
       // Print newline
@@ -234,6 +234,11 @@ char * read_line() {
 	  write(1,&ch,1);
 	}
 
+	history_index--;
+        if (history_index < 0) {
+          history_index = 0;
+        }
+
 	// Copy line from history
 	strcpy(line_buffer, history[history_index]);
 	line_length = strlen(line_buffer);
@@ -241,14 +246,47 @@ char * read_line() {
 	// echo line
 	write(1, line_buffer, line_length);
 	cursor = line_length;
-
-	history_index--;
-        if (history_index < 0) {
-          history_index = 0;
-        }
       }
       else if (ch1 == 91 && ch2 == 66) {
+        // down arrow
+	// Erase old line
+        // Print backspaces
+        int i = 0;
+        for (i =0; i < line_length; i++) {
+          ch = 8;
+          write(1,&ch,1);
+        }
 
+        // Print spaces on top
+        for (i =0; i < line_length; i++) {
+          ch = ' ';
+          write(1,&ch,1);
+        }
+
+        // Print backspaces
+        for (i =0; i < line_length; i++) {
+          ch = 8;
+          write(1,&ch,1);
+        }
+
+	history_index++;
+        if (history_index >= history_length) {
+          history_index = history_length;
+        }
+
+	if (history_index == history_length) {
+          line_length = 0;
+	  cursor = line_length;
+	}
+	else {
+          // Copy line from history
+          strcpy(line_buffer, history[history_index]);
+          line_length = strlen(line_buffer);
+
+          // echo line
+          write(1, line_buffer, line_length);
+          cursor = line_length;
+	}
       }
       else if (ch1 == 91 && ch2 == 68) {
         // left arrow
@@ -269,7 +307,6 @@ char * read_line() {
 	}
       }
     }
-
   }
 
   // Add eol and null char at the end of string

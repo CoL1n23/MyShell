@@ -95,9 +95,9 @@ void expandWildcard(char* prefix, char* suffix) {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
 
-    char* np_cpy = new char[strlen(new_prefix) + 1];
+    char* np_cpy = (char *) malloc(strlen(new_prefix) + 1);
     strcpy(np_cpy, new_prefix);
-    char* su_cpy = new char[strlen(suffix) + 1];
+    char* su_cpy = (char *) malloc(strlen(suffix) + 1);
     strcpy(su_cpy, suffix);
     expand_time++;
 

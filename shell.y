@@ -96,7 +96,7 @@ void expandWildcard(char* prefix, char* suffix) {
       sprintf(new_prefix, "%s", component);
     }
     else {
-      if (!scrcmp(prefix, "/")) {
+      if (!strcmp(prefix, "/")) {
         prefix = "";
       }
       sprintf(new_prefix, "%s/%s", prefix, component);

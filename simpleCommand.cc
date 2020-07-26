@@ -93,7 +93,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     strcat(fullpath, rest);
     argument = new std::string(fullpath);
   }
-  regfree(regex_t3);
+  regfree(&regex_t3);
 
   // simply add the argument to the vector
   _arguments.push_back(argument);

@@ -346,7 +346,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   expand_time = 0;
   home = false;
 
-  if (arg_c[0] == "/") {
+  if (arg_c[0] == '/') {
     home = true;
   }
   // expand wildcards and sort argument

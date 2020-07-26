@@ -158,7 +158,7 @@ void expandWildcard(char* prefix, char* suffix) {
     dir = (char *)".";
   }
   else if (add_home) {
-    dir = "/";
+    dir = (char *)"/";
   }
   else {
     dir = prefix;

@@ -27,18 +27,16 @@ void Shell::prompt() {
 void sigIntHandler (int sig) {
   if (sig == SIGINT) {
     printf("\n");
-    Shell::prompt();
+    // Shell::prompt();
   }
 }
 
 void sigChildHandler (int sig) {
   if (sig == SIGCHLD) {
     while (waitpid(-1, NULL, WNOHANG) > 0) {
-      /*
       if (Shell::_currentCommand._background == true) {
         printf("%d terminated.\n", getpid());
       }
-      */
     }
   }
 }

@@ -55,6 +55,10 @@ char * read_line() {
   // Set terminal in raw mode
   tty_raw_mode();
 
+  for (int i = 0; i < MAX_BUFFER_LINE; i++) {
+    line_buffer[i] = 0;
+  }
+
   line_length = 0;
   cursor = 0;
 

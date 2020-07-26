@@ -230,17 +230,18 @@ char * read_line() {
 	  write(1,&ch,1);
 	}
 
-	history_index--;
-	if (history_index < 0) {
-          history_index = 0;
-	}
 	// Copy line from history
 	strcpy(line_buffer, history[history_index]);
-	line_length = strlen(line_buffer) - 1;
+	line_length = strlen(line_buffer);
 
 	// echo line
 	write(1, line_buffer, line_length);
 	cursor = line_length;
+
+	history_index--;
+        if (history_index < 0) {
+          history_index = 0;
+        }
       }
       else if (ch1 == 91 && ch2 == 66) {
 

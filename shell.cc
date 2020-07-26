@@ -68,7 +68,7 @@ int main() {
     exit(-1);
   }
 
-  // create a file, fopen, .shellrc, yyrestart
+  // restart with source file
   FILE* source = fopen(".shellrc", "r");
   if (source != NULL) {
     yyrestart(source);

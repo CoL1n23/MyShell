@@ -21,6 +21,14 @@ SimpleCommand::~SimpleCommand() {
 
 void SimpleCommand::insertArgument( std::string * argument ) {
   const char* string = argument->c_str();
+
+  char* slash = strchr(string, '/');
+  if (slash == NULL) {
+    // simply add the argument to the vector
+    _arguments.push_back(argument);
+    return;
+  }
+
   // check for tilde expansion (has 3 parts)
   const char tilde1[] = "^~[/]?$";
 
@@ -91,10 +99,6 @@ void SimpleCommand::insertArgument( std::string * argument ) {
 
   // simply add the argument to the vector
   _arguments.push_back(argument);
-
-  regfree(&regex_t1);
-  regfree(&regex_t2);
-  regfree(&regex_t3);
 }
 
 // Print out the simple command

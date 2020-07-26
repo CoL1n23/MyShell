@@ -68,7 +68,6 @@ void expandWildcard(char* prefix, char* suffix) {
     }
     files[n_files] = prefix;
     n_files++;
-    free(prefix);
     return;
   }
 

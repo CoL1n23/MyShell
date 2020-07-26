@@ -50,7 +50,8 @@ int yylex();
 int max_files;
 int n_files;
 char** files;
-bool add_home_dir;
+int expand_time;
+bool home;
 
 int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
@@ -60,9 +61,6 @@ int compareFiles(const void* file1, const void* file2) {
 }
 
 void expandWildcard(char* prefix, char* suffix) {
-  char* suffix_cpy = new char[strlen(suffix) + 1];
-  strcpy(suffix_cpy, suffix);
-
   if (suffix[0] == 0) {
     if (n_files == max_files) {
       max_files *= 2;
@@ -88,9 +86,6 @@ void expandWildcard(char* prefix, char* suffix) {
 
   // examine component
   char new_prefix[MAXFILENAME];
-  if (prefix == NULL && suffix_cpy[0] == '/') {
-    add_home_dir = true;
-  }
   if (strchr(component, '*') == NULL && strchr(component, '?') == NULL) {
     // concat component with prefix if no wildcard
     if (prefix == NULL) {
@@ -104,7 +99,8 @@ void expandWildcard(char* prefix, char* suffix) {
     strcpy(np_cpy, new_prefix);
     char* su_cpy = new char[strlen(suffix) + 1];
     strcpy(su_cpy, suffix);
-    
+    expand_time++;
+
     expandWildcard(np_cpy, su_cpy);  // move on to next component
     return;  
   }
@@ -156,9 +152,8 @@ void expandWildcard(char* prefix, char* suffix) {
     // set dir to current dir if prefix is empty
     dir = (char *)".";
   }
-  else if (add_home_dir) {
+  else if (expand_time == 1 && home == true) {
     dir = (char *)"/";
-    add_home_dir = false;
   }
   else {
     dir = prefix;
@@ -189,10 +184,12 @@ void expandWildcard(char* prefix, char* suffix) {
       if (ent->d_name[0] == '.') {
         if (component[0] == '.') {
           // if user has specified hidden files
+          expand_time++;
           expandWildcard(np_cpy2, su_cpy2);
         }
       }
       else {
+        expand_time++;
         expandWildcard(np_cpy2, su_cpy2);
       }
     }
@@ -214,8 +211,12 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   max_files = 10;
   n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
-  add_home_dir = false;
+  expand_time = 0;
+  home = false;
 
+  if (arg_c[0] == "/") {
+    home = true;
+  }
   // expand wildcards and sort argument
   expandWildcard(NULL, arg_c);
   qsort(files, n_files, sizeof(char *), compareFiles);

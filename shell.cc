@@ -15,10 +15,10 @@ void Shell::prompt() {
     n_prompt = getenv("PROMPT");
     
     if (n_prompt) {
-      printf("%s", n_prompt);
+      printf("%s ", n_prompt);
     }
     else {
-      printf("myshell>");
+      printf("myshell> ");
     }
 
     fflush(stdout);

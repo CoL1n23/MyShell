@@ -224,7 +224,7 @@ void expandWildcard(char* prefix, char* suffix) {
     strcpy(com_cpy, component);
     // concat component with prefix if no wildcard
     if (prefix == NULL) {
-      sprintf(new_prefix, "/%s", component);
+      sprintf(new_prefix, "%s", component);
     }
     else {
       sprintf(new_prefix, "%s/%s", prefix, component);

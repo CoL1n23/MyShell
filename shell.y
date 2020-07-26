@@ -198,6 +198,7 @@ void expandWildcard(char* prefix, char* suffix) {
       }
     }
   }
+  regfree(&re);
   closedir(d);
 }
 

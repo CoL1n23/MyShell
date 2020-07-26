@@ -59,6 +59,9 @@ int compareFiles(const void* file1, const void* file2) {
 }
 
 void expandWildcard(char* prefix, char* suffix) {
+  char* suffix_cpy = new char[strlen(suffix) + 1];
+  strcpy(suffix_cpy, suffix);
+
   if (suffix[0] == 0) {
     if (n_files == max_files) {
       max_files *= 2;
@@ -89,7 +92,7 @@ void expandWildcard(char* prefix, char* suffix) {
     strcpy(com_cpy, component);
     // concat component with prefix if no wildcard
     if (prefix == NULL) {
-      if (suffix[0] == '/') {
+      if (suffix_cpy[0] == '/') {
         sprintf(new_prefix, "/%s", component);
       }
       else {

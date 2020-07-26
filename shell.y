@@ -145,6 +145,7 @@ void expandWildcard(char* prefix, char* suffix) {
     perror("regcomp");
     return;
   }
+  free(regex);
 
   // set up dir
   char* dir;

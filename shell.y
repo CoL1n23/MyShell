@@ -50,6 +50,7 @@ int yylex();
 int max_files;
 int n_files;
 char** files;
+bool add_home_dir;
 
 int compareFiles(const void* file1, const void* file2) {
   const char* filename1 = *(const char**) file1;
@@ -61,8 +62,6 @@ int compareFiles(const void* file1, const void* file2) {
 void expandWildcard(char* prefix, char* suffix) {
   char* suffix_cpy = new char[strlen(suffix) + 1];
   strcpy(suffix_cpy, suffix);
-
-  bool add_home = false;
 
   if (suffix[0] == 0) {
     if (n_files == max_files) {
@@ -159,6 +158,7 @@ void expandWildcard(char* prefix, char* suffix) {
   }
   else if (add_home) {
     dir = (char *)"/";
+    add_home_dir = false;
   }
   else {
     dir = prefix;
@@ -214,6 +214,7 @@ void expandWildcardsIfNecessary(std::string* arg_s) {
   max_files = 10;
   n_files = 0;
   files = (char **) malloc(max_files * sizeof(char *));
+  add_home_dir = false;
 
   // expand wildcards and sort argument
   expandWildcard(NULL, arg_c);

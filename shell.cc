@@ -26,8 +26,9 @@ void Shell::prompt() {
 
 void sigIntHandler (int sig) {
   if (sig == SIGINT) {
-    int pid = getpid();
-    printf("%d was killed.\n", pid);
+    // int pid = getpid();
+    // printf("%d was killed.\n", pid);
+    printf("\n");
   }
 }
 

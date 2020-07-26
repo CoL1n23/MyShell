@@ -190,13 +190,11 @@ void expandWildcard(char* prefix, char* suffix) {
           // if user has specified hidden files
           expand_time++;
           expandWildcard(np_cpy2, su_cpy2);
-          return;
         }
       }
       else {
         expand_time++;
         expandWildcard(np_cpy2, su_cpy2);
-return;
       }
     }
   }

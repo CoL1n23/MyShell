@@ -198,6 +198,8 @@ void expandWildcard(char* prefix, char* suffix) {
       }
     }
   }
+  free(np_cpy2);
+  free(su_cpy2);
   closedir(d);
 }
 

@@ -335,7 +335,7 @@ void Command::execute() {
     char* force_error = new char[100];
     force_error = getenv("ON_ERROR");
     if (force_error) {
-      printf(force_error);
+      printf("%s\n", force_error);
     }
 
     // Clear to prepare for next command

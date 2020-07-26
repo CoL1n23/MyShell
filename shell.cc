@@ -12,8 +12,7 @@ void yyrestart(FILE* source);
 void Shell::prompt() {
   if (isatty(0)) {
     // customize user prompt
-    char* n_prompt = getenv("PROMPT");
-    
+    char* n_prompt = getenv("PROMPT"); 
     if (n_prompt) {
       printf("%s ", n_prompt);
     }

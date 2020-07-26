@@ -102,6 +102,8 @@ void expandWildcard(char* prefix, char* suffix) {
     expand_time++;
 
     expandWildcard(np_cpy, su_cpy);  // move on to next component
+    free(np_cpy);
+    free(su_cpy);
     return;  
   }
 

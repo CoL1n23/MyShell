@@ -109,8 +109,8 @@ char * read_line() {
       
       if (strlen(line_buffer) > 0) {
 	strcpy(history[history_length++], line_buffer);
+	history_index = history_length - 1;
       }
-      history_index = history_length - 1;
 
       // Print newline
       write(1,&ch,1);

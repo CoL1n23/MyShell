@@ -55,8 +55,6 @@ char * read_line() {
   // Set terminal in raw mode
   tty_raw_mode();
 
-  history_length = 0;
-
   line_length = 0;
   cursor = 0;
 

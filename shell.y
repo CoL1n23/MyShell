@@ -89,7 +89,7 @@ void expandWildcard(char* prefix, char* suffix) {
   // examine component
   char new_prefix[MAXFILENAME];
   if (prefix == NULL && suffix_cpy[0] == '/') {
-    add_home = true;
+    add_home_dir = true;
   }
   if (strchr(component, '*') == NULL && strchr(component, '?') == NULL) {
     // concat component with prefix if no wildcard
@@ -156,7 +156,7 @@ void expandWildcard(char* prefix, char* suffix) {
     // set dir to current dir if prefix is empty
     dir = (char *)".";
   }
-  else if (add_home) {
+  else if (add_home_dir) {
     dir = (char *)"/";
     add_home_dir = false;
   }

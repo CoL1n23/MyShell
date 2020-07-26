@@ -37,7 +37,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     argument = new std::string(getenv("HOME"));
   }
 
-  const char tilde2[] = "^~[/]?[^/$]+$";
+  const char tilde2[] = "^~[/]?[^/${}]+$";
 
   regex_t regex_t2;
   int outcome_t2 = regcomp(&regex_t2, tilde2, REG_EXTENDED|REG_NOSUB);
@@ -58,7 +58,7 @@ void SimpleCommand::insertArgument( std::string * argument ) {
     argument = new std::string(result->pw_dir);
   }
 
-  const char tilde3[] = "^~[/]?[^/$]+/[^$]*$";
+  const char tilde3[] = "^~[/]?[^/${}]+/[^${}]*$";
 
   regex_t regex_t3;
   int outcome_t3 = regcomp(&regex_t3, tilde3, REG_EXTENDED|REG_NOSUB);

@@ -2,8 +2,8 @@
 
 ## Part 1: Parsing and Executing Commands
 
-Markup: - Part 1A: Lex and Yacc - Accepting more complex commands
-        - Part 1B: Executing commands
+- Part 1A: Lex and Yacc - Accepting more complex commands
+- Part 1B: Executing commands
 
 1B.1: Simple command process creation and execution
 

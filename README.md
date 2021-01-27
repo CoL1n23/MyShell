@@ -1,6 +1,6 @@
 # MyShell
 
-Part 1: Parsing and Executing Commands
+## Part 1: Parsing and Executing Commands
 
 Part 1A: Lex and Yacc - Accepting more complex commands
 
@@ -14,7 +14,7 @@ Part 1B: Executing commands
 
 1B.4: isatty()
 
-Part 2: Signal Handling, More Parsing, and Subshells
+## Part 2: Signal Handling, More Parsing, and Subshells
 
 2.1: Ctrl-C
 
@@ -34,7 +34,7 @@ Part 2: Signal Handling, More Parsing, and Subshells
 
 2.9: Subshells
 
-Part 3: Expansions, Wildcards, and Line Editing
+## Part 3: Expansions, Wildcards, and Line Editing
 
 3.1: Environment variable expansion *
 
